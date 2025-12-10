@@ -1,0 +1,47 @@
+Plataforma Aprenda+
+
+Projeto acadêmico com uma página única que apresenta vários cursos com três níveis de conteúdo, ebook e quiz. Tudo em HTML, CSS e JavaScript puro.
+
+Como funciona
+
+Abra o arquivo principal no navegador. O app mostra os cursos, permite navegar pelos níveis e executar quizzes. Não precisa servidor.
+
+Estrutura
+
+index.html
+
+/ebooks
+
+/courses (se desejar separar)
+
+assets (imagens, ícones)
+
+Recursos
+
+Níveis: básico, intermediário e avançado
+
+Quiz com explicações
+
+Layout responsivo
+
+Visual limpo
+
+Tecnologias
+
+HTML
+
+CSS
+
+JavaScript
+
+Em desenvolvimento
+
+Melhorar quizzes
+
+Adicionar mais cursos
+
+Download de eBooks
+
+Autor
+
+Fillipe – Projeto acadêmico
