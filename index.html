@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Plataforma Aprenda+ — Cursos</title>
+  <style>
+    :root{
+      --primary:#0a84ff;
+      --bg:#f7f9fc;
+      --card:#fff;
+      --muted:#64748b;
+      --shadow:0 6px 18px rgba(10,20,40,0.08);
+      --radius:12px;
+    }
+    *{box-sizing:border-box}
+    body{
+      font-family:'Open Sans', Arial, sans-serif;
+      margin:0;
+      background:linear-gradient(180deg,var(--bg),#ffffff);
+      color:#0f1724;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:18px 28px;
+    }
+    .brand{display:flex;gap:12px;align-items:center;cursor:pointer}
+    .logo{
+      width:52px;height:52px;border-radius:10px;background:var(--primary);
+      display:grid;place-items:center;color:#fff;font-weight:700;font-family:Poppins;
+    }
+    main{padding:20px;max-width:1100px;margin:0 auto;}
+    .hero h1{font-family:'Poppins',sans-serif;font-size:26px;margin:6px 0}
+    .hero p{color:var(--muted);margin:0}
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+      gap:18px;
+      margin-top:22px;
+    }
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      padding:14px;
+      box-shadow:var(--shadow);
+      transition:transform .18s,box-shadow .18s;
+      cursor:pointer;
+    }
+    .card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(10,20,40,0.12)}
+    .card h3{margin:6px 0 4px;font-size:18px}
+    .card p{color:var(--muted);font-size:14px;margin:0}
+    .btn{
+      display:inline-block;background:linear-gradient(90deg,var(--primary),#0066ff);
+      color:#fff;text-decoration:none;padding:9px 14px;border-radius:10px;font-weight:600;
+      margin-top:12px;cursor:pointer;border:none;
+    }
+    .btn.secondary{background:transparent;color:var(--primary);border:1px solid rgba(10,132,255,0.12)}
+    section.course{
+      display:none;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);
+      padding:18px;margin-top:18px;
+    }
+    .levels{display:grid;gap:12px;margin-top:12px}
+    .level{background:#fbfdff;border-radius:10px;padding:12px;border:1px solid rgba(10,20,40,0.03)}
+    .visual { margin-top:12px; display:flex; gap:12px; flex-wrap:wrap; align-items:flex-start; }
+    canvas { border-radius:10px; background:linear-gradient(180deg, #fff, #f8fbff); box-shadow:0 6px 18px rgba(10,20,40,0.02); }
+    .quiz{margin-top:16px}
+    .question-box{padding:12px;border-radius:10px;background:#ffffff;border:1px solid rgba(10,20,40,0.04)}
+    .options{display:grid;gap:8px;margin-top:10px}
+    .option-btn{
+      padding:10px 12px;border-radius:8px;border:1px solid rgba(10,20,40,0.06);
+      background:transparent;cursor:pointer;text-align:left;
+    }
+    .option-btn.selected{outline:3px solid rgba(10,132,255,0.12)}
+    .progress{font-size:13px;color:var(--muted);margin-top:8px}
+    footer{padding:22px;text-align:center;color:var(--muted);margin-top:18px}
+    @media (max-width:700px){
+      header{padding:14px}
+      .cards{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+      .visual{flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand" onclick="showHome()">
+      <div class="logo">DS</div>
+      <div>
+        <div style="font-family:Poppins;font-size:18px;font-weight:600;">Aprenda+</div>
+        <div style="font-size:12px;color:var(--muted)">Cursos práticos e eBooks</div>
+        
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div id="home">
+      <section class="hero">
+        <h1>Escolha um curso e comece a aprender hoje</h1>
+        <p>Conteúdo prático, níveis (Básico → Avançado), visualizações e quizzes para testar seu aprendizado.</p>
+      </section>
+
+      <section class="cards" id="coursesGrid"></section>
+    </div>
+
+    <div id="courseContent"></div>
+  </main>
+
+  <footer>
+    © 2025 Aprenda+. Desenvolvido por Fillipe • Projeto acadêmico
+  </footer>
+
+  <script>
+/* ====== DADOS DOS CURSOS (adicionados Redação, Inglês, Programação com Python) ====== */
+const courses = [
+ {
+  id:'matematica',
+  title:'Matemática',
+  desc:'Funções, álgebra, gráficos, derivadas e resolução de problemas.',
+  ebook:'ebooks/matematica.pdf',
+  content:{
+    basic:`
+Funções no dia a dia: previsão de gastos, temperatura, velocidade e crescimento.
+Uma função associa cada valor de entrada (x) a um único valor de saída (f(x)).
+Exemplo: f(x)=2x+1 cresce de forma constante — a cada 1 unidade em x, a saída aumenta 2.
+Tipos comuns:
+• Funções lineares (reta)
+• Funções quadráticas (parábolas)
+• Funções exponenciais (crescimento rápido)
+`,
+    
+    intermediate:`
+Funções lineares e quadráticas em profundidade:
+• Linear: f(x)=ax+b → a é inclinação, b é intercepto.
+• Quadrática: f(x)=ax²+bx+c → gráfico é uma parábola.
+Vértice: ponto máximo ou mínimo da parábola.
+Vértice = (-b/2a, f(-b/2a)).
+Interceptos:
+• Com y → f(0)
+• Com x → resolver ax²+bx+c=0.
+Comparação de gráficos: como inclinação, abertura e concavidade mudam modelos reais.
+`,
+
+    advanced:`
+Derivadas: a ferramenta para medir variações.
+A derivada de f(x) mede o quanto a função muda quando x muda.
+Regras importantes:
+• d/dx(xⁿ)=n·xⁿ⁻¹
+• d/dx(c)=0
+• Derivada de somas: derivar termo a termo.
+Aplicações:
+• Crescimento máximo/mínimo: f'(x)=0 → ponto crítico.
+• Otimização: custo mínimo, lucro máximo, rotas eficientes.
+• Velocidade instantânea: derivada da posição no tempo.
+`
+  }
+}
+,
+  {
+    id:'fisica',
+    title:'Física',
+    desc:'Cinemática, energia e leis de Newton com simulações e gráficos de movimento.',
+    ebook:'ebooks/fisica.pdf',
+    content:{
+      basic:`Movimento retilíneo: posição, velocidade e aceleração. Ex.: v = Δs/Δt.`,
+      intermediate:`Gráficos posição-tempo e velocidade-tempo. Integre/derive para obter informações de movimento.`,
+      advanced:`Trabalho e energia: W = F·d, conservação de energia em sistemas simples.`
+    }
+  },
+  {
+    id:'quimica',
+    title:'Química',
+    desc:'Estrutura atômica, ligações e reações com representações e tabelas práticas.',
+    ebook:'ebooks/quimica.pdf',
+    content:{
+      basic:`Átomos, prótons, nêutrons e elétrons. Número atômico e massa atômica.`,
+      intermediate:`Ligações iônicas e covalentes: formação de moléculas simples. Use modelos para entender geometria.`,
+      advanced:`Estequiometria básica: balanceamento de equações e cálculo de reagentes/produções.`
+    }
+  },
+  {
+    id:'biologia',
+    title:'Biologia',
+    desc:'Células, genética e ecologia com esquemas e exemplos práticos.',
+    ebook:'ebooks/biologia.pdf',
+    content:{
+      basic:`Célula: membrana, citoplasma, núcleo. Diferenças entre eucarionte e procarionte.`,
+      intermediate:`Genética: conceitos de gene, alelo e herança simples (dominante/recessivo).`,
+      advanced:`Ecologia: cadeias alimentares, ciclos biogeoquímicos e impacto humano.`
+    }
+  },
+  {
+    id:'medicina',
+    title:'Medicina',
+    desc:'Noções de anatomia, primeiros socorros e sinalização clássica.',
+    ebook:'ebooks/medicina.pdf',
+    content:{
+      basic:`Sistemas do corpo humano: circulatório, respiratório e digestório — visão geral.`,
+      intermediate:`Primeiros socorros básicos: RCP, controle de hemorragias e avaliação inicial da via aérea.`,
+      advanced:`Interpretação inicial de sinais vitais e aplicação prática simples em cenários simulados.`
+    }
+  },
+  {
+    id:'desenvolvimento',
+    title:'Desenvolvimento de Sistemas',
+    desc:'Lógica, front-end e back-end com diagramas práticos e exercícios.',
+    ebook:'ebooks/desenvolvimento.pdf',
+    content:{
+      basic:`Lógica de programação: variáveis, estruturas condicionais e laços.`,
+      intermediate:`Front-end: HTML/CSS/JS básicos; Back-end: APIs e conceitos de banco de dados.`,
+      advanced:`Arquitetura simples: REST APIs, CRUD e ciclo de desenvolvimento (Dev → Prod).`
+    }
+  },
+
+  /* --- NOVOS CURSOS --- */
+  {
+    id:'redacao',
+    title:'Redação',
+    desc:'Estrutura de textos, argumentação e prática de escrita para ENEM e concursos.',
+    ebook:'ebooks/redacao.pdf',
+    content:{
+      basic:`Estrutura básica: introdução (tese), desenvolvimento (argumentos) e conclusão (fecho). Como construir uma tese clara.`,
+      intermediate:`Coesão e coerência: conectores, progressão de ideias e variação vocabular. Planejamento e rascunho.`,
+      advanced:`Argumentação avançada: uso de evidências, contra-argumentos, e revisão para clareza e concisão. Técnicas de edição.`
+    }
+  },
+  {
+    id:'ingles',
+    title:'Inglês',
+    desc:'Gramática prática, vocabulário e conversação para nível iniciante a avançado.',
+    ebook:'ebooks/ingles.pdf',
+    content:{
+      basic:`Saudações, pronomes, presente simples e vocabulário básico para situações do dia a dia.`,
+      intermediate:`Tempos verbais (passado simples, present perfect), perguntas, e frases condicionais simples.`,
+      advanced:`Uso de modais, voz passiva, phrasal verbs e estratégias de fluência oral/escrita.`
+    }
+  },
+  {
+    id:'python',
+    title:'Programação com Python',
+    desc:'Python do básico ao avançado: sintaxe, estruturas e mini-projetos práticos.',
+    ebook:'ebooks/python.pdf',
+    content:{
+      basic:`Introdução à sintaxe Python: variáveis, tipos, entrada/saída e operações básicas.`,
+      intermediate:`Funções, listas, dicionários, manipulação de arquivos e introdução a módulos.`,
+      advanced:`Programação orientada a objetos, tratamento de exceções, e construção de um mini-projeto (ex.: gerenciador simples).`
+    }
+  }
+];
+
+/* ====== QUIZZES (10 perguntas por curso) ====== */
+const quizzes = {
+  matematica: [
+  {
+    q:"Para f(x)=3x+1, qual é f(2)?",
+    options:["5","6","7","8"],
+    correct:2,
+    explanation:"3·2 + 1 = 7."
+  },
+  {
+    q:"A função y = x² representa:",
+    options:["Reta","Parábola","Hipérbole","Função constante"],
+    correct:1,
+    explanation:"O gráfico de x² é uma parábola concava para cima."
+  },
+  {
+    q:"Qual é a inclinação da reta f(x)=5x−3?",
+    options:["5","−3","3/5","0"],
+    correct:0,
+    explanation:"O coeficiente angular (inclinação) é o número que multiplica x."
+  },
+  {
+    q:"A equação x²−9=0 tem:",
+    options:["x=3","x=−3","x=±3","Nenhuma solução"],
+    correct:2,
+    explanation:"x=3 e x=−3."
+  },
+  {
+    q:"Derivada de 4x³ é:",
+    options:["4x²","12x²","12x³","3x²"],
+    correct:1,
+    explanation:"d/dx(4x³)=12x²."
+  },
+  {
+    q:"O vértice da parábola f(x)=x²−4x+3 fica em:",
+    options:["(2, -1)","(4, 3)","(1, 0)","(2, 3)"],
+    correct:0,
+    explanation:"x=−b/2a = 4/2 = 2; f(2)=−1."
+  },
+  {
+    q:"Se f(x)=2x+5, o intercepto no eixo y é:",
+    options:["2","5","7","0"],
+    correct:1,
+    explanation:"Intercepto = f(0) = 5."
+  },
+  {
+    q:"Qual expressão NÃO representa uma função?",
+    options:["x→x²","x→3x+1","x→√x","x→±x"],
+    correct:3,
+    explanation:"x→±x tem duas saídas para a mesma entrada."
+  },
+  {
+    q:"A derivada mede:",
+    options:["A área sob o gráfico","O valor máximo da função","A taxa de variação","O intercepto com o eixo y"],
+    correct:2,
+    explanation:"Derivada = mudança instantânea."
+  },
+  {
+    q:"A solução de 2x+6=0 é:",
+    options:["3","−3","6","0"],
+    correct:1,
+    explanation:"2x = −6 → x = −3."
+  }
+]
+,
+  quimica: [
+    {q:"Partícula com carga positiva:", options:["Próton","Elétron","Nêutron","Íon negativo"], correct:0, explanation:"Próton tem carga positiva."},
+    {q:"Ligação covalente envolve:", options:["Compartilhar elétrons","Transferir elétrons","Prótons","Nêutrons"], correct:0, explanation:"Covalente = compartilhamento."},
+    {q:"Fórmula da água:", options:["H2O","CO2","O2","NaCl"], correct:0, explanation:"Água = H₂O."},
+    {q:"Número atômico = número de:", options:["Prótons","Elétrons","Nêutrons","Átomos"], correct:0, explanation:"Número de prótons define o elemento."},
+    {q:"pH < 7 indica:", options:["Ácido","Básico","Neutro","Salino"], correct:0, explanation:"pH < 7 é ácido."},
+    {q:"Combustão é uma reação com:", options:["Oxigênio","Nitrogênio","Hélio","Água"], correct:0, explanation:"Combustão normalmente envolve O₂."},
+    {q:"Mol é unidade de:", options:["Quantidade de matéria","Massa","Tempo","Temperatura"], correct:0, explanation:"Mol mede quantidade de substância."},
+    {q:"Reação balanceada mantém:", options:["Número de átomos","Energia","Volume","Temperatura"], correct:0, explanation:"Conservação de massa: mesmo número de cada átomo."},
+    {q:"Ligação iônica acontece entre:", options:["Metal + não-metal","2 metais","2 gases nobres","2 não-metais"], correct:0, explanation:"Metal doa elétron, não-metal recebe."},
+    {q:"Estado padrão de O2 à T ambiente:", options:["Gasoso","Líquido","Sólido","Plasma"], correct:0, explanation:"Oxigênio é gasoso em condições padrão."}
+  ],
+  biologia: [
+    {q:"Organelas celulares que produzem energia:", options:["Mitocôndrias","Lisossomos","Ribossomos","Cloroplastos"], correct:0, explanation:"Mitocôndrias produzem ATP (energia)."},
+    {q:"Material genético principal em eucariotos:", options:["DNA no núcleo","RNA no citoplasma","Proteínas","Lipídios"], correct:0, explanation:"DNA no núcleo contem instruções genéticas."},
+    {q:"Ribossomos sintetizam:", options:["Proteínas","Lipídios","Carboidratos","Ácidos nucleicos"], correct:0, explanation:"Ribossomos fazem síntese proteica."},
+    {q:"Fotossíntese ocorre em:", options:["Cloroplastos","Mitocôndrias","Núcleo","Parede celular"], correct:0, explanation:"Cloroplastos em plantas realizam fotossíntese."},
+    {q:"Célula procarionte NÃO possui:", options:["Núcleo definido","Ribossomos","Membrana plasmática","Parede celular"], correct:0, explanation:"Procarionte não tem núcleo delimitado por membrana."},
+    {q:"Herança dominante significa:", options:["A característica aparece se há um alelo","Não aparece nunca","Depende do ambiente","Sempre recessivo"], correct:0, explanation:"Basta um alelo dominante para a característica aparecer."},
+    {q:"Cadeia alimentar começa geralmente com:", options:["Produtores","Consumidores","Decompositores","Predadores"], correct:0, explanation:"Produtores (plantas) transformam energia solar."},
+    {q:"O que é biodiversidade?", options:["Variedade de espécies","Somente plantas","Apenas microrganismos","Apenas animais"], correct:0, explanation:"Biodiversidade = variedade de vida em um ecossistema."},
+    {q:"Virus precisa de:", options:["Célula hospedeira","Comida","Água","Luz"], correct:0, explanation:"Vírus se replicam dentro de células hospedeiras."},
+    {q:"Mitose produz:", options:["2 células geneticamente idênticas","4 células haploides","Espermatozóides","Óvulos"], correct:0, explanation:"Mitose gera duas células-filhas idênticas (diploides)."}
+  ],
+  medicina: [
+    {q:"RCP inicial: verificar", options:["Segurança da cena e resposta","Pressão arterial","Temperatura","Nível de glicose"], correct:0, explanation:"Sempre cheque segurança e se a vítima responde."},
+    {q:"Sinal vital que mede oxigenação:", options:["SpO2 (oximetria)","Pressão arterial","Temperatura","Frequência urinária"], correct:0, explanation:"SpO2 indica saturação de oxigênio."},
+    {q:"Manobra para desobstrução em adulto (consciente):", options:["Heimlich","RCP","Intubação","Massagem"], correct:0, explanation:"Heimlich/empurrões abdominais para obstrução por corpo estranho."},
+    {q:"Compressões torácicas devem ser:", options:["Firmes e rápidas","Lentas e suaves","Aleatórias","Inexistentes"], correct:0, explanation:"Compressões firmes e ritmo adequado são essenciais."},
+    {q:"Hemorragia externa: ação inicial:", options:["Compressão direta","Dar água","Movimentar muito a vítima","Ficar parado"], correct:0, explanation:"Compressão direta ajuda a controlar sangramento."},
+    {q:"Sinais vitais incluem:", options:["Pulso, respiração, pressão e temperatura","Apenas pulso","Apenas pressão","Apenas glicemia"], correct:0, explanation:"Sinais vitais clássicos: pulso, respiração, pressão e temperatura."},
+    {q:"PI (primeiros 3 passos) ABC:", options:["Airway, Breathing, Circulation","Pressão, Isquemia, Cirurgia","Avaliação, Botas, Compressão","Nenhuma"], correct:0, explanation:"A = via aérea, B = respiração, C = circulação."},
+    {q:"Sinais de choque incluem:", options:["Palidez, suor frio, pulso rápido","Sede intensa sem outros sinais","Somente dor de cabeça","Não se move"], correct:0, explanation:"Choque costuma apresentar palidez, sudorese e taquicardia."},
+    {q:"Para controlar queimadura leve:", options:["Água fria corrente","Gelo diretamente","Óleo","Enfaixar apertado"], correct:0, explanation:"Água fria corrente ajuda a diminuir a lesão."},
+    {q:"Sinais de infecção local:", options:["Vermelhidão, calor, dor e inchaço","Nenhuma alteração","Só coceira","Perda total de sensibilidade"], correct:0, explanation:"Esses são sinais clássicos de inflamação/infeção local."}
+  ],
+  desenvolvimento: [
+    {q:"O que é uma variável?", options:["Espaço para armazenar dados","Uma função","Uma biblioteca","Um servidor"], correct:0, explanation:"Variável armazena valores."},
+    {q:"HTML é usado para:", options:["Estruturar conteúdo","Estilizar","Lógica","Banco de dados"], correct:0, explanation:"HTML cria a estrutura da página."},
+    {q:"CSS serve para:", options:["Estilizar (layout/cores)","Lógica do servidor","Gerenciar banco","Enviar emails"], correct:0, explanation:"CSS define estilos e layout."},
+    {q:"JS é usado para:", options:["Interatividade no cliente","Hospedar site","Gerenciar banco","Enviar pacotes"], correct:0, explanation:"JavaScript cria comportamento no navegador."},
+    {q:"CRUD significa:", options:["Create, Read, Update, Delete","Compile, Run, Update, Debug","Cache, Refresh, Upload, Download","Connect, Read, Use, Drop"], correct:0, explanation:"Create, Read, Update e Delete são operações básicas de dados."},
+    {q:"API REST costuma usar:", options:["HTTP/JSON","FTP/XML","SMTP","POP3"], correct:0, explanation:"APIs REST usam HTTP e tipicamente JSON."},
+    {q:"Banco relacional usa:", options:["Tabelas e chaves","Arquivos locais","Arrays únicos","Somente JSON"], correct:0, explanation:"Bancos relacionais organizam dados em tabelas com chaves."},
+    {q:"Front-end é:", options:["Interface do usuário","Servidor","Banco de dados","Rede"], correct:0, explanation:"Parte visível e interativa para o usuário."},
+    {q:"Back-end é:", options:["Lógica e dados no servidor","Imagens do site","Somente HTML","Estilos"], correct:0, explanation:"Back-end processa lógica e dados no servidor."},
+    {q:"Git é usado para:", options:["Versionamento de código","Hospedagem","Estilização","Testes unitários"], correct:0, explanation:"Git controla versões e histórico do código."}
+  ],
+
+  /* --- QUIZZES NOVOS --- */
+  redacao: [
+    {q:"Qual é a estrutura básica de uma redação dissertativa-argumentativa?", options:["Introdução, desenvolvimento e conclusão","Tese, mapa mental e resumo","Resumo, comentário, conclusão","Introdução, índices e capa"], correct:0, explanation:"Introdução apresenta tese, desenvolvimento argumenta e conclusão fecha o texto."},
+    {q:"O que é uma tese em uma redação?", options:["Uma ideia central defendida","Um exemplo aleatório","Uma lista de palavras","Um ditado popular"], correct:0, explanation:"Tese = ideia central que será defendida ao longo do texto."},
+    {q:"Qual conector indica consequência?", options:["Portanto","Enquanto","Apesar","Embora"], correct:0, explanation:"'Portanto' indica consequência."},
+    {q:"O que melhora a coerência de um parágrafo?", options:["Uso adequado de conectores","Repetir sempre a mesma palavra","Apagar a conclusão","Mudar de assunto"], correct:0, explanation:"Conectores e progressão lógica melhoram a coerência."},
+    {q:"Qual ação é parte da revisão?", options:["Eliminar repetições e corrigir pontuação","Só mudar o título","Apagar todo o parágrafo inicial","Adicionar frases sem sentido"], correct:0, explanation:"Revisão inclui clareza, concisão e correção gramatical."},
+    {q:"Um bom argumento deve:", options:["Trazer evidência ou exemplo","Ser vago","Ser ofensivo","Ignorar contra-argumentos"], correct:0, explanation:"Argumento forte usa evidências, dados ou exemplos."},
+    {q:"Como fechar uma conclusão eficiente?", options:["Retomar tese e sintetizar argumentos","Apresentar nova tese","Introduzir um tema diferente","Fazer perguntas sem resposta"], correct:0, explanation:"Conclusão retoma a tese e sintetiza o que foi dito."},
+    {q:"Qual frase é um exemplo de conectivo adversativo?", options:["No entanto","Além disso","Logo","Portanto"], correct:0, explanation:"'No entanto' introduz contraste (adversatividade)."},
+    {q:"Ao planejar, qual recurso é útil antes de escrever?", options:["Rascunho/Mapa mental","Excluir referências","Escrever direto sem rascunho","Ignorar a tese"], correct:0, explanation:"Rascunho ajuda a organizar ideias e estrutura."},
+    {q:"Qual alternativa melhora a formalidade de um texto?", options:["Evitar gírias e abreviações","Usar só gírias","Falar em 1ª pessoa o tempo todo","Incluir emojis"], correct:0, explanation:"Formalidade pede linguagem culta e precisa."}
+  ],
+
+  ingles: [
+    {q:"Como se diz 'Bom dia' em inglês?", options:["Good morning","Good night","See you","What's up"], correct:0, explanation:"'Good morning' = 'Bom dia'."},
+    {q:"Qual a forma correta do verbo 'to be' no presente para 'he'?", options:["is","are","am","be"], correct:0, explanation:"He is — 'is' é usado com he/she/it."},
+    {q:"Qual tempo indica ação concluída no passado?", options:["Past simple","Present continuous","Future simple","Present perfect continuous"], correct:0, explanation:"Past simple é usado para ações concluídas no passado."},
+    {q:"'Can' expressa:", options:["Habilidade/Permissão","Proibição","Passado perfeito","Futuro certo"], correct:0, explanation:"'Can' indica habilidade ou pedir permissão."},
+    {q:"Pergunta no passado simples (you / go):", options:["Did you go?","You did go?","Do you went?","Are you go?"], correct:0, explanation:"Perguntas no past simple usam 'did' + base verb."},
+    {q:"Traduza: 'Eu gosto de ler'.", options:["I like to read","I am liking to read","I likes read","I reading"], correct:0, explanation:"'I like to read' ou 'I like reading' são corretas."},
+    {q:"Qual é o pronome possessivo para 'they'?", options:["theirs","his","your","ours"], correct:0, explanation:"'theirs' é possessivo de 'they'."},
+    {q:"'There is' é usado para:", options:["Existência de algo singular","Expressar obrigação","Falar do futuro","Comparações"], correct:0, explanation:"'There is' indica existência (singular)."},
+    {q:"Qual é a forma correta de 'comer' no gerúndio em inglês?", options:["eating","eat","ate","eaten"], correct:0, explanation:"Gerúndio: eating."},
+    {q:"Como formar negativo no presente simples (he / like):", options:["He does not like","He not likes","He don't like","He doesn't likes"], correct:0, explanation:"Negativo no present simple: 'does not' + base verb."}
+  ],
+
+  python: [
+    {q:"Como declarar uma variável em Python?", options:["x = 10","int x = 10","var x := 10","let x = 10"], correct:0, explanation:"Em Python usamos 'x = 10' (tipagem dinâmica)."},
+    {q:"Qual função mostra saída no console?", options:["print()","echo()","console.log()","println()"], correct:0, explanation:"print() exibe output no terminal em Python."},
+    {q:"Como criar uma função simples?", options:["def soma(a,b): return a+b","function soma(a,b) { }","fun soma => a+b","create soma(a,b)"], correct:0, explanation:"Sintaxe Python: def nome(params): return ..."},
+    {q:"Qual estrutura percorre uma lista?", options:["for item in lista:","for (i=0;i<...)","foreach lista { }","while item in lista"], correct:0, explanation:"'for item in lista:' é a forma Pythonic."},
+    {q:"Como comentar uma linha?", options:["# comentário","// comentário","/* comentário */","<!-- comentário -->"], correct:0, explanation:"Comentários de linha usam '#' em Python."},
+    {q:"Como abrir um arquivo para leitura?", options:["open('arquivo.txt','r')","open('arquivo.txt','w')","read('arquivo.txt')","file.open('arquivo')"], correct:0, explanation:"Modo 'r' abre para leitura."},
+    {q:"Como pegar exceção genérica?", options:["try...except Exception as e:","try...catch","on error goto","handle(Exception e)"], correct:0, explanation:"Em Python usa-se try/except."},
+    {q:"Qual tipo para coleção chave→valor?", options:["dict","list","tuple","set"], correct:0, explanation:"Dicionário (dict) armazena pares chave/valor."},
+    {q:"Como importar módulo math?", options:["import math","using math","#import math","require('math')"], correct:0, explanation:"Import padrão: import math."},
+    {q:"Qual comando cria um ambiente virtual (venv)?", options:["python -m venv venv","pip install venv","create venv","venv create"], correct:0, explanation:"Comando oficial: python -m venv venv."}
+  ]
+};
+
+/* ====== RENDERIZAÇÃO INICIAL DOS CARDS ====== */
+const grid = document.getElementById('coursesGrid');
+const home = document.getElementById('home');
+const courseContainer = document.getElementById('courseContent');
+
+courses.forEach(c=>{
+  const div = document.createElement('div');
+  div.className = 'card';
+  div.innerHTML = `
+    <div style="display:flex;gap:12px;align-items:center">
+      <div style="width:64px;height:64px;border-radius:12px;background:linear-gradient(180deg,var(--primary),#0066ff);display:grid;place-items:center;color:white;font-weight:700;font-family:Poppins">${c.title.charAt(0)}</div>
+      <div style="flex:1">
+        <h3>${c.title}</h3>
+        <p>${c.desc}</p>
+        <div style="margin-top:8px">
+          <button class="btn" style="padding:7px 10px;font-size:13px">Abrir</button>
+        </div>
+      </div>
+    </div>
+  `;
+  div.addEventListener('click',()=>openCourse(c.id));
+  grid.appendChild(div);
+});
+
+/* ====== ABA DE CURSO: render + canvas + quiz ====== */
+function openCourse(id){
+  const course = courses.find(x=>x.id===id);
+  if(!course) return;
+  home.style.display='none';
+  courseContainer.innerHTML = `
+    <section class="course" style="display:block">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <div>
+          <h1>${course.title}</h1>
+          <p style="color:var(--muted)">${course.desc}</p>
+        </div>
+        <div>
+          <a class="btn" href="${course.ebook}" target="_blank">📘 Baixar eBook completo</a>
+          <button class="btn secondary" style="margin-left:8px" onclick="showHome()">← Voltar</button>
+        </div>
+      </div>
+
+      <div class="levels">
+        <div class="level">
+          <h3>🔹 Nível 1 — Introdução</h3>
+          <p>${course.content.basic}</p>
+          <div class="visual">
+            <canvas id="${id}-canvas-basic" width="500" height="220"></canvas>
+          </div>
+        </div>
+
+        <div class="level">
+          <h3>🔸 Nível 2 — Intermediário</h3>
+          <p>${course.content.intermediate}</p>
+          <div class="visual">
+            <canvas id="${id}-canvas-intermediate" width="500" height="220"></canvas>
+          </div>
+        </div>
+
+        <div class="level">
+          <h3>🔺 Nível 3 — Avançado</h3>
+          <p>${course.content.advanced}</p>
+          <div class="visual">
+            <canvas id="${id}-canvas-advanced" width="500" height="220"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz" id="${id}-quiz">
+        <h3 style="margin-top:16px">🧩 Teste seu conhecimento — ${course.title}</h3>
+        <div id="${id}-quiz-box"></div>
+      </div>
+    </section>
+  `;
+  // desenhar as visualizações específicas
+  setTimeout(()=>{ drawVisual(id); initQuiz(id); },50);
+}
+
+/* ====== FUNÇÕES DE DESENHO (inclui novos cursos) ====== */
+function openCourse(id){
+  const course = courses.find(x=>x.id===id);
+  if(!course) return;
+  home.style.display='none';
+  courseContainer.innerHTML = `
+    <section class="course" style="display:block">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <div>
+          <h1>${course.title}</h1>
+          <p style="color:var(--muted)">${course.desc}</p>
+        </div>
+        <div>
+          <a class="btn" href="${course.ebook}" target="_blank">📘 Baixar eBook completo</a>
+          <button class="btn secondary" style="margin-left:8px" onclick="showHome()">← Voltar</button>
+        </div>
+      </div>
+
+      <div class="levels">
+        <div class="level">
+          <h3>🔹 Nível 1 — Introdução</h3>
+          <p>${course.content.basic}</p>
+        </div>
+
+        <div class="level">
+          <h3>🔸 Nível 2 — Intermediário</h3>
+          <p>${course.content.intermediate}</p>
+        </div>
+
+        <div class="level">
+          <h3>🔺 Nível 3 — Avançado</h3>
+          <p>${course.content.advanced}</p>
+        </div>
+      </div>
+
+      <div class="quiz" id="${id}-quiz">
+        <h3 style="margin-top:16px">🧩 Teste seu conhecimento — ${course.title}</h3>
+        <div id="${id}-quiz-box"></div>
+      </div>
+    </section>
+  `;
+  initQuiz(id); // Mantemos apenas o quiz
+}
+
+
+/* ====== QUIZ: RENDER + LÓGICA (mesma lógica que você tinha) ====== */
+function initQuiz(courseId){
+  const quizData = quizzes[courseId];
+  const container = document.getElementById(`${courseId}-quiz-box`);
+  if(!quizData || !container){
+    if(container) container.innerHTML = '<p>Sem quiz disponível.</p>';
+    return;
+  }
+
+  let index = 0;
+  const answers = new Array(quizData.length).fill(null);
+
+  function renderQuestion(){
+    const q = quizData[index];
+    container.innerHTML = `
+      <div class="question-box">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <strong>Questão ${index+1} de ${quizData.length}</strong>
+          <div class="progress">Progresso: ${index+1}/${quizData.length}</div>
+        </div>
+        <p style="margin-top:10px">${q.q}</p>
+        <div class="options" id="options-${courseId}">
+          ${q.options.map((opt,i)=>`<button class="option-btn" data-i="${i}">${String.fromCharCode(65+i)}. ${opt}</button>`).join('')}
+        </div>
+        <div style="margin-top:12px;display:flex;gap:8px">
+          <button class="btn" id="next-${courseId}">${ index === quizData.length-1 ? 'Finalizar' : 'Próxima' }</button>
+          <button class="btn secondary" id="skip-${courseId}">Pular</button>
+        </div>
+      </div>
+      <div style="margin-top:10px;color:var(--muted);font-size:13px">Dica: pense no conceito antes de escolher — após finalizar você verá seu resultado.</div>
+    `;
+    const opts = document.querySelectorAll(`#options-${courseId} .option-btn`);
+    opts.forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        opts.forEach(b=>b.classList.remove('selected'));
+        btn.classList.add('selected');
+        answers[index] = Number(btn.dataset.i);
+      });
+    });
+    document.getElementById(`next-${courseId}`).onclick = ()=> {
+      if(answers[index] === null){
+        if(!confirm('Você não escolheu uma opção. Deseja pular esta questão?')) return;
+      }
+      if(index < quizData.length - 1){
+        index++; renderQuestion();
+      } else {
+        showResult();
+      }
+    };
+    document.getElementById(`skip-${courseId}`).onclick = ()=> {
+      if(index < quizData.length - 1){ index++; renderQuestion(); } else showResult();
+    };
+    if(answers[index] !== null){
+      const pre = document.querySelector(`#options-${courseId} .option-btn[data-i="${answers[index]}"]`);
+      if(pre) pre.classList.add('selected');
+    }
+  }
+
+  function showResult(){
+    let correctCount=0;
+    let reviewHtml = '';
+    quizData.forEach((q,i)=>{
+      const user = answers[i];
+      const isCorrect = user === q.correct;
+      if(isCorrect) correctCount++;
+      reviewHtml += `
+        <div style="margin-bottom:10px;padding:10px;border-radius:8px;background:#fff;border:1px solid rgba(10,20,40,0.04)">
+          <strong>Q${i+1}:</strong> ${q.q} <br>
+          <em>Sua resposta:</em> ${ user===null ? '<span style="color:#999">Não respondeu</span>' : q.options[user] } <br>
+          <em>Resposta correta:</em> ${q.options[q.correct]} ${ isCorrect ? '✅' : '❌' } <br>
+          <small style="color:var(--muted)">${q.explanation || ''}</small>
+        </div>
+      `;
+    });
+    container.innerHTML = `
+      <div style="padding:12px;background:#fff;border-radius:10px;border:1px solid rgba(10,20,40,0.04)">
+        <h3>Resultado: ${correctCount} / ${quizData.length}</h3>
+        <p style="color:var(--muted)">Percentual: ${Math.round((correctCount/quizData.length)*100)}%</p>
+        <div style="margin-top:12px">
+          <button class="btn" id="retry-${courseId}">Refazer Quiz</button>
+          <button class="btn secondary" id="review-${courseId}" style="margin-left:8px">Ver respostas</button>
+          <button class="btn secondary" id="home-${courseId}" style="margin-left:8px">Voltar ao curso</button>
+        </div>
+      </div>
+      <div id="${courseId}-review" style="margin-top:12px;display:none">${reviewHtml}</div>
+    `;
+    document.getElementById(`retry-${courseId}`).onclick = ()=> initQuiz(courseId);
+    document.getElementById(`review-${courseId}`).onclick = ()=> {
+      const r = document.getElementById(`${courseId}-review`);
+      r.style.display = r.style.display === 'none' ? 'block' : 'none';
+    };
+    document.getElementById(`home-${courseId}`).onclick = ()=> {
+      document.querySelector('.course').scrollIntoView({behavior:'smooth'});
+    };
+  }
+
+  renderQuestion();
+}
+
+/* ====== Função para voltar ao início ====== */
+function showHome(){
+  courseContainer.innerHTML='';
+  home.style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* Inicial: nada mais */
+  </script>
+</body>
+</html>
