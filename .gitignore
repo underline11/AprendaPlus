@@ -1,0 +1,22 @@
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Node (caso use futuramente)
+node_modules/
+npm-debug.log
+
+# IDE
+.vscode/
+.idea/
+
+# Build
+dist/
+.cache/
+
+# Ebooks gerados
+*.pdf
+
+# Arquivos temporários
+*.tmp
+*.log
