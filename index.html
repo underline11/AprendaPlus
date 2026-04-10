@@ -485,49 +485,66 @@ function openCourse(id){
 }
 
 /* ====== FUNÇÕES DE DESENHO (inclui novos cursos) ====== */
-function openCourse(id){
-  const course = courses.find(x=>x.id===id);
-  if(!course) return;
-  home.style.display='none';
+function openCourse(id) {
+  const course = courses.find(x => x.id === id);
+  if (!course) return;
+
+  // Esconde a home e prepara o container
+  home.style.display = 'none';
+  
+  // PEÇA DO QUEBRA-CABEÇA: Só cria o editor se for o curso de desenvolvimento
+  let editorHtml = '';
+  if (id === 'desenvolvimento') {
+    editorHtml = `
+      <div class="level" style="background: #1e1e1e; color: white;">
+        <h3>💻 Editor Prático Interativo</h3>
+        <textarea id="code-dev" rows="10" style="width:100%; font-family:monospace; background:#2d2d2d; color:#9cdcfe; border:none; padding:10px; border-radius:8px;">
+<!DOCTYPE html>
+<html>
+<body style="text-align:center; font-family:sans-serif;">
+  <h1 style="color:#0a84ff;">Olá, Desenvolvedor!</h1>
+  <p>Altere este código e clique em Executar.</p>
+</body>
+</html></textarea>
+        <button class="btn" onclick="runDev()" style="margin-top:10px;">⚡ Executar Código</button>
+        <iframe id="output-dev" style="width:100%; height:250px; background:white; margin-top:10px; border-radius:8px; border:none;"></iframe>
+      </div>`;
+  }
+
+  // Montagem do HTML final
   courseContainer.innerHTML = `
     <section class="course" style="display:block">
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
         <div>
           <h1>${course.title}</h1>
           <p style="color:var(--muted)">${course.desc}</p>
         </div>
         <div>
-          <a class="btn" href="${course.ebook}" target="_blank">📘 Baixar eBook completo</a>
-          <button class="btn secondary" style="margin-left:8px" onclick="showHome()">← Voltar</button>
+          <a class="btn" href="${course.ebook}" target="_blank">📘 Baixar eBook</a>
+          <button class="btn secondary" onclick="showHome()">← Voltar</button>
         </div>
       </div>
 
       <div class="levels">
-        <div class="level">
-          <h3>🔹 Nível 1 — Introdução</h3>
-          <p>${course.content.basic}</p>
-        </div>
-
-        <div class="level">
-          <h3>🔸 Nível 2 — Intermediário</h3>
-          <p>${course.content.intermediate}</p>
-        </div>
-
-        <div class="level">
-          <h3>🔺 Nível 3 — Avançado</h3>
-          <p>${course.content.advanced}</p>
-        </div>
+        <div class="level"><h3>🔹 Básico</h3><p>${course.content.basic}</p></div>
+        
+        ${editorHtml} <div class="level"><h3>🔸 Intermediário</h3><p>${course.content.intermediate}</p></div>
+        <div class="level"><h3>🔺 Avançado</h3><p>${course.content.advanced}</p></div>
       </div>
 
       <div class="quiz" id="${id}-quiz">
-        <h3 style="margin-top:16px">🧩 Teste seu conhecimento — ${course.title}</h3>
+        <h3 style="margin-top:20px;">🧩 Teste seu conhecimento</h3>
         <div id="${id}-quiz-box"></div>
       </div>
     </section>
   `;
-  initQuiz(id); // Mantemos apenas o quiz
-}
 
+  // Inicializa o editor e o quiz após o HTML carregar
+  setTimeout(() => {
+    if (id === 'desenvolvimento') runDev();
+    initQuiz(id);
+  }, 50);
+}
 
 /* ====== QUIZ: RENDER + LÓGICA (mesma lógica que você tinha) ====== */
 function initQuiz(courseId){
@@ -633,6 +650,17 @@ function showHome(){
   courseContainer.innerHTML='';
   home.style.display='block';
   window.scrollTo({top:0,behavior:'smooth'});
+}
+function runDev() {
+  const textArea = document.getElementById('code-dev');
+  const iframe = document.getElementById('output-dev');
+  if (!textArea || !iframe) return;
+
+  const code = textArea.value;
+  const doc = iframe.contentDocument || iframe.contentWindow.document;
+  doc.open();
+  doc.write(code);
+  doc.close();
 }
 
 /* Inicial: nada mais */
