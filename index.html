@@ -87,7 +87,7 @@
 <body>
   <header>
     <div class="brand" onclick="showHome()">
-      <div class="logo">DS</div>
+      <div class="logo">A+</div>
       <div>
         <div style="font-family:Poppins;font-size:18px;font-weight:600;">Aprenda+</div>
         <div style="font-size:12px;color:var(--muted)">Cursos práticos e eBooks</div>
@@ -117,95 +117,339 @@
 /* ====== DADOS DOS CURSOS (adicionados Redação, Inglês, Programação com Python) ====== */
 const courses = [
  {
-  id:'matematica',
-  title:'Matemática',
-  desc:'Funções, álgebra, gráficos, derivadas e resolução de problemas.',
-  ebook:'ebooks/matematica.pdf',
-  content:{
-    basic:`
-Funções no dia a dia: previsão de gastos, temperatura, velocidade e crescimento.
-Uma função associa cada valor de entrada (x) a um único valor de saída (f(x)).
-Exemplo: f(x)=2x+1 cresce de forma constante — a cada 1 unidade em x, a saída aumenta 2.
-Tipos comuns:
-• Funções lineares (reta)
-• Funções quadráticas (parábolas)
-• Funções exponenciais (crescimento rápido)
-`,
+  id: 'matematica',
+  title: 'Matemática',
+  desc: 'Cálculo, Álgebra e Geometria.',
+  topics: [
+    {
+      id: 'funcoes',
+      title: 'Funções',
+      content: {
+        basic: 'Uma função é uma regra matemática que associa cada elemento de um conjunto a um único elemento de outro conjunto . Ela funciona como uma máquina de transformação, onde para todo valor de entrada existe uma única  saída sendo amplamente usada para modelar relações entre variáveis',
+        intermediate: 'Estudo de funções quadráticas, exponenciais e logarítmicas com análise de gráficos.',
+        advanced: 'Composição de funções, funções inversas e introdução a limites fundamentais.',
+      }
+    },
+    {
+      id: 'aplicada',
+      title: 'Matemática Aplicada',
+      content: {
+        basic: 'Resolução de problemas do cotidiano envolvendo finanças básicas e medidas de grandezas.',
+        intermediate: 'Modelagem matemática de situações reais e introdução à pesquisa operacional.',
+        advanced: 'Otimização, modelos de crescimento populacional e simulações matemáticas para tomada de decisão.'
+      }
+    },
+    {
+      id: 'probabilidade-estatistica',
+      title: 'Probabilidade e Estatística',
+      content: {
+        basic: 'Conceitos de média, mediana, moda e interpretação básica de gráficos de barras.',
+        intermediate: 'Cálculo de probabilidade simples, eventos independentes e análise combinatória básica.',
+        advanced: 'Distribuição normal, desvio padrão, variância e testes de hipótese estatística.'
+      }
+    },
+    {
+      id: 'teoria-dos-numeros',
+      title: 'Teoria dos Números',
+      content: {
+        basic: 'Estudo dos números inteiros, divisibilidade, números primos e decomposição em fatores primos.',
+        intermediate: 'Máximo Divisor Comum (MDC), Mínimo Múltiplo Comum (MMC) e Congruências lineares.',
+        advanced: 'Teorema Fundamental da Aritmética, Pequeno Teorema de Fermat e introdução à Criptografia.'
+      }
+    },
+    {
+      id: 'calculo',
+      title: 'Cálculo',
+      content: {
+        basic: 'Noções de taxas de variação e inclinação de retas tangentes.',
+        intermediate: 'Regras de derivação (produto, quociente e cadeia) e aplicações em máximos e mínimos.',
+        advanced: 'Integrais definidas e indefinidas, cálculo de áreas sob curvas e o Teorema Fundamental do Cálculo.'
+      }
+    },
+    {
+      id: 'geometria',
+      title: 'Geometria',
+      content: {
+        basic: 'Cálculo de áreas e perímetros de figuras planas como quadrados, triângulos e círculos.',
+        intermediate: 'Geometria espacial: volume e área superficial de prismas, pirâmides e cilindros.',
+        advanced: 'Geometria analítica: estudo da reta, da circunferência e seções cônicas no plano cartesiano.'
+      }
+    },
+    {
+      id: 'aritimética',
+      title: 'Aritimética',
+      content: {
+        basic: 'Operações fundamentais (adição, subtração, multiplicação e divisão) e expressões numéricas.',
+        intermediate: 'Frações, números decimais, porcentagem e regra de três simples e composta.',
+        advanced: 'Potenciação, radiciação, notação científica e sistemas de numeração em diferentes bases.'
+      }
+    },
+    {
+      id: 'trigonometria',
+      title: 'Trigonometria',
+      content: {
+        basic: 'Relações no triângulo retângulo (Seno, Cosseno e Tangente) e Teorema de Pitágoras.',
+        intermediate: 'Ciclo trigonométrico, identidades fundamentais e leis dos senos e cossenos em triângulos quaisquer.',
+        advanced: 'Funções trigonométricas, transformações de soma/subtração e resolução de equações trigonométricas complexas.'
+      }
+    },
+    {
+      id: 'algebra',
+      title: 'Álgebra Linear',
+      content: {
+        basic: 'Conceitos de vetores, operações básicas e representação no plano cartesiano.',
+        intermediate: 'Matrizes (soma, multiplicação e inversa), determinantes e sistemas de equações lineares.',
+        advanced: 'Espaços vetoriais, transformações lineares, autovalores (eigenvalues) e autovetores.'
+      }
+    }
     
-    intermediate:`
-Funções lineares e quadráticas em profundidade:
-• Linear: f(x)=ax+b → a é inclinação, b é intercepto.
-• Quadrática: f(x)=ax²+bx+c → gráfico é uma parábola.
-Vértice: ponto máximo ou mínimo da parábola.
-Vértice = (-b/2a, f(-b/2a)).
-Interceptos:
-• Com y → f(0)
-• Com x → resolver ax²+bx+c=0.
-Comparação de gráficos: como inclinação, abertura e concavidade mudam modelos reais.
-`,
+  ]
+},
+  
+  {
+  id: 'fisica',
+  title: 'Física',
+  desc: 'Mecânica, Óptica e Eletricidade.',
+  // Em vez de content: { ... } aqui, usamos topics:
+  topics: [
+    {
+      id: 'mecanica-classica', // ID único para o Quiz
+      title: 'Mecânica Clássica',
+      content: {
+        basic: 'Estudo do movimento (cinemática), leis de Newton e conceitos de força e massa.',
+        intermediate: 'Trabalho e energia, conservação da quantidade de movimento e dinâmica de rotação.',
+        advanced: 'Gravitação universal, leis de Kepler e introdução à mecânica analítica (Lagrangiana).'
+      }
+    },
+     {
+      id: 'termodinamica', // ID único para o Quiz
+      title: 'Termodinâmica/Termologia',
+      content: {
+        basic: 'Conceitos de temperatura, calor, escalas termométricas e dilatação térmica.',
+        intermediate: 'Comportamento dos gases ideais, a primeira lei da termodinâmica e máquinas térmicas.',
+        advanced: 'Entropia, a segunda lei da termodinâmica e noções de termodinâmica estatística.'
+      }
+    },
+     {
+      id: 'mecanica-quantica', // ID único para o Quiz
+      title: 'Mecânica Quântica',
+      content: {
+        basic: 'Crise da física clássica, radiação de corpo negro e o efeito fotoelétrico.',
+        intermediate: 'Dualidade onda-partícula, princípio da incerteza de Heisenberg e o modelo atômico de Bohr.',
+        advanced: 'Equação de Schrödinger, orbitais atômicos e o conceito de spin e tunelamento quântico.'
+      }
+    },
+    {
+      id: 'eletromagnetismo', // ID único para o Quiz
+      title: 'Eletromagnetismo',
+      content: {
+        basic: 'Cargas elétricas, lei de Coulomb, campo elétrico e potencial elétrico.',
+        intermediate: 'Corrente elétrica, circuitos de corrente contínua, campo magnético e lei de Ampère.',
+        advanced: 'Indução eletromagnética (lei de Faraday), equações de Maxwell e ondas eletromagnéticas.'
+      }
+    },
+    {
+      id: 'acustica', // ID único para o Quiz
+      title: 'Acústica',
+      content: {
+        basic: 'Natureza das ondas sonoras, produção do som e velocidade de propagação.',
+        intermediate: 'Qualidades fisiológicas do som (altura, intensidade e timbre) e fenômenos de reflexão e eco.',
+        advanced: 'Efeito Doppler, ressonância em tubos sonoros e análise de harmônicos e batimentos.'
+      }
+    },
+     {
+      id: 'ondulatoria', // ID único para o Quiz
+      title: 'Ondulatória',
+      content: {
+        basic: 'Classificação das ondas (mecânicas vs. eletromagnéticas) e elementos de uma onda (crista, vale, frequência).',
+        intermediate: 'Fenômenos ondulatórios: reflexão, refração, difração e interferência simples.',
+        advanced: 'Polarização, ondas estacionárias e sobreposição de ondas complexas.'
+      }
+    },
+    {
+      id: 'relatividade', // ID único para o Quiz
+      title: 'Relatividade',
+      content: {
+        basic: 'Postulados da relatividade especial e a constância da velocidade da luz.',
+        intermediate: 'Dilatação do tempo, contração do comprimento e a equivalência massa-energia (E = mc<sup>2</sup>).',
+        advanced: 'Noções de relatividade geral: curvatura do espaço-tempo e o desvio da luz pela gravidade.'
+      }
+    },
+    {
+      id: 'atomica', // ID único para o Quiz
+      title: 'Física Atômica e Molecular',
+      content: {
+        basic: 'Estrutura básica do átomo (prótons, nêutrons e elétrons) e níveis de energia.',
+        intermediate: 'Espectros de emissão e absorção, ligações químicas sob a ótica da física e momento de dipolo.',
+        advanced: 'Excitação eletrônica, lasers, espectroscopia molecular e interações intermoleculares.'
+      }
+    },
+    {
+      id: 'nuclear', // ID único para o Quiz
+      title: 'Física Nuclear e de Partículas',
+      content: {
+        basic: 'Forças nucleares, radioatividade natural (alfa, beta e gama) e tempo de meia-vida.',
+        intermediate: 'Fissão e fusão nuclear, reatores nucleares e detecção de radiação.',
+        advanced: 'O Modelo Padrão: quarks, léptons e bósons, e o funcionamento de aceleradores de partículas.'
+      }
+    },
+    {
+      id: 'optica',
+      title: 'Óptica Geométrica',
+      content: {
+        basic: 'Princípios da propagação retilínea da luz, sombras e penumbras.',
+        intermediate: 'Reflexão em espelhos planos e esféricos e refração em lentes delgadas.',
+        advanced: 'Instrumentos ópticos (microscópios, telescópios), aberrações cromáticas e olho humano.'
+      }
+    }
+  ]
+},
+  
+  {
+    id: 'quimica',
+    title: 'Química',
+    desc: 'O estudo da matéria e suas transformações.',
+    topics: [
+      {
+        id: 'atomistica',
+        title: 'Atomística',
+        content: {
+          basic: 'Modelos atômicos clássicos (Dalton, Thomson, Rutherford e Bohr) e partículas subatômicas.',
+          intermediate: 'Distribuição eletrônica (Diagrama de Linus Pauling), números quânticos e propriedades periódicas dos elementos.',
+          advanced: 'Hibridização de orbitais, geometria molecular e forças intermoleculares (London, Dipolo-dipolo, Pontes de Hidrogênio).'
+        }
+      },
+      {
+        id: 'quimica-organica',
+        title: 'Química Orgânica',
+        content: {
+          basic: 'Introdução ao carbono, cadeias carbônicas e identificação de hidrocarbonetos simples.',
+          intermediate: 'Funções oxigenadas e nitrogenadas (Álcoois, Cetonas, Ácidos Carboxílicos, Aminas) e nomenclatura IUPAC.',
+          advanced: 'Isomeria plana e espacial (Geométrica e Óptica) e mecanismos de reações orgânicas de substituição e adição.'
+        }
+      },
+      {
+        id: 'quimica-inorganica',
+        title: 'Química Inorgânica',
+        content: {
+          basic: 'Conceitos de ácidos e bases de Arrhenius, sais e óxidos: definição e nomenclatura.',
+          intermediate: 'Reações de neutralização, teorias modernas de ácidos-bases (Bronsted-Lowry e Lewis) e pH/pOH.',
+          advanced: 'Estudo de complexos metálicos, reações de dupla troca e solubilidade de sais inorgânicos.'
+        }
+      },
+      {
+        id: 'fisio-quimico',
+        title: 'Físico-Química',
+        content: {
+          basic: 'Unidades de medida química, concentração de soluções e cálculos estequiométricos simples.',
+          intermediate: 'Termoquímica (Entalpia e Lei de Hess), Cinética Química (velocidade das reações) e Equilíbrio Químico.',
+          advanced: 'Eletroquímica (Pilhas e Eletrólise), Propriedades Coligativas e Equilíbrio de Solubilidade (K<sub>ps</sub>).'
+        }
+      },
+      {
+        id: 'quimica-analitica',
+        title: 'Química Analítica',
+        content: {
+          basic: 'Introdução às vidrarias de laboratório e técnicas básicas de separação de misturas.',
+          intermediate: 'Volumetria (Titulação ácido-base) e cálculos de incerteza e precisão em medições.',
+          advanced: 'Análise instrumental: espectrofotometria, cromatografia e métodos eletroanalíticos de quantificação.'
+        }
+      },
+      {
+        id: 'bioquimica',
+        title: 'Bioquímica',
+        content: {
+          basic: 'Estrutura e importância da água para os seres vivos e conceitos básicos de pH biológico.',
+          intermediate: 'Estudo de biomoléculas: Carboidratos (açúcares), Lipídios (gorduras) e Aminoácidos.',
+          advanced: 'Estrutura de Proteínas, cinética enzimática, metabolismo (Ciclo de Krebs) e estrutura do DNA/RNA.'
+        }
+      },
+      {
+        id: 'reacoes-quimicas',
+        title: 'Reações Químicas',
+        content: {
+          basic: 'Balanceamento de equações por tentativa e classificação de reações (síntese, análise, simples e dupla troca).',
+          intermediate: 'Reações de Oxirredução (ajuste de NOX) e estequiometria com reagente limitante e excesso.',
+          advanced: 'Termodinâmica química (Energia Livre de Gibbs e Espontaneidade) e catálise homogênea e heterogênea.'
+        }
+      }
+    ]
+  },
 
-    advanced:`
-Derivadas: a ferramenta para medir variações.
-A derivada de f(x) mede o quanto a função muda quando x muda.
-Regras importantes:
-• d/dx(xⁿ)=n·xⁿ⁻¹
-• d/dx(c)=0
-• Derivada de somas: derivar termo a termo.
-Aplicações:
-• Crescimento máximo/mínimo: f'(x)=0 → ponto crítico.
-• Otimização: custo mínimo, lucro máximo, rotas eficientes.
-• Velocidade instantânea: derivada da posição no tempo.
-`
-  }
-}
-,
   {
-    id:'fisica',
-    title:'Física',
-    desc:'Cinemática, energia e leis de Newton com simulações e gráficos de movimento.',
-    ebook:'ebooks/fisica.pdf',
-    content:{
-      basic:`Movimento retilíneo: posição, velocidade e aceleração. Ex.: v = Δs/Δt.`,
-      intermediate:`Gráficos posição-tempo e velocidade-tempo. Integre/derive para obter informações de movimento.`,
-      advanced:`Trabalho e energia: W = F·d, conservação de energia em sistemas simples.`
-    }
+    id: 'biologia',
+    title: 'Biologia',
+    desc: 'A ciência que estuda a vida e os organismos vivos.',
+    topics: [
+      {
+        id: 'zoologia',
+        title: 'Zoologia',
+        content: {
+          basic: 'Classificação básica do Reino Animal e características dos principais grupos de invertebrados (poríferos, cnidários).',
+          intermediate: 'Anatomia comparada e fisiologia de vertebrados: peixes, anfíbios, répteis, aves e mamíferos.',
+          advanced: 'Evolução dos sistemas orgânicos, etologia (comportamento animal) e filogenia molecular.'
+        }
+      },
+      {
+        id: 'botanica',
+        title: ' Botânica',
+        content: {
+          basic: 'Partes das plantas (raiz, caule, folha) e as principais diferenças entre briófitas e pteridófitas.',
+          intermediate: 'Organelas celulares e suas funções (Mitocôndrias, Ribossomos, etc).',
+          advanced: 'Fitormônios (hormônios vegetais), movimentos vegetais (tropismos) e biotecnologia aplicada à agricultura.'
+        }
+      },
+      {
+        id: 'microbiologia',
+        title: ' Microbiologia',
+        content: {
+          basic: 'Introdução aos microrganismos: vírus, bactérias e fungos, e sua importância na natureza.',
+          intermediate: 'Estrutura celular procariótica, mecanismos de reprodução bacteriana e o ciclo de replicação viral.',
+          advanced: 'Resistência bacteriana a antibióticos, bacteriologia industrial e aplicações de fungos na biotecnologia.'
+        }
+      },
+      {
+        id: 'citologia',
+        title: 'Citologia (Células)',
+        content: {
+          basic: 'Teoria celular, diferença entre células procariontes e eucariontes e organelas básicas.',
+          intermediate: 'Membrana plasmática (transporte ativo e passivo) e o papel das mitocôndrias e cloroplastos na energia.',
+          advanced: 'Ciclo celular (mitose e meiose), sinalização celular e controle de qualidade proteica.'
+        }
+      },
+      {
+        id: 'genetica',
+        title: 'Genética',
+        content: {
+          basic: 'Conceitos de DNA e RNA, cromossomos e as Leis de Mendel (dominância e recessividade).',
+          intermediate: 'Mapeamento gênico, grupos sanguíneos (Sistema ABO e Rh) e mutações genéticas.',
+          advanced: 'Engenharia genética, tecnologia do DNA recombinante, CRISPR e bioética.'
+        }
+      }
+    ]
   },
+
   {
-    id:'quimica',
-    title:'Química',
-    desc:'Estrutura atômica, ligações e reações com representações e tabelas práticas.',
-    ebook:'ebooks/quimica.pdf',
-    content:{
-      basic:`Átomos, prótons, nêutrons e elétrons. Número atômico e massa atômica.`,
-      intermediate:`Ligações iônicas e covalentes: formação de moléculas simples. Use modelos para entender geometria.`,
-      advanced:`Estequiometria básica: balanceamento de equações e cálculo de reagentes/produções.`
+  id: 'banco-de-dados',
+  title: 'Banco de Dados',
+  desc: 'Aprenda a organizar e consultar dados com SQL.',
+  topics: [
+   
+    {
+      id: 'consultas',
+      title: 'Consultas com SELECT',
+      content: {
+        basic: 'Comandos básicos como SELECT (buscar dados), INSERT (inserir), UPDATE (atualizar) e DELETE (deletar) permitem manipular dados estruturados em linhas e colunas',
+        intermediate: 'capacidade de manipular dados com eficiência usando JOINs complexos, subqueries, CTEs (Common Table Expressions) e funções de janela (Window Functions) para análises. O foco muda da simples extração de dados brutos para a construção de consultas que geram insights de negócios e otimizam a estrutura do banco.',
+        advanced: 'abrange a otimização de consultas, manipulação complexa de dados e automação de banco de dados, sendo essencial para analistas e engenheiros de dados. Domine Window Functions, CTEs (Common Table Expressions), stored procedures, triggers e consultas recursivas para análise financeira e estruturação de dados.'
+      }
     }
-  },
-  {
-    id:'biologia',
-    title:'Biologia',
-    desc:'Células, genética e ecologia com esquemas e exemplos práticos.',
-    ebook:'ebooks/biologia.pdf',
-    content:{
-      basic:`Célula: membrana, citoplasma, núcleo. Diferenças entre eucarionte e procarionte.`,
-      intermediate:`Genética: conceitos de gene, alelo e herança simples (dominante/recessivo).`,
-      advanced:`Ecologia: cadeias alimentares, ciclos biogeoquímicos e impacto humano.`
-    }
-  },
-  {
-    id:'medicina',
-    title:'Medicina',
-    desc:'Noções de anatomia, primeiros socorros e sinalização clássica.',
-    ebook:'ebooks/medicina.pdf',
-    content:{
-      basic:`Sistemas do corpo humano: circulatório, respiratório e digestório — visão geral.`,
-      intermediate:`Primeiros socorros básicos: RCP, controle de hemorragias e avaliação inicial da via aérea.`,
-      advanced:`Interpretação inicial de sinais vitais e aplicação prática simples em cenários simulados.`
-    }
-  },
+  ]
+},
+  
   {
     id:'desenvolvimento',
-    title:'Desenvolvimento de Sistemas',
+    title:'Desenvolvimento Web',
     desc:'Lógica, front-end e back-end com diagramas práticos e exercícios.',
     ebook:'ebooks/desenvolvimento.pdf',
     content:{
@@ -228,19 +472,51 @@ Aplicações:
     }
   },
   {
-    id:'ingles',
-    title:'Inglês',
-    desc:'Gramática prática, vocabulário e conversação para nível iniciante a avançado.',
-    ebook:'ebooks/ingles.pdf',
-    content:{
-      basic:`Saudações, pronomes, presente simples e vocabulário básico para situações do dia a dia.`,
-      intermediate:`Tempos verbais (passado simples, present perfect), perguntas, e frases condicionais simples.`,
-      advanced:`Uso de modais, voz passiva, phrasal verbs e estratégias de fluência oral/escrita.`
-    }
+    id: 'ingles',
+    title: 'Inglês',
+    desc: 'Domine a língua mais falada do mundo.',
+    topics: [
+      {
+        id: 'gramatica',
+        title: 'Grammar (Gramática)',
+        content: {
+          basic: 'Verb To Be, Pronouns e Present Simple.',
+          intermediate: 'Past Simple, Future (Will/Going to) e Modal Verbs.',
+          advanced: 'Present Perfect, Passive Voice e Conditionals.'
+        }
+      },
+      {
+        id: 'vocabulario',
+        title: 'Vocabulary (Vocabulário)',
+        content: {
+          basic: 'Greetings, colors, numbers and daily routine.',
+          intermediate: 'Business English, travel and idiomatic expressions.',
+          advanced: 'Phrasal verbs, slangs and formal writing.'
+        }
+      }
+    ]
   },
+{
+  id: 'java',
+  title: 'Programação Java',
+  desc: 'Aprenda uma das linguagens mais poderosas do mercado.',
+  topics: [
+    {
+      id: 'sintaxe-java',
+      title: 'Sintaxe e Variáveis',
+      content: {
+        basic: 'Java é uma linguagem orientada a objetos e fortemente tipada.',
+        intermediate: 'Declaração de tipos: int, String, double e boolean.',
+        advanced: 'Estrutura da classe principal: public class Main.'
+      }
+    }
+  ]
+},
+
+  
   {
     id:'python',
-    title:'Programação com Python',
+    title:'Desenvolvimento de Sistemas(Python)',
     desc:'Python do básico ao avançado: sintaxe, estruturas e mini-projetos práticos.',
     ebook:'ebooks/python.pdf',
     content:{
@@ -485,172 +761,145 @@ function openCourse(id){
 }
 
 /* ====== FUNÇÕES DE DESENHO (inclui novos cursos) ====== */
+/* ====== NAVEGAÇÃO ENTRE CURSOS E MATÉRIAS ====== */
+
 function openCourse(id) {
   const course = courses.find(x => x.id === id);
   if (!course) return;
 
-  // Esconde a home e prepara o container
   home.style.display = 'none';
-  
-  // PEÇA DO QUEBRA-CABEÇA: Só cria o editor se for o curso de desenvolvimento
-  let editorHtml = '';
-  if (id === 'desenvolvimento') {
-    editorHtml = `
-      <div class="level" style="background: #1e1e1e; color: white;">
-        <h3>💻 Editor Prático Interativo</h3>
-        <textarea id="code-dev" rows="10" style="width:100%; font-family:monospace; background:#2d2d2d; color:#9cdcfe; border:none; padding:10px; border-radius:8px;">
-<!DOCTYPE html>
-<html>
-<body style="text-align:center; font-family:sans-serif;">
-  <h1 style="color:#0a84ff;">Olá, Desenvolvedor!</h1>
-  <p>Altere este código e clique em Executar.</p>
-</body>
-</html></textarea>
-        <button class="btn" onclick="runDev()" style="margin-top:10px;">⚡ Executar Código</button>
-        <iframe id="output-dev" style="width:100%; height:250px; background:white; margin-top:10px; border-radius:8px; border:none;"></iframe>
-      </div>`;
-  }
 
-  // Montagem do HTML final
-  courseContainer.innerHTML = `
-    <section class="course" style="display:block">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-        <div>
-          <h1>${course.title}</h1>
-          <p style="color:var(--muted)">${course.desc}</p>
-        </div>
-        <div>
-          <a class="btn" href="${course.ebook}" target="_blank">📘 Baixar eBook</a>
+  // VERIFICAÇÃO: O curso tem matérias (topics)?
+  if (course.topics && course.topics.length > 0) {
+    // Se tiver, mostra o Menu de Matérias
+    courseContainer.innerHTML = `
+      <div class="course-menu">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+          <h2>${course.title} - Matérias</h2>
           <button class="btn secondary" onclick="showHome()">← Voltar</button>
         </div>
+        <div class="cards">
+          ${course.topics.map(topic => `
+            <div class="card" onclick="openTopic('${course.id}', '${topic.id}')">
+              <div style="font-weight:700; color:var(--primary); margin-bottom:5px;">Módulo</div>
+              <h3>${topic.title}</h3>
+              <p>Clique para iniciar este conteúdo prático.</p>
+              <button class="btn" style="padding:5px 10px; font-size:12px;">Estudar</button>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  } else {
+    // Se não tiver tópicos, abre como um curso simples (legado)
+    openTopic(id, null); 
+  }
+}
+
+function openTopic(courseId, topicId) {
+  const course = courses.find(c => c.id === courseId);
+  if (!course) return;
+
+  let contentData;
+  let backAction;
+
+  // 1. Lógica do botão Voltar Dinâmico
+  if (topicId && course.topics) {
+    // Se estou dentro de uma matéria, o "Voltar" me leva para o menu de matérias do curso
+    contentData = course.topics.find(t => t.id === topicId);
+    backAction = `openCourse('${courseId}')`;
+  } else {
+    // Se o curso não tem matérias separadas, o "Voltar" me leva para a Home
+    contentData = course;
+    backAction = `showHome()`;
+  }
+
+  // 2. Preparação do Editor (Programação)
+  // Prepara o Editor (Programação)
+  let editorHtml = '';
+  if (courseId === 'desenvolvimento' || courseId === 'python' || courseId === 'banco-de-dados' || courseId === 'java') {
+    
+    let placeholder = ""; // Declarada apenas UMA vez
+
+    if (courseId === 'java') {
+        placeholder = `public class Main {
+    public static void main(String[] args) {
+        String nome = "Felipe";
+        int idade = 20;
+        System.out.println("Olá, meu nome é " + nome);
+        if (idade >= 18) {
+            System.out.println("Status: Maior de idade");
+        }
+    }
+}`;
+    } else if (courseId === 'banco-de-dados') {
+        placeholder = `-- Exemplo de Banco de Dados (SQL)
+CREATE TABLE alunos (id INT, nome TEXT);
+INSERT INTO alunos VALUES (1, 'Felipe');
+SELECT * FROM alunos;`;
+    } else if (courseId === 'python') {
+        placeholder = `# Este é um comentário: Exibindo Olá Mundo
+print("Olá, Mundo!")
+`;
+    } else if (courseId === 'desenvolvimento') {
+        placeholder = `<!DOCTYPE html>
+<html>
+<head>
+    <style>body { font-family: sans-serif; text-align: center; }</style>
+</head>
+<body>
+    <h1>Olá Mundo!</h1>
+    <button onclick="alert('Funciona!')">Clique aqui</button>
+</body>
+</html>`;
+    }
+
+    editorHtml = `
+      <div class="level" style="background: #1e1e1e; color: white;">
+        <h3>💻 Prática Interativa</h3>
+        <textarea id="code-input" rows="10" style="width:100%; font-family:monospace; background:#2d2d2d; color:#9cdcfe; border:none; padding:10px; border-radius:8px;">${placeholder}</textarea>
+        <button class="btn" onclick="runCode('${courseId}')" style="margin-top:10px;">⚡ Executar</button>
+        <iframe id="output-frame" style="width:100%; height:200px; background:white; margin-top:10px; border-radius:8px; border:none;"></iframe>
+      </div>`;
+  }
+  // 3. Renderização do HTML
+  // Note que o ID do quiz agora tenta usar o topicId primeiro, se não existir usa o courseId
+  const quizTargetId = topicId || courseId;
+
+  courseContainer.innerHTML = `
+    <section class="course" style="display:block">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
+        <h1>${contentData.title}</h1>
+        <button class="btn secondary" onclick="${backAction}">← Voltar</button>
       </div>
 
       <div class="levels">
-        <div class="level"><h3>🔹 Básico</h3><p>${course.content.basic}</p></div>
-        
-        ${editorHtml} <div class="level"><h3>🔸 Intermediário</h3><p>${course.content.intermediate}</p></div>
-        <div class="level"><h3>🔺 Avançado</h3><p>${course.content.advanced}</p></div>
+        <div class="level"><h3>🔹 Básico</h3><p>${contentData.content.basic}</p></div>
+        ${editorHtml}
+        <div class="level"><h3>🔸 Intermediário</h3><p>${contentData.content.intermediate}</p></div>
+        <div class="level"><h3>🔺 Avançado</h3><p>${contentData.content.advanced}</p></div>
       </div>
 
-      <div class="quiz" id="${id}-quiz">
-        <h3 style="margin-top:20px;">🧩 Teste seu conhecimento</h3>
-        <div id="${id}-quiz-box"></div>
+      <div class="quiz" id="${quizTargetId}-quiz" style="margin-top:30px; border-top:1px solid #eee; padding-top:20px;">
+        <h3>🧩 Teste seu conhecimento</h3>
+        <div id="${quizTargetId}-quiz-box"></div>
       </div>
     </section>
   `;
 
-  // Inicializa o editor e o quiz após o HTML carregar
+  // 4. Inicialização de Funções Extras
   setTimeout(() => {
-    if (id === 'desenvolvimento') runDev();
-    initQuiz(id);
+    if (editorHtml) runCode(courseId);
+    // Tenta carregar o quiz para a matéria específica ou para o curso geral
+    initQuiz(quizTargetId);
   }, 50);
 }
 
-/* ====== QUIZ: RENDER + LÓGICA (mesma lógica que você tinha) ====== */
-function initQuiz(courseId){
-  const quizData = quizzes[courseId];
-  const container = document.getElementById(`${courseId}-quiz-box`);
-  if(!quizData || !container){
-    if(container) container.innerHTML = '<p>Sem quiz disponível.</p>';
-    return;
-  }
-
-  let index = 0;
-  const answers = new Array(quizData.length).fill(null);
-
-  function renderQuestion(){
-    const q = quizData[index];
-    container.innerHTML = `
-      <div class="question-box">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <strong>Questão ${index+1} de ${quizData.length}</strong>
-          <div class="progress">Progresso: ${index+1}/${quizData.length}</div>
-        </div>
-        <p style="margin-top:10px">${q.q}</p>
-        <div class="options" id="options-${courseId}">
-          ${q.options.map((opt,i)=>`<button class="option-btn" data-i="${i}">${String.fromCharCode(65+i)}. ${opt}</button>`).join('')}
-        </div>
-        <div style="margin-top:12px;display:flex;gap:8px">
-          <button class="btn" id="next-${courseId}">${ index === quizData.length-1 ? 'Finalizar' : 'Próxima' }</button>
-          <button class="btn secondary" id="skip-${courseId}">Pular</button>
-        </div>
-      </div>
-      <div style="margin-top:10px;color:var(--muted);font-size:13px">Dica: pense no conceito antes de escolher — após finalizar você verá seu resultado.</div>
-    `;
-    const opts = document.querySelectorAll(`#options-${courseId} .option-btn`);
-    opts.forEach(btn=>{
-      btn.addEventListener('click',()=>{
-        opts.forEach(b=>b.classList.remove('selected'));
-        btn.classList.add('selected');
-        answers[index] = Number(btn.dataset.i);
-      });
-    });
-    document.getElementById(`next-${courseId}`).onclick = ()=> {
-      if(answers[index] === null){
-        if(!confirm('Você não escolheu uma opção. Deseja pular esta questão?')) return;
-      }
-      if(index < quizData.length - 1){
-        index++; renderQuestion();
-      } else {
-        showResult();
-      }
-    };
-    document.getElementById(`skip-${courseId}`).onclick = ()=> {
-      if(index < quizData.length - 1){ index++; renderQuestion(); } else showResult();
-    };
-    if(answers[index] !== null){
-      const pre = document.querySelector(`#options-${courseId} .option-btn[data-i="${answers[index]}"]`);
-      if(pre) pre.classList.add('selected');
-    }
-  }
-
-  function showResult(){
-    let correctCount=0;
-    let reviewHtml = '';
-    quizData.forEach((q,i)=>{
-      const user = answers[i];
-      const isCorrect = user === q.correct;
-      if(isCorrect) correctCount++;
-      reviewHtml += `
-        <div style="margin-bottom:10px;padding:10px;border-radius:8px;background:#fff;border:1px solid rgba(10,20,40,0.04)">
-          <strong>Q${i+1}:</strong> ${q.q} <br>
-          <em>Sua resposta:</em> ${ user===null ? '<span style="color:#999">Não respondeu</span>' : q.options[user] } <br>
-          <em>Resposta correta:</em> ${q.options[q.correct]} ${ isCorrect ? '✅' : '❌' } <br>
-          <small style="color:var(--muted)">${q.explanation || ''}</small>
-        </div>
-      `;
-    });
-    container.innerHTML = `
-      <div style="padding:12px;background:#fff;border-radius:10px;border:1px solid rgba(10,20,40,0.04)">
-        <h3>Resultado: ${correctCount} / ${quizData.length}</h3>
-        <p style="color:var(--muted)">Percentual: ${Math.round((correctCount/quizData.length)*100)}%</p>
-        <div style="margin-top:12px">
-          <button class="btn" id="retry-${courseId}">Refazer Quiz</button>
-          <button class="btn secondary" id="review-${courseId}" style="margin-left:8px">Ver respostas</button>
-          <button class="btn secondary" id="home-${courseId}" style="margin-left:8px">Voltar ao curso</button>
-        </div>
-      </div>
-      <div id="${courseId}-review" style="margin-top:12px;display:none">${reviewHtml}</div>
-    `;
-    document.getElementById(`retry-${courseId}`).onclick = ()=> initQuiz(courseId);
-    document.getElementById(`review-${courseId}`).onclick = ()=> {
-      const r = document.getElementById(`${courseId}-review`);
-      r.style.display = r.style.display === 'none' ? 'block' : 'none';
-    };
-    document.getElementById(`home-${courseId}`).onclick = ()=> {
-      document.querySelector('.course').scrollIntoView({behavior:'smooth'});
-    };
-  }
-
-  renderQuestion();
+function showHome() {
+  home.style.display = 'block';
+  courseContainer.innerHTML = '';
 }
-
-/* ====== Função para voltar ao início ====== */
-function showHome(){
-  courseContainer.innerHTML='';
-  home.style.display='block';
-  window.scrollTo({top:0,behavior:'smooth'});
-}
+    
 function runDev() {
   const textArea = document.getElementById('code-dev');
   const iframe = document.getElementById('output-dev');
@@ -662,6 +911,83 @@ function runDev() {
   doc.write(code);
   doc.close();
 }
+    
+    function runCode(id) {
+  const code = document.getElementById('code-input').value;
+  const iframe = document.getElementById('output-frame');
+  const doc = iframe.contentDocument || iframe.contentWindow.document;
+
+  if (id === 'desenvolvimento') {
+    const blob = new Blob([code], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    iframe.src = url;
+    iframe.onload = () => URL.revokeObjectURL(url);
+
+  } else if (id === 'python') {
+    let output = "";
+    const lines = code.split('\n');
+    try {
+      lines.forEach(line => {
+        let l = line.trim();
+        if (!l || l.startsWith('#')) return;
+        if (l.startsWith('print(')) {
+          let content = l.match(/\((.*)\)/)[1];
+          output += `> ${content.replace(/['"]/g, '')}<br>`;
+        }
+      });
+    } catch (e) { output = `<span style="color:red;">Erro: ${e.message}</span>`; }
+    
+    doc.open();
+    doc.write(`<body style="font-family:monospace; padding:15px; background:#1e1e1e; color:#dcdcdc;">
+      <div style="color:#569cd6; border-bottom:1px solid #333; margin-bottom:10px;"># Console Python</div>
+      ${output || "> Código executado."}</body>`);
+    doc.close();
+
+  } else if (id === 'banco-de-dados') {
+    let output = "";
+    try {
+      const commands = code.split(';');
+      commands.forEach(cmd => {
+        let c = cmd.trim().toUpperCase();
+        if (!c) return;
+        if (c.startsWith('CREATE TABLE')) output += `> Tabela criada com sucesso.<br>`;
+        else if (c.startsWith('INSERT INTO')) output += `> 1 linha inserida.<br>`;
+        else if (c.startsWith('SELECT')) {
+          output += `<table style="border-collapse: collapse; width: 100%; color: white; border: 1px solid #444; margin-top:5px;">
+            <tr style="background: #333;"><th>ID</th><th>NOME</th></tr>
+            <tr><td style="border: 1px solid #444; padding: 5px;">1</td><td style="border: 1px solid #444; padding: 5px;">Felipe</td></tr>
+          </table>`;
+        }
+      });
+    } catch (e) { output = `Erro SQL: ${e.message}`; }
+
+    doc.open();
+    doc.write(`<body style="font-family:monospace; padding:15px; background:#1e1e1e; color:#dcdcdc;">
+      <div style="color:#4ec9b0; border-bottom:1px solid #333; margin-bottom:10px;"># Console SQL (Simulado)</div>
+      ${output || "> Comando executado."}</body>`);
+    doc.close();
+
+  } else if (id === 'java') {
+    let output = "";
+    const lines = code.split('\n');
+    try {
+      lines.forEach(line => {
+        let l = line.trim();
+        if (l.includes("System.out.println(")) {
+          let content = l.match(/\((.*)\)/)[1];
+          let clean = content.replace(/"/g, '').replace(/\+/g, '');
+          output += `> ${clean}<br>`;
+        }
+      });
+    } catch (e) { output = `Erro Java: ${e.message}`; }
+
+    doc.open();
+    doc.write(`<body style="font-family:monospace; padding:15px; background:#1e1e1e; color:#dcdcdc;">
+      <div style="color:#f8981d; border-bottom:1px solid #333; margin-bottom:10px;"># Java Console (Simulado)</div>
+      ${output || "> Compilado com sucesso."}</body>`);
+    doc.close();
+  }
+} // <--- Fecha a função aqui
 
 /* Inicial: nada mais */
   </script>
