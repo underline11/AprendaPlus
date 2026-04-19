@@ -866,6 +866,7 @@ print("Olá, Mundo!")
   // Note que o ID do quiz agora tenta usar o topicId primeiro, se não existir usa o courseId
   const quizTargetId = topicId || courseId;
 
+  // 1. Montagem do HTML com verificações de segurança
   courseContainer.innerHTML = `
     <section class="course" style="display:block">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
@@ -874,18 +875,34 @@ print("Olá, Mundo!")
       </div>
 
       <div class="levels">
-        <div class="level"><h3>🔹 Básico</h3><p>${contentData.content.basic}</p></div>
+        <div class="level">
+            <h3>🔹 Básico</h3>
+            <p>${contentData.content.basic || contentData.content}</p> 
+        </div>
+        
         ${editorHtml}
-        <div class="level"><h3>🔸 Intermediário</h3><p>${contentData.content.intermediate}</p></div>
-        <div class="level"><h3>🔺 Avançado</h3><p>${contentData.content.advanced}</p></div>
+
+        ${contentData.content.intermediate ? `
+          <div class="level"><h3>🔸 Intermediário</h3><p>${contentData.content.intermediate}</p></div>
+          <div class="level"><h3>🔺 Avançado</h3><p>${contentData.content.advanced}</p></div>
+        ` : ''}
       </div>
 
       <div class="quiz" id="${quizTargetId}-quiz" style="margin-top:30px; border-top:1px solid #eee; padding-top:20px;">
         <h3>🧩 Teste seu conhecimento</h3>
-        <div id="${quizTargetId}-quiz-box"></div>
+        <div id="${quizTargetId}-quiz-box">
+            </div>
       </div>
     </section>
   `;
+
+  // 2. A PARTE QUE FALTA: Chamar a função para carregar o quiz na caixa que acabamos de criar
+  if (typeof openQuiz === 'function') {
+      // Usamos um pequeno delay para garantir que o navegador já desenhou a caixa acima
+      setTimeout(() => {
+          renderQuizInsideBox(courseId, quizTargetId);
+      }, 100);
+  }
 
   // 4. Inicialização de Funções Extras
   setTimeout(() => {
@@ -989,6 +1006,95 @@ function runDev() {
   }
 } // <--- Fecha a função aqui
 
+    /* ====== FUNÇÕES DO QUIZ ====== */
+
+function openQuiz(courseId, topicId) {
+    const quizQuestions = quizzes[courseId]; // Busca no seu objeto 'quizzes'
+    const course = courses.find(c => c.id === courseId);
+    const container = document.getElementById('main-content');
+
+    if (!quizQuestions) {
+        alert("Quiz não encontrado para este curso.");
+        return;
+    }
+
+    let quizHtml = `
+        <div class="quiz-container" style="padding: 20px; background: white; border-radius: 12px;">
+            <button class="btn" onclick="openTopic('${courseId}', '${topicId}')" style="margin-bottom: 20px;">← Voltar para a Aula</button>
+            <h2 style="margin-bottom: 25px;">🧠 Quiz: ${course.title}</h2>
+    `;
+
+    quizQuestions.forEach((item, index) => {
+        quizHtml += `
+            <div class="quiz-card" style="margin-bottom: 30px; padding: 20px; border: 1px solid #eee; border-radius: 10px; background: #fafafa;">
+                <p style="font-weight: bold; font-size: 1.1rem; margin-bottom: 15px;">${index + 1}. ${item.q}</p>
+                <div style="display: grid; gap: 10px;">
+                    ${item.options.map((opt, i) => `
+                        <button class="quiz-opt" onclick="checkAnswer(this, ${i}, ${item.correct}, '${item.explanation.replace(/'/g, "\\'")}')" 
+                                style="padding: 12px; text-align: left; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer;">
+                            ${opt}
+                        </button>
+                    `).join('')}
+                </div>
+                <div class="explanation" style="display:none; margin-top: 15px; padding: 10px; background: #e7f3ff; border-radius: 5px; color: #0056b3; font-size: 0.9rem;">
+                </div>
+            </div>
+        `;
+    });
+
+    quizHtml += `</div>`;
+    container.innerHTML = quizHtml;
+    window.scrollTo(0, 0);
+}
+
+function checkAnswer(btn, selected, correct, explanation) {
+    const parent = btn.parentElement;
+    const cards = parent.parentElement;
+    const buttons = parent.querySelectorAll('button');
+    const expDiv = cards.querySelector('.explanation');
+
+    // Bloqueia outros cliques nesta questão
+    buttons.forEach(b => b.style.pointerEvents = 'none');
+
+    if (selected === correct) {
+        btn.style.background = "#d4edda"; // Verde
+        btn.style.borderColor = "#28a745";
+        btn.innerHTML += " ✅";
+    } else {
+        btn.style.background = "#f8d7da"; // Vermelho
+        btn.style.borderColor = "#dc3545";
+        btn.innerHTML += " ❌";
+        buttons[correct].style.background = "#d4edda"; // Mostra a certa
+    }
+
+    if (expDiv) {
+        expDiv.style.display = "block";
+        expDiv.innerHTML = `<strong>Por que?</strong> ${explanation}`;
+    }
+}
+    function renderQuizInsideBox(courseId, targetId) {
+    const quizBox = document.getElementById(`${targetId}-quiz-box`);
+    const questions = quizzes[courseId];
+
+    if (!quizBox || !questions) return;
+
+    let html = '';
+    questions.forEach((item, index) => {
+        html += `
+            <div style="margin-bottom: 20px; padding: 15px; background: #f9f9f9; border-radius: 8px;">
+                <p><strong>${index + 1}. ${item.q}</strong></p>
+                ${item.options.map((opt, i) => `
+                    <button class="quiz-opt" onclick="checkAnswer(this, ${i}, ${item.correct}, '${item.explanation.replace(/'/g, "\\'")}')" 
+                            style="display:block; width:100%; margin:5px 0; text-align:left; padding:10px; border:1px solid #ddd; background:white; cursor:pointer; border-radius:5px;">
+                        ${opt}
+                    </button>
+                `).join('')}
+                <div class="explanation" style="display:none; margin-top:10px; color:#0056b3; font-size:0.9rem;"></div>
+            </div>
+        `;
+    });
+    quizBox.innerHTML = html;
+}
 /* Inicial: nada mais */
   </script>
 </body>
