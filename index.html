@@ -125,9 +125,62 @@ const courses = [
       id: 'funcoes',
       title: 'Funções',
       content: {
-        basic: 'Uma função é uma regra matemática que associa cada elemento de um conjunto a um único elemento de outro conjunto . Ela funciona como uma máquina de transformação, onde para todo valor de entrada existe uma única  saída sendo amplamente usada para modelar relações entre variáveis',
-        intermediate: 'Estudo de funções quadráticas, exponenciais e logarítmicas com análise de gráficos.',
-        advanced: 'Composição de funções, funções inversas e introdução a limites fundamentais.',
+        basic: `
+        <p>Uma função associa cada valor de entrada (x) a um único valor de saída (f(x)). 
+        <strong>Mova os controles abaixo para ver a reta mudar:</strong></p>
+        <div style="background:#f1f5f9; padding:15px; border-radius:10px; margin:10px 0; border:1px solid #e2e8f0">
+          <div style="margin-bottom:10px">
+            <label style="display:block; font-size:12px; color:#475569">Inclinação (a):</label>
+            <input type="range" id="input-a" min="-5" max="5" step="0.5" value="1" style="width:100%">
+          </div>
+          <div>
+            <label style="display:block; font-size:12px; color:#475569">Deslocamento (b):</label>
+            <input type="range" id="input-b" min="-50" max="50" value="0" style="width:100%">
+          </div>
+          <p id="formula-text" style="text-align:center; font-family:monospace; font-weight:bold; color:var(--primary); margin-top:10px; font-size:18px">f(x) = 1x + 0</p>
+        </div>
+        <div class="visual" style="justify-content:center">
+          <canvas id="math-canvas-basic" width="400" height="250" style="background:#fff; border:1px solid #ddd"></canvas>
+        </div>
+      `,
+        intermediate: `
+        <p>A função quadrática gera uma curva chamada <strong>parábola</strong>. 
+        Ajuste os coeficientes para ver como ela se comporta:</p>
+        <div style="background:#fff7ed; padding:15px; border-radius:10px; margin:10px 0; border:1px solid #ffedd5">
+          <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; margin-bottom:10px">
+            <div>
+              <label style="display:block; font-size:11px; color:#9a3412">Concavidade (a):</label>
+              <input type="range" id="input-quad-a" min="-0.5" max="0.5" step="0.05" value="0.1" style="width:100%">
+            </div>
+            <div>
+              <label style="display:block; font-size:11px; color:#9a3412">Inclinação (b):</label>
+              <input type="range" id="input-quad-b" min="-5" max="5" step="0.5" value="0" style="width:100%">
+            </div>
+            <div>
+              <label style="display:block; font-size:11px; color:#9a3412">Corte Y (c):</label>
+              <input type="range" id="input-quad-c" min="-50" max="50" value="0" style="width:100%">
+            </div>
+          </div>
+          <p id="formula-quad-text" style="text-align:center; font-family:monospace; font-weight:bold; color:#ea580c; margin-top:10px; font-size:16px">f(x) = 0.1x² + 0x + 0</p>
+        </div>
+        <div class="visual" style="justify-content:center">
+          <canvas id="math-canvas-intermediate" width="400" height="250" style="background:#fff; border:1px solid #ddd"></canvas>
+        </div>
+      `,
+        advanced: `
+  <p>A <strong>Derivada</strong> mede a taxa de variação em um ponto exato. 
+  Mova o ponto na parábola para ver a inclinação da reta tangente:</p>
+  
+  <div style="background:#f0fdf4; padding:15px; border-radius:10px; margin:10px 0; border:1px solid #dcfce7">
+    <label style="display:block; font-size:11px; color:#166534">Deslize para mover o ponto (x):</label>
+    <input type="range" id="input-der-x" min="-40" max="40" value="20" style="width:100%">
+    <p id="formula-der-text" style="text-align:center; font-family:monospace; font-weight:bold; color:#16a34a; margin-top:10px; font-size:16px">Ponto x = 20 | Inclinação = ...</p>
+  </div>
+
+  <div class="visual" style="justify-content:center">
+    <canvas id="math-canvas-advanced" width="400" height="250" style="background:#fff; border:1px solid #ddd"></canvas>
+  </div>
+`,
       }
     },
     {
@@ -216,7 +269,21 @@ const courses = [
       id: 'mecanica-classica', // ID único para o Quiz
       title: 'Mecânica Clássica',
       content: {
-        basic: 'Estudo do movimento (cinemática), leis de Newton e conceitos de força e massa.',
+        // Localize o objeto fisica e mude o content.basic:
+basic: `
+  <p>No <strong>Movimento Uniformemente Variado (MUV)</strong>, a velocidade muda de forma constante devido à aceleração.</p>
+  
+  <div style="background:#eff6ff; padding:15px; border-radius:10px; margin:10px 0; border:1px solid #dbeafe">
+    <label style="display:block; font-size:12px; color:#1e40af">Aceleração (a):</label>
+    <input type="range" id="input-acc" min="0" max="10" step="0.5" value="2" style="width:100%">
+    <p id="physics-text" style="text-align:center; font-family:monospace; font-weight:bold; color:#2563eb; margin-top:10px; font-size:16px">a = 2 m/s² | v = v₀ + at</p>
+  </div>
+
+  <div class="visual" style="justify-content:center; flex-direction:column; align-items:center;">
+    <canvas id="physics-canvas" width="400" height="200" style="background:#fff; border:1px solid #ddd"></canvas>
+    <p style="font-size:11px; color:gray; margin-top:5px">Gráfico: Velocidade (Y) x Tempo (X)</p>
+  </div>
+`,
         intermediate: 'Trabalho e energia, conservação da quantidade de movimento e dinâmica de rotação.',
         advanced: 'Gravitação universal, leis de Kepler e introdução à mecânica analítica (Lagrangiana).'
       }
@@ -314,7 +381,16 @@ const courses = [
         id: 'atomistica',
         title: 'Atomística',
         content: {
-          basic: 'Modelos atômicos clássicos (Dalton, Thomson, Rutherford e Bohr) e partículas subatômicas.',
+          basic: `
+  <p>A escala de pH mede a acidez de uma solução.</p>
+  <div class="level" style="text-align:center">
+      <h4>Escala de pH: <span id="ph-display">7.0</span></h4>
+      <input type="range" id="ph-slider" min="0" max="14" step="0.1" value="7" style="width:80%">
+      <div id="ph-box" style="margin-top:15px; padding:20px; border-radius:8px; background:#e2e8f0;">
+          Neutro 💧
+      </div>
+  </div>
+`,
           intermediate: 'Distribuição eletrônica (Diagrama de Linus Pauling), números quânticos e propriedades periódicas dos elementos.',
           advanced: 'Hibridização de orbitais, geometria molecular e forças intermoleculares (London, Dipolo-dipolo, Pontes de Hidrogênio).'
         }
@@ -385,7 +461,12 @@ const courses = [
         id: 'zoologia',
         title: 'Zoologia',
         content: {
-          basic: 'Classificação básica do Reino Animal e características dos principais grupos de invertebrados (poríferos, cnidários).',
+          basic: `
+        <p>Observe como a população cresce rápido no início e depois estabiliza...</p>
+  <div class="level" style="background: white; padding: 15px; border-radius: 8px; min-height: 300px;">
+      <canvas id="bio-crescimento" style="max-height: 300px;"></canvas>
+  </div>
+      `,
           intermediate: 'Anatomia comparada e fisiologia de vertebrados: peixes, anfíbios, répteis, aves e mamíferos.',
           advanced: 'Evolução dos sistemas orgânicos, etologia (comportamento animal) e filogenia molecular.'
         }
@@ -513,6 +594,54 @@ const courses = [
   ]
 },
 
+  {
+    id: 'geografia',
+    title: 'Geografia',
+    desc: 'ciência que estuda o espaço geográfico, analisando as interações entre a sociedade humana e o meio natural.',
+    topics: [
+      {
+        id: 'geografia-fisica',
+        title: 'Geografia Física',
+        content: {
+          basic: `
+  <p>O climograma abaixo mostra a relação entre chuvas e temperaturas...</p>
+  <div class="level" style="background: white; padding: 15px; border-radius: 8px; min-height: 300px;">
+      <canvas id="geo-climograma" style="max-height: 300px;"></canvas>
+  </div>
+`,
+          intermediate: 'Geografia Física envolve a compreensão articulada dos componentes naturais da Terra (relevo, clima, vegetação, hidrografia e solos) e suas interações dinâmicas. Nesta etapa, entende-se a paisagem não como elementos isolados, mas como sistemas ambientais complexos e dinâmicos..',
+          advanced: 'Analisa o meio natural da Terra através da interação complexa entre litosfera, atmosfera, hidrosfera e biosfera, indo além da descrição para focar em processos dinâmicos, modelagem de paisagens e impactos ambientais. Domina subáreas como Geomorfologia, Climatologia, Pedologia e Hidrologia para entender o equilíbrio natural e as mudanças globais.'
+        }
+      },
+      {
+        id: 'geografia-humana',
+        title: ' Geografia Humana',
+        content: {
+          basic: 'A Geografia Humana estuda a relação entre os seres humanos e o meio, focando em como a sociedade organiza, transforma e produz o espaço geográfico. Seus principais ramos incluem demografia (população), urbanização, industrialização, economia e cultura, analisando a distribuição e as atividades humanas na superfície terrestre.',
+          intermediate: 'Geografia Humana envolve compreender como as sociedades produzem, transformam e organizam o espaço geográfico através de dinâmicas econômicas, políticas e populacionais. Foca na interação sociedade-natureza, analisando urbanização, industrialização, fluxos migratórios e desigualdades socioespaciais, essenciais para planejamento territorial.',
+          advanced: 'Foca na interação complexa entre sociedade, cultura e meio ambiente, analisando como seres humanos produzem, organizam e transformam o espaço. Estuda dinâmicas globais como urbanização, processos econômicos, geopolítica, migrações e a produção de paisagens, utilizando abordagens críticas e interdisciplinares para compreender desigualdades territoriais.'
+        }
+      },
+      {
+        id: 'geografia-ambiental',
+        title: 'Geografia Ambiental (Integrada)',
+        content: {
+          basic: 'A Geografia Ambiental é o estudo das interações entre seres humanos e o meio ambiente. Analisa como processos naturais influenciam a vida humana e como atividades antrópicas transformam a natureza, focando na sustentabilidade, gestão de recursos naturais e no impacto de problemas como poluição, aquecimento global e desmatamento.',
+          intermediate: 'O conhecimento intermediário em Geografia Ambiental foca na interação complexa entre sociedade e natureza, analisando impactos antrópicos, gestão de recursos e sustentabilidade. Abrange a análise de biomas, dinâmicas de uso do solo, mudanças climáticas, além de instrumentos técnicos como Estudos de Impacto Ambiental (EIA/RIMA) para planejamento territorial.',
+          advanced: 'O conhecimento avançado em Geografia Ambiental concentra-se na análise integrada das interações sociedade-natureza, utilizando ferramentas geotecnológicas (SIG) para gestão territorial, avaliação de impactos (EIA/RIMA) e planejamento sustentável. Foca em sistemas complexos como bacias hidrográficas, mudanças climáticas, resíduos sólidos e conservação da biodiversidade.'
+        }
+      },
+      {
+        id: 'cartografia-geotecnologias',
+        title: 'Cartografia e Geotecnologias',
+        content: {
+          basic: 'A cartografia é a ciência e arte de representar a superfície terrestre em mapas, utilizando elementos essenciais como escala, legenda e orientação. Geotecnologias são ferramentas tecnológicas (GPS, SIG, Drones) que coletam e analisam dados espaciais para tomadas de decisão, transformando informações geográficas em soluções.',
+          intermediate: 'Um nível intermediário em Cartografia e Geotecnologias envolve a manipulação eficiente de SIGs (como QGIS), processamento de imagens de satélite, entendimento sólido de projeções e georreferenciamento. Esse conhecimento permite analisar dados espaciais para tomadas de decisão, criando mapas temáticos complexos e utilizando técnicas de sensoriamento remoto.',
+          advanced: 'O conhecimento avançado em Cartografia e Geotecnologias integra teoria e prática para transformar dados geográficos em informações estratégicas, utilizando ferramentas como SIG (QGIS/ArcGIS), sensoriamento remoto, drones e análise espacial. Essa área foca em mapeamento digital, inteligência artificial e processamento de imagens para tomada de decisão em gestão territorial.'
+        }
+      }
+    ]
+  },
   
   {
     id:'python',
@@ -531,61 +660,61 @@ const courses = [
 const quizzes = {
   matematica: [
   {
-    q:"Para f(x)=3x+1, qual é f(2)?",
+    pergunta:"Para f(x)=3x+1, qual é f(2)?",
     options:["5","6","7","8"],
     correct:2,
     explanation:"3·2 + 1 = 7."
   },
   {
-    q:"A função y = x² representa:",
+    question:"A função y = x² representa:",
     options:["Reta","Parábola","Hipérbole","Função constante"],
     correct:1,
     explanation:"O gráfico de x² é uma parábola concava para cima."
   },
   {
-    q:"Qual é a inclinação da reta f(x)=5x−3?",
+    question:"Qual é a inclinação da reta f(x)=5x−3?",
     options:["5","−3","3/5","0"],
     correct:0,
     explanation:"O coeficiente angular (inclinação) é o número que multiplica x."
   },
   {
-    q:"A equação x²−9=0 tem:",
+    question:"A equação x²−9=0 tem:",
     options:["x=3","x=−3","x=±3","Nenhuma solução"],
     correct:2,
     explanation:"x=3 e x=−3."
   },
   {
-    q:"Derivada de 4x³ é:",
+    question:"Derivada de 4x³ é:",
     options:["4x²","12x²","12x³","3x²"],
     correct:1,
     explanation:"d/dx(4x³)=12x²."
   },
   {
-    q:"O vértice da parábola f(x)=x²−4x+3 fica em:",
+    question:"O vértice da parábola f(x)=x²−4x+3 fica em:",
     options:["(2, -1)","(4, 3)","(1, 0)","(2, 3)"],
     correct:0,
     explanation:"x=−b/2a = 4/2 = 2; f(2)=−1."
   },
   {
-    q:"Se f(x)=2x+5, o intercepto no eixo y é:",
+    question:"Se f(x)=2x+5, o intercepto no eixo y é:",
     options:["2","5","7","0"],
     correct:1,
     explanation:"Intercepto = f(0) = 5."
   },
   {
-    q:"Qual expressão NÃO representa uma função?",
+    question:"Qual expressão NÃO representa uma função?",
     options:["x→x²","x→3x+1","x→√x","x→±x"],
     correct:3,
     explanation:"x→±x tem duas saídas para a mesma entrada."
   },
   {
-    q:"A derivada mede:",
+    question:"A derivada mede:",
     options:["A área sob o gráfico","O valor máximo da função","A taxa de variação","O intercepto com o eixo y"],
     correct:2,
     explanation:"Derivada = mudança instantânea."
   },
   {
-    q:"A solução de 2x+6=0 é:",
+    question:"A solução de 2x+6=0 é:",
     options:["3","−3","6","0"],
     correct:1,
     explanation:"2x = −6 → x = −3."
@@ -593,93 +722,157 @@ const quizzes = {
 ]
 ,
   quimica: [
-    {q:"Partícula com carga positiva:", options:["Próton","Elétron","Nêutron","Íon negativo"], correct:0, explanation:"Próton tem carga positiva."},
-    {q:"Ligação covalente envolve:", options:["Compartilhar elétrons","Transferir elétrons","Prótons","Nêutrons"], correct:0, explanation:"Covalente = compartilhamento."},
-    {q:"Fórmula da água:", options:["H2O","CO2","O2","NaCl"], correct:0, explanation:"Água = H₂O."},
-    {q:"Número atômico = número de:", options:["Prótons","Elétrons","Nêutrons","Átomos"], correct:0, explanation:"Número de prótons define o elemento."},
-    {q:"pH < 7 indica:", options:["Ácido","Básico","Neutro","Salino"], correct:0, explanation:"pH < 7 é ácido."},
-    {q:"Combustão é uma reação com:", options:["Oxigênio","Nitrogênio","Hélio","Água"], correct:0, explanation:"Combustão normalmente envolve O₂."},
-    {q:"Mol é unidade de:", options:["Quantidade de matéria","Massa","Tempo","Temperatura"], correct:0, explanation:"Mol mede quantidade de substância."},
-    {q:"Reação balanceada mantém:", options:["Número de átomos","Energia","Volume","Temperatura"], correct:0, explanation:"Conservação de massa: mesmo número de cada átomo."},
-    {q:"Ligação iônica acontece entre:", options:["Metal + não-metal","2 metais","2 gases nobres","2 não-metais"], correct:0, explanation:"Metal doa elétron, não-metal recebe."},
-    {q:"Estado padrão de O2 à T ambiente:", options:["Gasoso","Líquido","Sólido","Plasma"], correct:0, explanation:"Oxigênio é gasoso em condições padrão."}
+    {question:"Partícula com carga positiva:", options:["Próton","Elétron","Nêutron","Íon negativo"], correct:0, explanation:"Próton tem carga positiva."},
+    {question:"Ligação covalente envolve:", options:["Compartilhar elétrons","Transferir elétrons","Prótons","Nêutrons"], correct:0, explanation:"Covalente = compartilhamento."},
+    {question:"Fórmula da água:", options:["H2O","CO2","O2","NaCl"], correct:0, explanation:"Água = H₂O."},
+    {question:"Número atômico = número de:", options:["Prótons","Elétrons","Nêutrons","Átomos"], correct:0, explanation:"Número de prótons define o elemento."},
+    {question:"pH < 7 indica:", options:["Ácido","Básico","Neutro","Salino"], correct:0, explanation:"pH < 7 é ácido."},
+    {question:"Combustão é uma reação com:", options:["Oxigênio","Nitrogênio","Hélio","Água"], correct:0, explanation:"Combustão normalmente envolve O₂."},
+    {question:"Mol é unidade de:", options:["Quantidade de matéria","Massa","Tempo","Temperatura"], correct:0, explanation:"Mol mede quantidade de substância."},
+    {question:"Reação balanceada mantém:", options:["Número de átomos","Energia","Volume","Temperatura"], correct:0, explanation:"Conservação de massa: mesmo número de cada átomo."},
+    {question:"Ligação iônica acontece entre:", options:["Metal + não-metal","2 metais","2 gases nobres","2 não-metais"], correct:0, explanation:"Metal doa elétron, não-metal recebe."},
+    {question:"Estado padrão de O2 à T ambiente:", options:["Gasoso","Líquido","Sólido","Plasma"], correct:0, explanation:"Oxigênio é gasoso em condições padrão."}
+  ],
+  geografia: [
+    {
+      question: "Qual camada da Terra é composta principalmente por ferro e níquel em estado sólido e líquido?",
+      options: ["Crosta", "Manto", "Núcleo", "Litosfera"],
+      correct: 2,
+      explanation: "O núcleo é a parte mais interna da Terra, dividido em interno (sólido) e externo (líquido)."
+    },
+    {
+      question: "O fenômeno do 'Êxodo Rural' refere-se a:",
+      options: ["Migração da cidade para o campo", "Migração do campo para a cidade", "Mudança entre capitais", "Turismo rural"],
+      correct: 1,
+      explanation: "O êxodo rural é o deslocamento em massa da população do campo para as áreas urbanas."
+    },
+    {
+      question: "Qual destes é o principal gás do efeito estufa emitido pela queima de combustíveis fósseis?",
+      options: ["Oxigênio", "Nitrogênio", "Dióxido de Carbono (CO2)", "Hélio"],
+      correct: 2,
+      explanation: "O CO2 é o principal resíduo da queima de carvão e petróleo, intensificando o aquecimento global."
+    },
+    {
+      question: "O que a escala de um mapa indica?",
+      options: ["A altitude do terreno", "A relação entre a distância no mapa e a distância real", "O nome dos países", "A direção do Norte"],
+      correct: 1,
+      explanation: "A escala diz quantas vezes o mundo real foi reduzido para caber no papel."
+    },
+    {
+      question: "Qual bioma brasileiro é conhecido como a 'Savana mais rica do mundo'?",
+      options: ["Pantanal", "Caatinga", "Cerrado", "Pampa"],
+      correct: 2,
+      explanation: "O Cerrado é considerado a savana com maior biodiversidade do planeta."
+    },
+    {
+      question: "As linhas imaginárias horizontais que circundam a Terra são chamadas de:",
+      options: ["Longitudes", "Latitudes", "Meridianos", "Fusos Horários"],
+      correct: 1,
+      explanation: "As latitudes são as linhas horizontais (paralelos), enquanto as verticais são as longitudes."
+    },
+    {
+      question: "O que caracteriza uma 'Megalópole'?",
+      options: ["Uma cidade com mais de 100 habitantes", "A união espacial de duas ou mais metrópoles", "Cidades sem saneamento", "Cidades exclusivamente rurais"],
+      correct: 1,
+      explanation: "Megalópoles ocorrem quando metrópoles crescem tanto que suas áreas urbanas se conectam."
+    },
+    {
+      question: "Qual tipo de rocha se forma através do resfriamento e solidificação do magma?",
+      options: ["Sedimentar", "Metamórfica", "Magmática (ou Ígnea)", "Fóssil"],
+      correct: 2,
+      explanation: "As rochas magmáticas surgem do resfriamento do material fundido do interior da Terra."
+    },
+    {
+      question: "O conceito de 'Desenvolvimento Sustentável' busca equilibrar:",
+      options: ["Apenas o lucro", "Preservação ambiental, justiça social e eficiência econômica", "Somente a limpeza dos oceanos", "O fim de todas as indústrias"],
+      correct: 1,
+      explanation: "Sustentabilidade é usar os recursos hoje sem comprometer as gerações futuras."
+    },
+    {
+      question: "Qual projeção cartográfica é famosa por manter as formas, mas distorcer o tamanho das massas de terra (como a Groenlândia)?",
+      options: ["Projeção de Peters", "Projeção de Mercator", "Projeção de Mollweide", "Projeção Cônica"],
+      correct: 1,
+      explanation: "A Projeção de Mercator é eurocêntrica e distorce as áreas polares para manter os ângulos de navegação."
+    }
   ],
   biologia: [
-    {q:"Organelas celulares que produzem energia:", options:["Mitocôndrias","Lisossomos","Ribossomos","Cloroplastos"], correct:0, explanation:"Mitocôndrias produzem ATP (energia)."},
-    {q:"Material genético principal em eucariotos:", options:["DNA no núcleo","RNA no citoplasma","Proteínas","Lipídios"], correct:0, explanation:"DNA no núcleo contem instruções genéticas."},
-    {q:"Ribossomos sintetizam:", options:["Proteínas","Lipídios","Carboidratos","Ácidos nucleicos"], correct:0, explanation:"Ribossomos fazem síntese proteica."},
-    {q:"Fotossíntese ocorre em:", options:["Cloroplastos","Mitocôndrias","Núcleo","Parede celular"], correct:0, explanation:"Cloroplastos em plantas realizam fotossíntese."},
-    {q:"Célula procarionte NÃO possui:", options:["Núcleo definido","Ribossomos","Membrana plasmática","Parede celular"], correct:0, explanation:"Procarionte não tem núcleo delimitado por membrana."},
-    {q:"Herança dominante significa:", options:["A característica aparece se há um alelo","Não aparece nunca","Depende do ambiente","Sempre recessivo"], correct:0, explanation:"Basta um alelo dominante para a característica aparecer."},
-    {q:"Cadeia alimentar começa geralmente com:", options:["Produtores","Consumidores","Decompositores","Predadores"], correct:0, explanation:"Produtores (plantas) transformam energia solar."},
-    {q:"O que é biodiversidade?", options:["Variedade de espécies","Somente plantas","Apenas microrganismos","Apenas animais"], correct:0, explanation:"Biodiversidade = variedade de vida em um ecossistema."},
-    {q:"Virus precisa de:", options:["Célula hospedeira","Comida","Água","Luz"], correct:0, explanation:"Vírus se replicam dentro de células hospedeiras."},
-    {q:"Mitose produz:", options:["2 células geneticamente idênticas","4 células haploides","Espermatozóides","Óvulos"], correct:0, explanation:"Mitose gera duas células-filhas idênticas (diploides)."}
+    {question:"Organelas celulares que produzem energia:", options:["Mitocôndrias","Lisossomos","Ribossomos","Cloroplastos"], correct:0, explanation:"Mitocôndrias produzem ATP (energia)."},
+    {question:"Material genético principal em eucariotos:", options:["DNA no núcleo","RNA no citoplasma","Proteínas","Lipídios"], correct:0, explanation:"DNA no núcleo contem instruções genéticas."},
+    {question:"Ribossomos sintetizam:", options:["Proteínas","Lipídios","Carboidratos","Ácidos nucleicos"], correct:0, explanation:"Ribossomos fazem síntese proteica."},
+    {question:"Fotossíntese ocorre em:", options:["Cloroplastos","Mitocôndrias","Núcleo","Parede celular"], correct:0, explanation:"Cloroplastos em plantas realizam fotossíntese."},
+    {question:"Célula procarionte NÃO possui:", options:["Núcleo definido","Ribossomos","Membrana plasmática","Parede celular"], correct:0, explanation:"Procarionte não tem núcleo delimitado por membrana."},
+    {question:"Herança dominante significa:", options:["A característica aparece se há um alelo","Não aparece nunca","Depende do ambiente","Sempre recessivo"], correct:0, explanation:"Basta um alelo dominante para a característica aparecer."},
+    {question:"Cadeia alimentar começa geralmente com:", options:["Produtores","Consumidores","Decompositores","Predadores"], correct:0, explanation:"Produtores (plantas) transformam energia solar."},
+    {question:"O que é biodiversidade?", options:["Variedade de espécies","Somente plantas","Apenas microrganismos","Apenas animais"], correct:0, explanation:"Biodiversidade = variedade de vida em um ecossistema."},
+    {question:"Virus precisa de:", options:["Célula hospedeira","Comida","Água","Luz"], correct:0, explanation:"Vírus se replicam dentro de células hospedeiras."},
+    {question:"Mitose produz:", options:["2 células geneticamente idênticas","4 células haploides","Espermatozóides","Óvulos"], correct:0, explanation:"Mitose gera duas células-filhas idênticas (diploides)."}
   ],
-  medicina: [
-    {q:"RCP inicial: verificar", options:["Segurança da cena e resposta","Pressão arterial","Temperatura","Nível de glicose"], correct:0, explanation:"Sempre cheque segurança e se a vítima responde."},
-    {q:"Sinal vital que mede oxigenação:", options:["SpO2 (oximetria)","Pressão arterial","Temperatura","Frequência urinária"], correct:0, explanation:"SpO2 indica saturação de oxigênio."},
-    {q:"Manobra para desobstrução em adulto (consciente):", options:["Heimlich","RCP","Intubação","Massagem"], correct:0, explanation:"Heimlich/empurrões abdominais para obstrução por corpo estranho."},
-    {q:"Compressões torácicas devem ser:", options:["Firmes e rápidas","Lentas e suaves","Aleatórias","Inexistentes"], correct:0, explanation:"Compressões firmes e ritmo adequado são essenciais."},
-    {q:"Hemorragia externa: ação inicial:", options:["Compressão direta","Dar água","Movimentar muito a vítima","Ficar parado"], correct:0, explanation:"Compressão direta ajuda a controlar sangramento."},
-    {q:"Sinais vitais incluem:", options:["Pulso, respiração, pressão e temperatura","Apenas pulso","Apenas pressão","Apenas glicemia"], correct:0, explanation:"Sinais vitais clássicos: pulso, respiração, pressão e temperatura."},
-    {q:"PI (primeiros 3 passos) ABC:", options:["Airway, Breathing, Circulation","Pressão, Isquemia, Cirurgia","Avaliação, Botas, Compressão","Nenhuma"], correct:0, explanation:"A = via aérea, B = respiração, C = circulação."},
-    {q:"Sinais de choque incluem:", options:["Palidez, suor frio, pulso rápido","Sede intensa sem outros sinais","Somente dor de cabeça","Não se move"], correct:0, explanation:"Choque costuma apresentar palidez, sudorese e taquicardia."},
-    {q:"Para controlar queimadura leve:", options:["Água fria corrente","Gelo diretamente","Óleo","Enfaixar apertado"], correct:0, explanation:"Água fria corrente ajuda a diminuir a lesão."},
-    {q:"Sinais de infecção local:", options:["Vermelhidão, calor, dor e inchaço","Nenhuma alteração","Só coceira","Perda total de sensibilidade"], correct:0, explanation:"Esses são sinais clássicos de inflamação/infeção local."}
-  ],
+
   desenvolvimento: [
-    {q:"O que é uma variável?", options:["Espaço para armazenar dados","Uma função","Uma biblioteca","Um servidor"], correct:0, explanation:"Variável armazena valores."},
-    {q:"HTML é usado para:", options:["Estruturar conteúdo","Estilizar","Lógica","Banco de dados"], correct:0, explanation:"HTML cria a estrutura da página."},
-    {q:"CSS serve para:", options:["Estilizar (layout/cores)","Lógica do servidor","Gerenciar banco","Enviar emails"], correct:0, explanation:"CSS define estilos e layout."},
-    {q:"JS é usado para:", options:["Interatividade no cliente","Hospedar site","Gerenciar banco","Enviar pacotes"], correct:0, explanation:"JavaScript cria comportamento no navegador."},
-    {q:"CRUD significa:", options:["Create, Read, Update, Delete","Compile, Run, Update, Debug","Cache, Refresh, Upload, Download","Connect, Read, Use, Drop"], correct:0, explanation:"Create, Read, Update e Delete são operações básicas de dados."},
-    {q:"API REST costuma usar:", options:["HTTP/JSON","FTP/XML","SMTP","POP3"], correct:0, explanation:"APIs REST usam HTTP e tipicamente JSON."},
-    {q:"Banco relacional usa:", options:["Tabelas e chaves","Arquivos locais","Arrays únicos","Somente JSON"], correct:0, explanation:"Bancos relacionais organizam dados em tabelas com chaves."},
-    {q:"Front-end é:", options:["Interface do usuário","Servidor","Banco de dados","Rede"], correct:0, explanation:"Parte visível e interativa para o usuário."},
-    {q:"Back-end é:", options:["Lógica e dados no servidor","Imagens do site","Somente HTML","Estilos"], correct:0, explanation:"Back-end processa lógica e dados no servidor."},
-    {q:"Git é usado para:", options:["Versionamento de código","Hospedagem","Estilização","Testes unitários"], correct:0, explanation:"Git controla versões e histórico do código."}
+    {question:"O que é uma variável?", options:["Espaço para armazenar dados","Uma função","Uma biblioteca","Um servidor"], correct:0, explanation:"Variável armazena valores."},
+    {question:"HTML é usado para:", options:["Estruturar conteúdo","Estilizar","Lógica","Banco de dados"], correct:0, explanation:"HTML cria a estrutura da página."},
+    {question:"CSS serve para:", options:["Estilizar (layout/cores)","Lógica do servidor","Gerenciar banco","Enviar emails"], correct:0, explanation:"CSS define estilos e layout."},
+    {question:"JS é usado para:", options:["Interatividade no cliente","Hospedar site","Gerenciar banco","Enviar pacotes"], correct:0, explanation:"JavaScript cria comportamento no navegador."},
+    {question:"CRUD significa:", options:["Create, Read, Update, Delete","Compile, Run, Update, Debug","Cache, Refresh, Upload, Download","Connect, Read, Use, Drop"], correct:0, explanation:"Create, Read, Update e Delete são operações básicas de dados."},
+    {question:"API REST costuma usar:", options:["HTTP/JSON","FTP/XML","SMTP","POP3"], correct:0, explanation:"APIs REST usam HTTP e tipicamente JSON."},
+    {question:"Banco relacional usa:", options:["Tabelas e chaves","Arquivos locais","Arrays únicos","Somente JSON"], correct:0, explanation:"Bancos relacionais organizam dados em tabelas com chaves."},
+    {question:"Front-end é:", options:["Interface do usuário","Servidor","Banco de dados","Rede"], correct:0, explanation:"Parte visível e interativa para o usuário."},
+    {question:"Back-end é:", options:["Lógica e dados no servidor","Imagens do site","Somente HTML","Estilos"], correct:0, explanation:"Back-end processa lógica e dados no servidor."},
+    {question:"Git é usado para:", options:["Versionamento de código","Hospedagem","Estilização","Testes unitários"], correct:0, explanation:"Git controla versões e histórico do código."}
   ],
 
   /* --- QUIZZES NOVOS --- */
   redacao: [
-    {q:"Qual é a estrutura básica de uma redação dissertativa-argumentativa?", options:["Introdução, desenvolvimento e conclusão","Tese, mapa mental e resumo","Resumo, comentário, conclusão","Introdução, índices e capa"], correct:0, explanation:"Introdução apresenta tese, desenvolvimento argumenta e conclusão fecha o texto."},
-    {q:"O que é uma tese em uma redação?", options:["Uma ideia central defendida","Um exemplo aleatório","Uma lista de palavras","Um ditado popular"], correct:0, explanation:"Tese = ideia central que será defendida ao longo do texto."},
-    {q:"Qual conector indica consequência?", options:["Portanto","Enquanto","Apesar","Embora"], correct:0, explanation:"'Portanto' indica consequência."},
-    {q:"O que melhora a coerência de um parágrafo?", options:["Uso adequado de conectores","Repetir sempre a mesma palavra","Apagar a conclusão","Mudar de assunto"], correct:0, explanation:"Conectores e progressão lógica melhoram a coerência."},
-    {q:"Qual ação é parte da revisão?", options:["Eliminar repetições e corrigir pontuação","Só mudar o título","Apagar todo o parágrafo inicial","Adicionar frases sem sentido"], correct:0, explanation:"Revisão inclui clareza, concisão e correção gramatical."},
-    {q:"Um bom argumento deve:", options:["Trazer evidência ou exemplo","Ser vago","Ser ofensivo","Ignorar contra-argumentos"], correct:0, explanation:"Argumento forte usa evidências, dados ou exemplos."},
-    {q:"Como fechar uma conclusão eficiente?", options:["Retomar tese e sintetizar argumentos","Apresentar nova tese","Introduzir um tema diferente","Fazer perguntas sem resposta"], correct:0, explanation:"Conclusão retoma a tese e sintetiza o que foi dito."},
-    {q:"Qual frase é um exemplo de conectivo adversativo?", options:["No entanto","Além disso","Logo","Portanto"], correct:0, explanation:"'No entanto' introduz contraste (adversatividade)."},
-    {q:"Ao planejar, qual recurso é útil antes de escrever?", options:["Rascunho/Mapa mental","Excluir referências","Escrever direto sem rascunho","Ignorar a tese"], correct:0, explanation:"Rascunho ajuda a organizar ideias e estrutura."},
-    {q:"Qual alternativa melhora a formalidade de um texto?", options:["Evitar gírias e abreviações","Usar só gírias","Falar em 1ª pessoa o tempo todo","Incluir emojis"], correct:0, explanation:"Formalidade pede linguagem culta e precisa."}
+    {question:"Qual é a estrutura básica de uma redação dissertativa-argumentativa?", options:["Introdução, desenvolvimento e conclusão","Tese, mapa mental e resumo","Resumo, comentário, conclusão","Introdução, índices e capa"], correct:0, explanation:"Introdução apresenta tese, desenvolvimento argumenta e conclusão fecha o texto."},
+    {question:"O que é uma tese em uma redação?", options:["Uma ideia central defendida","Um exemplo aleatório","Uma lista de palavras","Um ditado popular"], correct:0, explanation:"Tese = ideia central que será defendida ao longo do texto."},
+    {question:"Qual conector indica consequência?", options:["Portanto","Enquanto","Apesar","Embora"], correct:0, explanation:"'Portanto' indica consequência."},
+    {question:"O que melhora a coerência de um parágrafo?", options:["Uso adequado de conectores","Repetir sempre a mesma palavra","Apagar a conclusão","Mudar de assunto"], correct:0, explanation:"Conectores e progressão lógica melhoram a coerência."},
+    {question:"Qual ação é parte da revisão?", options:["Eliminar repetições e corrigir pontuação","Só mudar o título","Apagar todo o parágrafo inicial","Adicionar frases sem sentido"], correct:0, explanation:"Revisão inclui clareza, concisão e correção gramatical."},
+    {question:"Um bom argumento deve:", options:["Trazer evidência ou exemplo","Ser vago","Ser ofensivo","Ignorar contra-argumentos"], correct:0, explanation:"Argumento forte usa evidências, dados ou exemplos."},
+    {question:"Como fechar uma conclusão eficiente?", options:["Retomar tese e sintetizar argumentos","Apresentar nova tese","Introduzir um tema diferente","Fazer perguntas sem resposta"], correct:0, explanation:"Conclusão retoma a tese e sintetiza o que foi dito."},
+    {question:"Qual frase é um exemplo de conectivo adversativo?", options:["No entanto","Além disso","Logo","Portanto"], correct:0, explanation:"'No entanto' introduz contraste (adversatividade)."},
+    {question:"Ao planejar, qual recurso é útil antes de escrever?", options:["Rascunho/Mapa mental","Excluir referências","Escrever direto sem rascunho","Ignorar a tese"], correct:0, explanation:"Rascunho ajuda a organizar ideias e estrutura."},
+    {question:"Qual alternativa melhora a formalidade de um texto?", options:["Evitar gírias e abreviações","Usar só gírias","Falar em 1ª pessoa o tempo todo","Incluir emojis"], correct:0, explanation:"Formalidade pede linguagem culta e precisa."}
   ],
 
   ingles: [
-    {q:"Como se diz 'Bom dia' em inglês?", options:["Good morning","Good night","See you","What's up"], correct:0, explanation:"'Good morning' = 'Bom dia'."},
-    {q:"Qual a forma correta do verbo 'to be' no presente para 'he'?", options:["is","are","am","be"], correct:0, explanation:"He is — 'is' é usado com he/she/it."},
-    {q:"Qual tempo indica ação concluída no passado?", options:["Past simple","Present continuous","Future simple","Present perfect continuous"], correct:0, explanation:"Past simple é usado para ações concluídas no passado."},
-    {q:"'Can' expressa:", options:["Habilidade/Permissão","Proibição","Passado perfeito","Futuro certo"], correct:0, explanation:"'Can' indica habilidade ou pedir permissão."},
-    {q:"Pergunta no passado simples (you / go):", options:["Did you go?","You did go?","Do you went?","Are you go?"], correct:0, explanation:"Perguntas no past simple usam 'did' + base verb."},
-    {q:"Traduza: 'Eu gosto de ler'.", options:["I like to read","I am liking to read","I likes read","I reading"], correct:0, explanation:"'I like to read' ou 'I like reading' são corretas."},
-    {q:"Qual é o pronome possessivo para 'they'?", options:["theirs","his","your","ours"], correct:0, explanation:"'theirs' é possessivo de 'they'."},
-    {q:"'There is' é usado para:", options:["Existência de algo singular","Expressar obrigação","Falar do futuro","Comparações"], correct:0, explanation:"'There is' indica existência (singular)."},
-    {q:"Qual é a forma correta de 'comer' no gerúndio em inglês?", options:["eating","eat","ate","eaten"], correct:0, explanation:"Gerúndio: eating."},
-    {q:"Como formar negativo no presente simples (he / like):", options:["He does not like","He not likes","He don't like","He doesn't likes"], correct:0, explanation:"Negativo no present simple: 'does not' + base verb."}
+    {question:"Como se diz 'Bom dia' em inglês?", options:["Good morning","Good night","See you","What's up"], correct:0, explanation:"'Good morning' = 'Bom dia'."},
+    {question:"Qual a forma correta do verbo 'to be' no presente para 'he'?", options:["is","are","am","be"], correct:0, explanation:"He is — 'is' é usado com he/she/it."},
+    {question:"Qual tempo indica ação concluída no passado?", options:["Past simple","Present continuous","Future simple","Present perfect continuous"], correct:0, explanation:"Past simple é usado para ações concluídas no passado."},
+    {question:"'Can' expressa:", options:["Habilidade/Permissão","Proibição","Passado perfeito","Futuro certo"], correct:0, explanation:"'Can' indica habilidade ou pedir permissão."},
+    {question:"Pergunta no passado simples (you / go):", options:["Did you go?","You did go?","Do you went?","Are you go?"], correct:0, explanation:"Perguntas no past simple usam 'did' + base verb."},
+    {question:"Traduza: 'Eu gosto de ler'.", options:["I like to read","I am liking to read","I likes read","I reading"], correct:0, explanation:"'I like to read' ou 'I like reading' são corretas."},
+    {question:"Qual é o pronome possessivo para 'they'?", options:["theirs","his","your","ours"], correct:0, explanation:"'theirs' é possessivo de 'they'."},
+    {question:"'There is' é usado para:", options:["Existência de algo singular","Expressar obrigação","Falar do futuro","Comparações"], correct:0, explanation:"'There is' indica existência (singular)."},
+    {question:"Qual é a forma correta de 'comer' no gerúndio em inglês?", options:["eating","eat","ate","eaten"], correct:0, explanation:"Gerúndio: eating."},
+    {question:"Como formar negativo no presente simples (he / like):", options:["He does not like","He not likes","He don't like","He doesn't likes"], correct:0, explanation:"Negativo no present simple: 'does not' + base verb."}
+  ],
+  fisica: [
+    {question:"Qual é a unidade de medida da força no Sistema Internacional?", options:["Newton (N)","Joule (J)","Watt (W)","Pascal (Pa)"], correct:0, explanation:"A força é medida em Newtons (N) em homenagem a Isaac Newton."},
+    {question:"A primeira lei de Newton também é conhecida como:", options:["Lei da Ação e Reação","Lei da Inércia","Lei da Gravidade","Lei da Conservação de Energia"], correct:1, explanation:"Inércia é a tendência de um corpo de manter seu estado de repouso ou movimento."},
+    {question:"O que o calorímetro mede?", options:["Pressão","Quantidade de calor","Velocidade","Intensidade luminosa"], correct:1, explanation:"Calorímetros medem as trocas de calor entre corpos (relevante para Termologia)."},
+    {question:"Velocidade média é definida como a razão entre:", options:["Massa e volume","Deslocamento e tempo","Força e área","Energia e trabalho"], correct:1, explanation:"V = ΔS/Δt (Variação do espaço sobre o tempo)."},
+    {question:"O que acontece na escala Celsius ao atingir 100°C ao nível do mar?", options:["A água congela","A água entra em ebulição","O gelo derrete","O oxigênio se torna sólido"], correct:1, explanation:"100°C é o ponto de ebulição da água sob pressão atmosférica normal."},
+    {question:"A aceleração da gravidade na Terra é aproximadamente:", options:["5 m/s²","9.8 m/s²","12 m/s²","1.5 m/s²"], correct:1, explanation:"A gravidade média na superfície da Terra é cerca de 9.8 m/s²."},
+    {question:"Um espelho côncavo pode formar imagens:", options:["Apenas reais","Apenas virtuais","Reais e virtuais","Somente menores que o objeto"], correct:2, explanation:"Dependendo da posição do objeto, o espelho côncavo pode projetar imagens reais ou virtuais."},
+    {question:"Qual partícula possui carga elétrica negativa?", options:["Próton","Elétron","Nêutron","Fóton"], correct:1, explanation:"O elétron é a partícula fundamental com carga negativa."},
+    {question:"Potência elétrica é medida em:", options:["Watt (W)","Volts (V)","Amperes (A)","Ohms (Ω)"], correct:0, explanation:"Watt (W) mede a taxa de transferência ou consumo de energia."},
+    {question:"Segundo a 1ª Lei da Termodinâmica, a energia não pode ser criada nem destruída, apenas:", options:["Ignorada","Transformada","Esfriada","Solidificada"], correct:1, explanation:"Energia se transforma de uma forma em outra (Princípio da Conservação)."}
   ],
 
   python: [
-    {q:"Como declarar uma variável em Python?", options:["x = 10","int x = 10","var x := 10","let x = 10"], correct:0, explanation:"Em Python usamos 'x = 10' (tipagem dinâmica)."},
-    {q:"Qual função mostra saída no console?", options:["print()","echo()","console.log()","println()"], correct:0, explanation:"print() exibe output no terminal em Python."},
-    {q:"Como criar uma função simples?", options:["def soma(a,b): return a+b","function soma(a,b) { }","fun soma => a+b","create soma(a,b)"], correct:0, explanation:"Sintaxe Python: def nome(params): return ..."},
-    {q:"Qual estrutura percorre uma lista?", options:["for item in lista:","for (i=0;i<...)","foreach lista { }","while item in lista"], correct:0, explanation:"'for item in lista:' é a forma Pythonic."},
-    {q:"Como comentar uma linha?", options:["# comentário","// comentário","/* comentário */","<!-- comentário -->"], correct:0, explanation:"Comentários de linha usam '#' em Python."},
-    {q:"Como abrir um arquivo para leitura?", options:["open('arquivo.txt','r')","open('arquivo.txt','w')","read('arquivo.txt')","file.open('arquivo')"], correct:0, explanation:"Modo 'r' abre para leitura."},
-    {q:"Como pegar exceção genérica?", options:["try...except Exception as e:","try...catch","on error goto","handle(Exception e)"], correct:0, explanation:"Em Python usa-se try/except."},
-    {q:"Qual tipo para coleção chave→valor?", options:["dict","list","tuple","set"], correct:0, explanation:"Dicionário (dict) armazena pares chave/valor."},
-    {q:"Como importar módulo math?", options:["import math","using math","#import math","require('math')"], correct:0, explanation:"Import padrão: import math."},
-    {q:"Qual comando cria um ambiente virtual (venv)?", options:["python -m venv venv","pip install venv","create venv","venv create"], correct:0, explanation:"Comando oficial: python -m venv venv."}
+    {question:"Como declarar uma variável em Python?", options:["x = 10","int x = 10","var x := 10","let x = 10"], correct:0, explanation:"Em Python usamos 'x = 10' (tipagem dinâmica)."},
+    {question:"Qual função mostra saída no console?", options:["print()","echo()","console.log()","println()"], correct:0, explanation:"print() exibe output no terminal em Python."},
+    {question:"Como criar uma função simples?", options:["def soma(a,b): return a+b","function soma(a,b) { }","fun soma => a+b","create soma(a,b)"], correct:0, explanation:"Sintaxe Python: def nome(params): return ..."},
+    {question:"Qual estrutura percorre uma lista?", options:["for item in lista:","for (i=0;i<...)","foreach lista { }","while item in lista"], correct:0, explanation:"'for item in lista:' é a forma Pythonic."},
+    {question:"Como comentar uma linha?", options:["# comentário","// comentário","/* comentário */","<!-- comentário -->"], correct:0, explanation:"Comentários de linha usam '#' em Python."},
+    {question:"Como abrir um arquivo para leitura?", options:["open('arquivo.txt','r')","open('arquivo.txt','w')","read('arquivo.txt')","file.open('arquivo')"], correct:0, explanation:"Modo 'r' abre para leitura."},
+    {question:"Como pegar exceção genérica?", options:["try...except Exception as e:","try...catch","on error goto","handle(Exception e)"], correct:0, explanation:"Em Python usa-se try/except."},
+    {question:"Qual tipo para coleção chave→valor?", options:["dict","list","tuple","set"], correct:0, explanation:"Dicionário (dict) armazena pares chave/valor."},
+    {question:"Como importar módulo math?", options:["import math","using math","#import math","require('math')"], correct:0, explanation:"Import padrão: import math."},
+    {question:"Qual comando cria um ambiente virtual (venv)?", options:["python -m venv venv","pip install venv","create venv","venv create"], correct:0, explanation:"Comando oficial: python -m venv venv."}
   ]
+  
 };
 
 /* ====== RENDERIZAÇÃO INICIAL DOS CARDS ====== */
@@ -856,7 +1049,7 @@ print("Olá, Mundo!")
 
     editorHtml = `
       <div class="level" style="background: #1e1e1e; color: white;">
-        <h3>💻 Prática Interativa</h3>
+        <h3>💻 Prática Interativa Simples</h3>
         <textarea id="code-input" rows="10" style="width:100%; font-family:monospace; background:#2d2d2d; color:#9cdcfe; border:none; padding:10px; border-radius:8px;">${placeholder}</textarea>
         <button class="btn" onclick="runCode('${courseId}')" style="margin-top:10px;">⚡ Executar</button>
         <iframe id="output-frame" style="width:100%; height:200px; background:white; margin-top:10px; border-radius:8px; border:none;"></iframe>
@@ -904,14 +1097,51 @@ print("Olá, Mundo!")
       }, 100);
   }
 
-  // 4. Inicialização de Funções Extras
+  // Inicialização com Delay para garantir que o HTML apareceu
   setTimeout(() => {
     if (editorHtml) runCode(courseId);
-    // Tenta carregar o quiz para a matéria específica ou para o curso geral
-    initQuiz(quizTargetId);
-  }, 50);
+
+    // Lógica do Quiz: Tenta o específico, se não der, tenta o geral do curso
+    if (typeof initQuiz === 'function') {
+        const sucesso = initQuiz(quizTargetId, "main-quiz-box");
+        if (!sucesso && quizTargetId !== courseId) {
+            initQuiz(courseId, "main-quiz-box");
+        }
+    }
+
+    // Ativa Gráficos de Matemática
+    if(courseId === 'matematica') {
+        if (typeof initMathInteractivity === 'function') initMathInteractivity();
+        if (typeof initQuadraticInteractivity === 'function') initQuadraticInteractivity();
+        if (typeof initDerivativeInteractivity === 'function') initDerivativeInteractivity();
+    }
+    // ... dentro do setTimeout da sua função openTopic ...
+
+// 5. Ativa Gráficos de Química
+if(courseId === 'quimica') {
+    if (typeof initChemistryInteractivity === 'function') initChemistryInteractivity();
 }
 
+if (document.getElementById('bio-crescimento')) {
+    console.log("Iniciando gráfico de Biologia..."); // Debug para você ver no console (F12)
+    initBiologyInteractivity();
+}
+
+// Ativa Geografia sempre que houver o canvas de climograma
+if (document.getElementById('geo-climograma')) {
+    console.log("Iniciando gráfico de Geografia...");
+    initGeographyInteractivity();
+}
+    
+    
+    // Ativa Gráfico de Física
+    if(courseId === 'fisica') {
+        if (typeof initPhysicsInteractivity === 'function') initPhysicsInteractivity(); 
+    }
+    
+    window.scrollTo(0, 0);
+  }, 100);
+}
 function showHome() {
   home.style.display = 'block';
   courseContainer.innerHTML = '';
@@ -1005,7 +1235,6 @@ function runDev() {
     doc.close();
   }
 } // <--- Fecha a função aqui
-
     /* ====== FUNÇÕES DO QUIZ ====== */
 
 function openQuiz(courseId, topicId) {
@@ -1094,6 +1323,361 @@ function checkAnswer(btn, selected, correct, explanation) {
         `;
     });
     quizBox.innerHTML = html;
+}
+    function initPhysicsInteractivity() {
+  const canvas = document.getElementById('physics-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const inputAcc = document.getElementById('input-acc');
+  const physicsText = document.getElementById('physics-text');
+
+  let time = 0;
+  let animationId;
+
+  function draw() {
+    const a = parseFloat(inputAcc.value);
+    physicsText.innerText = `Aceleração: ${a} m/s² | v = ${a} · t`;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Desenhar Eixos do Gráfico
+    ctx.strokeStyle = '#e2e8f0';
+    ctx.beginPath(); 
+    ctx.moveTo(40, 20); ctx.lineTo(40, 160); // Eixo V
+    ctx.lineTo(380, 160); // Eixo T
+    ctx.stroke();
+
+    // 1. Desenhar a linha da Velocidade no gráfico
+    ctx.strokeStyle = '#2563eb';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(40, 160);
+    for (let t = 0; t <= 340; t++) {
+      // v = a * t. Ajustamos a escala para o canvas
+      let v = (a * (t / 40)) * 15; 
+      ctx.lineTo(40 + t, 160 - v);
+    }
+    ctx.stroke();
+
+    // 2. Simulação visual (A "bolinha" acelerando)
+    time += 0.05;
+    if (time > 10) time = 0; // Reinicia a animação
+
+    // Posição s = s0 + v0t + 0.5at² (simplificado para o visual)
+    let posX = 40 + (0.5 * a * (time * time) * 2);
+    if (posX > 380) time = 0; // Reset se fugir da tela
+
+    ctx.fillStyle = '#f59e0b';
+    ctx.beginPath();
+    ctx.arc(posX, 185, 10, 0, Math.PI * 2);
+    ctx.fill();
+    
+    // Trilho da bolinha
+    ctx.fillStyle = '#eee';
+    ctx.fillRect(40, 195, 340, 2);
+
+    animationId = requestAnimationFrame(draw);
+  }
+
+  inputAcc.addEventListener('input', () => {
+    time = 0; // Reseta animação ao mexer no slider
+  });
+
+  draw();
+}
+  function initMathInteractivity() {
+  const canvas = document.getElementById('math-canvas-basic');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const inputA = document.getElementById('input-a');
+  const inputB = document.getElementById('input-b');
+  const formulaText = document.getElementById('formula-text');
+
+  function draw() {
+    const a = parseFloat(inputA.value);
+    const b = parseFloat(inputB.value);
+    formulaText.innerText = `f(x) = ${a}x ${b >= 0 ? '+ ' + b : '- ' + Math.abs(b)}`;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = '#e2e8f0';
+    ctx.beginPath(); ctx.moveTo(200, 0); ctx.lineTo(200, 250); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, 125); ctx.lineTo(400, 125); ctx.stroke();
+    ctx.strokeStyle = '#0a84ff';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    for (let x = -200; x <= 200; x++) {
+      let y = a * x + b;
+      let canvasX = 200 + x;
+      let canvasY = 125 - y;
+      if (x === -200) ctx.moveTo(canvasX, canvasY);
+      else ctx.lineTo(canvasX, canvasY);
+    }
+    ctx.stroke();
+  }
+  inputA.addEventListener('input', draw);
+  inputB.addEventListener('input', draw);
+  draw();
+}
+   function initMathInteractivity() {
+  const canvas = document.getElementById('math-canvas-basic');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const inputA = document.getElementById('input-a');
+  const inputB = document.getElementById('input-b');
+  const formulaText = document.getElementById('formula-text');
+
+  function draw() {
+    const a = parseFloat(inputA.value);
+    const b = parseFloat(inputB.value);
+    formulaText.innerText = `f(x) = ${a}x ${b >= 0 ? '+ ' + b : '- ' + Math.abs(b)}`;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = '#e2e8f0';
+    ctx.beginPath(); ctx.moveTo(200, 0); ctx.lineTo(200, 250); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, 125); ctx.lineTo(400, 125); ctx.stroke();
+    ctx.strokeStyle = '#0a84ff';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    for (let x = -200; x <= 200; x++) {
+      let y = a * x + b;
+      let canvasX = 200 + x;
+      let canvasY = 125 - y;
+      if (x === -200) ctx.moveTo(canvasX, canvasY);
+      else ctx.lineTo(canvasX, canvasY);
+    }
+    ctx.stroke();
+  }
+  inputA.addEventListener('input', draw);
+  inputB.addEventListener('input', draw);
+  draw();
+}
+
+// 5. LÓGICA DO GRÁFICO QUADRÁTICO
+function initQuadraticInteractivity() {
+  const canvas = document.getElementById('math-canvas-intermediate');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const inputA = document.getElementById('input-quad-a');
+  const inputB = document.getElementById('input-quad-b');
+  const inputC = document.getElementById('input-quad-c');
+  const formulaText = document.getElementById('formula-quad-text');
+
+  function draw() {
+    const a = parseFloat(inputA.value);
+    const b = parseFloat(inputB.value);
+    const c = parseFloat(inputC.value);
+    formulaText.innerText = `f(x) = ${a}x² ${b >= 0 ? '+ '+b : '- '+Math.abs(b)}x ${c >= 0 ? '+ '+c : '- '+Math.abs(c)}`;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = '#e2e8f0';
+    ctx.beginPath(); ctx.moveTo(200, 0); ctx.lineTo(200, 250); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, 125); ctx.lineTo(400, 125); ctx.stroke();
+    ctx.strokeStyle = '#ea580c';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    for (let x = -100; x <= 100; x++) {
+      let y = a * (x * x) + b * x + c;
+      let canvasX = 200 + x * 2;
+      let canvasY = 125 - y;
+      if (x === -100) ctx.moveTo(canvasX, canvasY);
+      else ctx.lineTo(canvasX, canvasY);
+    }
+    ctx.stroke();
+  }
+  [inputA, inputB, inputC].forEach(input => input.addEventListener('input', draw));
+  draw();
+}
+ function initDerivativeInteractivity() {
+  const canvas = document.getElementById('math-canvas-advanced');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const inputX = document.getElementById('input-der-x');
+  const formulaText = document.getElementById('formula-der-text');
+
+  function draw() {
+    const px = parseFloat(inputX.value);
+    const a = 0.05; // Fixamos uma parábola simples: f(x) = 0.05x²
+    
+    // f(x) = a*x² -> Derivada f'(x) = 2*a*x
+    const slope = 2 * a * px;
+    const py = a * (px * px);
+
+    formulaText.innerText = `No ponto x = ${px}, a inclinação é ${slope.toFixed(2)}`;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Eixos
+    ctx.strokeStyle = '#e2e8f0';
+    ctx.beginPath(); ctx.moveTo(200, 0); ctx.lineTo(200, 250); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, 125); ctx.lineTo(400, 125); ctx.stroke();
+
+    // 1. Desenha a Parábola (fundo)
+    ctx.strokeStyle = '#cbd5e1';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    for (let x = -100; x <= 100; x++) {
+      let y = a * (x * x);
+      ctx.lineTo(200 + x * 2, 125 - y);
+    }
+    ctx.stroke();
+
+    // 2. Desenha a Reta Tangente (A Derivada)
+    ctx.strokeStyle = '#16a34a';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    for (let x = px - 50; x <= px + 50; x++) {
+      // Equação da reta tangente: y - y1 = m(x - x1) -> y = m(x - px) + py
+      let y = slope * (x - px) + py;
+      ctx.lineTo(200 + x * 2, 125 - y);
+    }
+    ctx.stroke();
+
+    // 3. Desenha o Ponto do contato
+    ctx.fillStyle = '#16a34a';
+    ctx.beginPath();
+    ctx.arc(200 + px * 2, 125 - py, 5, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  inputX.addEventListener('input', draw);
+  draw();
+}
+ // --- COLOQUE NO FINAL DO ARQUIVO JS ---
+
+function initQuiz(id, targetBoxId = null) {
+    const containerId = targetBoxId || `${id}-quiz-box`;
+    const container = document.getElementById(containerId);
+    const questions = quizzes[id];
+
+    if (!container || !questions) {
+        console.warn(`Quiz não encontrado para: ${id}`);
+        return false; 
+    }
+
+    container.innerHTML = questions.map((q, index) => {
+        // Resolve o problema do 'undefined' buscando por vários nomes possíveis
+        const textoDaPergunta = q.question || q.text || q.pergunta || "Pergunta sem texto";
+        
+        return `
+        <div class="quiz-item" style="margin-bottom: 25px; padding: 15px; border: 1px solid #eee; border-radius: 8px;">
+            <p><strong>${index + 1}. ${textoDaPergunta}</strong></p>
+            <div class="options" style="display: flex; flex-direction: column; gap: 10px;">
+                ${q.options.map((opt, i) => `
+                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                        <input type="radio" name="q${index}" value="${i}">
+                        <span>${opt}</span>
+                    </label>
+                `).join('')}
+            </div>
+            <button class="btn" onclick="checkAnswer(this, ${q.correct}, 'q${index}')" style="margin-top: 15px; background: #007bff; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">
+                Verificar
+            </button>
+            <div class="feedback" style="margin-top: 10px; font-weight: bold; min-height: 20px;"></div>
+        </div>
+    `}).join('');
+
+    return true;
+}
+
+// Função auxiliar para verificar a resposta (Correct/Wrong)
+function checkAnswer(btn, correctIdx, radioName) {
+    const selected = document.querySelector(`input[name="${radioName}"]:checked`);
+    const feedback = btn.nextElementSibling;
+
+    if (!selected) {
+        feedback.innerHTML = "⚠️ Selecione uma opção!";
+        feedback.style.color = "orange";
+        return;
+    }
+
+    if (parseInt(selected.value) === correctIdx) {
+        feedback.innerHTML = "✅ Correto!";
+        feedback.style.color = "green";
+        btn.parentElement.style.borderLeft = "5px solid green";
+    } else {
+        feedback.innerHTML = "❌ Tente novamente.";
+        feedback.style.color = "red";
+        btn.parentElement.style.borderLeft = "5px solid red";
+    }
+}
+  function initChemistryInteractivity() {
+    const slider = document.getElementById('ph-slider');
+    const display = document.getElementById('ph-display');
+    const box = document.getElementById('ph-box');
+
+    if (!slider) return;
+
+    slider.addEventListener('input', () => {
+        const val = parseFloat(slider.value);
+        display.innerText = val.toFixed(1);
+        
+        // Lógica de cores (Vermelho -> Azul)
+        if (val < 7) {
+            box.style.background = `rgba(255, 0, 0, ${1 - val/7})`;
+            box.innerText = "Ambiente Ácido 🍋";
+        } else if (val > 7) {
+            box.style.background = `rgba(0, 0, 255, ${(val-7)/7})`;
+            box.innerText = "Ambiente Básico (Alcalino) 🧼";
+        } else {
+            box.style.background = "#e2e8f0";
+            box.innerText = "Neutro (Água Pura) 💧";
+        }
+    });
+}
+    function initBiologyInteractivity() {
+    const canvas = document.getElementById('bio-crescimento');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20],
+            datasets: [{
+                label: 'População (Indivíduos)',
+                data: [10, 20, 45, 90, 150, 185, 195, 200, 200, 200, 200],
+                borderColor: '#10b981',
+                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { title: { display: true, text: 'Crescimento Populacional (Curva S)' } }
+        }
+    });
+}
+
+function initGeographyInteractivity() {
+    const canvas = document.getElementById('geo-climograma');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    new Chart(ctx, {
+        data: {
+            labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+            datasets: [{
+                type: 'bar',
+                label: 'Precipitação (mm)',
+                data: [250, 210, 160, 100, 50, 20, 15, 30, 70, 120, 180, 230],
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                yAxisID: 'y'
+            }, {
+                type: 'line',
+                label: 'Temperatura (°C)',
+                data: [28, 27, 26, 24, 22, 20, 19, 21, 23, 25, 26, 27],
+                borderColor: 'rgb(255, 99, 132)',
+                yAxisID: 'y1'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { type: 'linear', position: 'left', title: { display: true, text: 'Chuva (mm)' } },
+                y1: { type: 'linear', position: 'right', grid: { drawOnChartArea: false }, title: { display: true, text: 'Temp (°C)' } }
+            }
+        }
+    });
 }
 /* Inicial: nada mais */
   </script>
