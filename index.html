@@ -117,11 +117,666 @@
 .lesson-item:hover {
     background: #eff6ff;
 }
+ /* Container Principal estilo 'Painel de Controle' */
+.lab-physics {
+    background: #2c3e50;
+    border: 4px solid #1a252f;
+    border-radius: 20px;
+    padding: 30px;
+    color: #ecf0f1;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* O Circuito */
+.circuit-area {
+    background: #ecf0f1;
+    border-radius: 10px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    margin-bottom: 25px;
+    border: 5px solid #bdc3c7;
+    position: relative;
+}
+
+/* Fio com efeito de brilho */
+.wire {
+    height: 6px;
+    background: #34495e;
+    flex-grow: 1;
+    transition: all 0.3s;
+    box-shadow: 0 0 0px rgba(241, 196, 15, 0);
+}
+
+/* Lâmpada Realista */
+.bulb {
+    width: 60px;
+    height: 60px;
+    background: #95a5a6;
+    border-radius: 50% 50% 15% 15%;
+    border: 3px solid #7f8c8d;
+    position: relative;
+    transition: 0.4s;
+}
+
+.bulb::after { /* Base da lâmpada */
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 15px;
+    width: 30px;
+    height: 15px;
+    background: #7f8c8d;
+    border-radius: 3px;
+}
+
+/* Multímetro Digital */
+.display-digital {
+    background: #000;
+    color: #00ff00;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #555;
+    text-align: center;
+    font-size: 1.2rem;
+    box-shadow: inset 0 0 10px rgba(0,255,0,0.2);
+}
+ .geo-lab {
+    background: #1a1a1a;
+    border-radius: 15px;
+    padding: 25px;
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Área de Visualização do Solo */
+.crust-view {
+    height: 250px;
+    background: #8b4513; /* Cor de terra */
+    position: relative;
+    overflow: hidden;
+    border-bottom: 10px solid #ff4500; /* Magma/Astenosfera */
+    margin-bottom: 20px;
+}
+
+.plate {
+    width: 50%;
+    height: 60px;
+    background: #5d4037;
+    position: absolute;
+    top: 50px;
+    border-top: 5px solid #4caf50; /* Grama/Vegetação */
+    transition: all 1s ease-in-out;
+}
+
+#plate-left { left: 0; border-right: 2px solid #3d2b1f; }
+#plate-right { right: 0; border-left: 2px solid #3d2b1f; }
+
+/* Efeito de Tremor (Terremoto) */
+@keyframes shake {
+    0% { transform: translate(1px, 1px); }
+    20% { transform: translate(-3px, 0px); }
+    40% { transform: translate(3px, 2px); }
+    100% { transform: translate(1px, -1px); }
+}
+ /* geo-lab-style.css */
+
+/* Container para os ícones geológicos */
+.geo-icon-container {
+    position: absolute;
+    top: 10px; /* Acima da grama */
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none; /* Não atrapalha cliques */
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.geo-icon {
+    font-size: 30px;
+    margin: 0 10px;
+}
+
+/* Animação de surgimento suave */
+.icon-appear {
+    opacity: 1;
+}
+ /* Estilo do Visor do Microscópio */
+.microscope-viewport {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    border: 15px solid #333;
+    margin: 20px auto;
+    overflow: hidden;
+    position: relative;
+    background: #000;
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.9);
+}
+
+#cell-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease, filter 0.2s ease;
+    filter: blur(10px); /* Começa desfocado */
+}
+
+/* Painel de Controle Estilo Laboratório */
+.bio-controls {
+    background: #e8f5e9;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #2e7d32;
+}
+
+.shaking { animation: shake 0.2s infinite; }
+ .math-lab {
+    background: #ffffff;
+    background-image: radial-gradient(#d1d1d1 1px, transparent 1px);
+    background-size: 20px 20px; /* Efeito de papel milimetrado */
+    border: 2px solid #0056b3;
+    border-radius: 15px;
+    padding: 20px;
+    position: relative;
+}
+
+.shape-container {
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #eee;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+#geo-shape {
+    background: rgba(0, 86, 179, 0.3);
+    border: 2px solid #0056b3;
+    transition: all 0.2s ease;
+}
+ /* Espaço onde o objeto 3D flutua */
+.scene-3d {
+    width: 100%;
+    height: 300px;
+    perspective: 800px; /* Cria a sensação de profundidade */
+    background: #f0f4f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* O objeto que será rotacionado */
+.cube {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    transform-style: preserve-3d;
+    transform: rotateX(-20deg) rotateY(30deg); /* Ângulo inicial */
+    transition: transform 0.1s;
+}
+
+/* Estilo das faces do cubo */
+.face {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: rgba(0, 80, 136, 0.7);
+    border: 2px solid #005088;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: white;
+}
+
+/* Posicionamento inicial das faces para formar um cubo */
+.front  { transform: translateZ(50px); }
+.back   { transform: rotateY(180deg) translateZ(50px); }
+.right  { transform: rotateY(90deg) translateZ(50px); }
+.left   { transform: rotateY(-90deg) translateZ(50px); }
+.top    { transform: rotateX(90deg) translateZ(50px); }
+.bottom { transform: rotateX(-90deg) translateZ(50px); }
+ /* O "Universo" */
+.space-scene {
+    width: 100%;
+    height: 500px;
+    background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+    perspective: 1200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+/* Container que rotacionamos com a câmera */
+.solar-system {
+    position: relative;
+    transform-style: preserve-3d;
+    transform: rotateX(65deg); /* Visão inclinada padrão */
+}
+
+/* Estilo do Sol */
+.sun {
+    width: 60px;
+    height: 60px;
+    background: #ffcc00;
+    border-radius: 50%;
+    box-shadow: 0 0 50px #ff6600, inset 0 0 20px #ffffff;
+    transform: rotateX(-65deg); /* Desfaz a inclinação para o Sol ficar "de frente" */
+    position: absolute;
+    z-index: 10;
+}
+
+/* Container de Órbita (é o que gira) */
+.orbit {
+    position: absolute;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform-style: preserve-3d;
+    animation: orbit-rotation linear infinite;
+}
+
+/* O Planeta em si */
+.planet {
+    position: absolute;
+    top: 50%;
+    left: -10px; /* Posiciona na borda da órbita */
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    transform: rotateX(-65deg); /* Mantém o planeta "em pé" */
+}
+
+/* Animação das Órbitas */
+@keyframes orbit-rotation {
+    from { transform: rotateZ(0deg); }
+    to { transform: rotateZ(360deg); }
+}
+.ocean-container {
+    perspective: 1000px;
+    width: 100%;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #1a1a1a;
+    border-radius: 15px;
+}
+
+/* 1. O AMBIENTE (A Câmera) */
+.world {
+    width: 100%;
+    height: 400px;
+    perspective: 1000px;
+    background: #87ceeb; /* Céu */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.chunk {
+    position: relative;
+    transform-style: preserve-3d;
+    transform: rotateX(-30deg) rotateY(45deg);
+    transition: transform 0.5s;
+}
+
+/* 2. O BLOCO (Estrutura) */
+.block {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    transform-style: preserve-3d;
+    transform: translate3d(calc(var(--x) * 30px), calc(var(--y) * -30px), calc(var(--z) * 30px));
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+/* 3. AS 6 FACES (Obrigatório para não ficar transparente) */
+.face {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: 1px solid rgba(0,0,0,0.1);
+    backface-visibility: hidden;
+}
+
+/* Posicionamento 3D das faces */
+.face.front  { transform: translateZ(15px); }
+.face.back   { transform: rotateY(180deg) translateZ(15px); }
+.face.left   { transform: rotateY(-90deg) translateZ(15px); }
+.face.right  { transform: rotateY(90deg) translateZ(15px); }
+.face.top    { transform: rotateX(90deg) translateZ(15px); }
+.face.bottom { transform: rotateX(-90deg) translateZ(15px); }
+
+/* 4. MATERIAIS (Cores corrigidas) */
+.grass .face { background: #795548; } /* Lados terra */
+.grass .top  { background: #5d8233; } /* Topo grama */
+
+.stone .face { background: #95a5a6; }
+.stone .right { background: #707b7c; }
+
+.water .face { background: rgba(0, 105, 148, 0.6); border: none; }
+
+/* 5. EFEITOS DE ESTRESSE FÍSICO */
+.block.breaking { transform: scale(0); opacity: 0; }
+.heat-stress { filter: sepia(0.5) saturate(2); transform: scale(1.05); }
+/* Efeito de Gravidade/Instabilidade (Inclinação) */
+    
+/* 1. ESTRUTURA DO BLOCO */
+.block {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    transform-style: preserve-3d;
+    /* Usa o Y negativo para o prédio subir e não afundar no chão */
+    transform: translate3d(calc(var(--x) * 30px), calc(var(--y) * -30px), calc(var(--z) * 30px));
+    transform-origin: bottom; 
+    transition: transform 0.3s ease-out, filter 0.5s;
+    cursor: pointer;
+}
+
+/* 2. AS FACES */
+.face {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: 1px solid rgba(0,0,0,0.1);
+    backface-visibility: hidden; /* Melhora a performance */
+    pointer-events: none; 
+}
+
+/* Posicionamento (Obrigatório para o cubo fechar) */
+.face.front  { transform: translateZ(15px); }
+.face.back   { transform: rotateY(180deg) translateZ(15px); }
+.face.left   { transform: rotateY(-90deg) translateZ(15px); }
+.face.right  { transform: rotateY(90deg) translateZ(15px); }
+.face.top    { transform: rotateX(90deg) translateZ(15px); }
+.face.bottom { transform: rotateX(-90deg) translateZ(15px); }
+
+/* 3. MATERIAIS E ANIMAÇÕES */
+.water .face { background: rgba(41, 128, 185, 0.6); }
+.water-moving .face { 
+    background: rgba(52, 152, 219, 0.9);
+    animation: flow 1s infinite alternate; 
+}
+
+@keyframes flow {
+    from { filter: hue-rotate(0deg); }
+    to { filter: hue-rotate(20deg); }
+}
+
+.generator .face { background: #7f8c8d; border: 2px dashed #f1c40f; }
+/* Adicione aqui os transforms das faces (frente, tras, etc.) que você já usava */
+/* Quando a classe fluxo-ativo for adicionada via JS */
+.water.fluxo-ativo .face {
+    background: rgba(52, 152, 219, 0.8);
+    box-shadow: inset 0 0 15px white;
+    transition: all 0.5s ease;
+}
+/* Local: Arquivo CSS */
+.water-moving .face {
+    animation: waterFlowAnim 2s infinite ease-in-out;
+}
+
+@keyframes waterFlowAnim {
+    0% { filter: brightness(1); }
+    50% { filter: brightness(1.3) saturate(1.2); }
+    100% { filter: brightness(1); }
+}
+/* Bloco de Metal (Ferro) */
+.block.iron .face {
+    background: #4a4a4a; /* Um cinza bem escuro, metálico */
+    border: 1px solid #222;
+}
+.block.iron .top {
+    background: #666; /* Topo levemente mais claro */
+}
+
+/* Ajuste de profundidade para o Viewport */
+/* O Container que segura os blocos precisa de perspectiva */
+.world {
+    perspective: 1000px;
+    perspective-origin: center;
+}
+
+/* O local onde os blocos são gerados precisa manter o 3D */
+/* O container azul que você criou */
+#water-container {
+    position: absolute; /* Mudado de relative para absolute */
+    transform-style: preserve-3d;
+    top: 60%;  /* Desci um pouco para você ver mais o céu */
+    left: 50%;
+    width: 0; 
+    height: 0;
+    /* Remova o transform daqui */
+}
+
+/* O container específico do foguete */
+#foguete-container {
+    position: absolute;
+    top: 50%; /* Centraliza no meio da área azul */
+    left: 50%;
+    transform-style: preserve-3d;
+    transition: transform 4s ease-in;
+}
+
+/* A classe dos blocos */
+.chunk {
+    position: absolute; /* Obrigatório para o posicionamento 3D */
+    width: 32px;
+    height: 32px;
+    transform-style: preserve-3d;
+    backface-visibility: visible;
+    /* Adicione uma borda leve para ajudar a ver o 3D */
+    border: 0.5px solid rgba(0, 0, 0, 0.1);
+}
+
+.iron { background-color: #7f8c8d; }   /* Torre Cinza */
+.stone { background-color: #95a5a6; }  /* Chão Cinza Claro */
+.gold { background-color: #f1c40f; }   /* Motor */
+.diamond { background-color: #3498db; }/* Corpo */
+.glass { background-color: #ecf0f1; border: 1px solid white; } /* Ponta */
+@keyframes shake {
+    0% { transform: translate3d(0, 0, 0); }
+    25% { transform: translate3d(2px, 0, 0); }
+    50% { transform: translate3d(-2px, 0, 0); }
+    75% { transform: translate3d(2px, 0, 0); }
+    100% { transform: translate3d(0, 0, 0); }
+}
+
+.tremendo {
+    animation: shake 0.1s infinite;
+}
+#viewport {
+    perspective: 1200px; /* Aumentei um pouco a profundidade */
+    perspective-origin: 50% 50%;
+    background: #87CEEB;
+    overflow: hidden; 
+    position: relative;
+    width: 100%;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* Container do bloco (agora vazio, apenas posiciona) */
+.chunk {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    transform-style: preserve-3d;
+}
+
+/* Estilo comum para todas as faces */
+.face {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    background-size: cover;
+    border: 0.5px solid rgba(0,0,0,0.2); /* Ajuda a ver as bordas */
+}
+
+/* Posicionamento de cada face no espaço 3D */
+.front  { transform: rotateY(0deg) translateZ(16px); }
+.back   { transform: rotateY(180deg) translateZ(16px); }
+.top    { transform: rotateX(90deg) translateZ(16px); }
+.bottom { transform: rotateX(-90deg) translateZ(16px); }
+.left   { transform: rotateY(-90deg) translateZ(16px); }
+.right  { transform: rotateY(90deg) translateZ(16px); }
+
+/* Aplica a cor/textura à face baseada no tipo do bloco pai */
+.iron .face { background-color: #7f8c8d; }
+.stone .face { background-color: #95a5a6; }
+.gold .face { background-color: #f1c40f; box-shadow: inset 0 0 10px #d35400; }
+.diamond .face { background-color: #3498db; }
+.glass .face { background-color: rgba(236, 240, 241, 0.6); border: 1px solid white; }
+#python-input:focus {
+    color: #9cdcfe !important;
+}
+
+/* 1. Reset e Container Principal */
+#city-project-wrapper {
+    --bg-color: #1a1a1a;
+    perspective: 1200px;
+}
+
+/* 2. O Mundo e a Grade */
+.city-world {
+    position: absolute;
+    left: 50%; top: 50%;
+    transform-style: preserve-3d;
+    transition: transform 0.4s ease;
+}
+
+#city-grid-base {
+    position: absolute;
+    width: 2000px; height: 2000px;
+    background-image: linear-gradient(#333 1px, transparent 1px), 
+                      linear-gradient(90deg, #333 1px, transparent 1px);
+    background-size: 50px 50px;
+    transform: rotateX(90deg) translateZ(0);
+    opacity: 0.2;
+    left: -1000px; top: -1000px;
+}
+
+/* 3. Lógica do Cubo (O segredo do fechamento) */
+.city-cube {
+    position: absolute;
+    transform-style: preserve-3d;
+    /* Usa as variáveis definidas em cada tipo */
+    width: var(--w);
+    height: var(--h);
+}
+
+.city-face {
+    position: absolute;
+    width: var(--w);
+    height: var(--h);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.5s ease;
+    backface-visibility: visible;
+}
+
+/* Posicionamento das faces usando as variáveis */
+.city-face.front  { transform: translateZ(calc(var(--d) / 2)); }
+.city-face.back   { transform: rotateY(180deg) translateZ(calc(var(--d) / 2)); }
+.city-face.left   { width: var(--d); transform: rotateY(-90deg) translateZ(calc(var(--w) / 2)); left: calc(50% - var(--d)/2); }
+.city-face.right  { width: var(--d); transform: rotateY(90deg) translateZ(calc(var(--w) / 2)); left: calc(50% - var(--d)/2); }
+.city-face.top    { height: var(--d); transform: rotateX(90deg) translateZ(calc(var(--h) / 2)); top: calc(50% - var(--d)/2); }
+
+/* 4. Definição por Tipo (Tamanhos e Cores) */
+.city-cube.house { 
+    --w: 30px; --h: 30px; --d: 30px; 
+}
+.house .city-face { background: #e67e22; border-color: #a04000; }
+.house .city-face.top { background: #d35400; }
+
+.city-cube.office { 
+    --w: 35px; --h: 100px; --d: 35px; 
+}
+.office .city-face { 
+    background: #2c3e50; 
+    background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 8px 12px;
+}
+
+.city-cube.power-plant { 
+    --w: 80px; --h: 50px; --d: 80px; 
+}
+.power-plant .city-face { background: #7f8c8d; border: 2px solid #34495e; }
+
+/* 5. Interatividade e Energia */
+.city-cube:hover .city-face {
+    filter: brightness(1.3);
+    cursor: pointer;
+    outline: 1px solid white;
+}
+
+#city-project-wrapper.power-on .office .city-face {
+    background-color: #34495e;
+    box-shadow: inset 0 0 15px rgba(241, 196, 15, 0.4);
+    background-image: radial-gradient(circle, #f1c40f 1px, transparent 1px);
+}
+
+#city-project-wrapper.power-on .house .city-face {
+    border-color: #f1c40f;
+    box-shadow: 0 0 10px rgba(241, 196, 15, 0.2);
+}
+.city-world {
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+/* --- TIPO: PRÉDIO RESIDENCIAL (Mais largo que o office) --- */
+.city-cube.apartment { 
+    --w: 50px; --h: 80px; --d: 50px; 
+}
+.apartment .city-face { 
+    background: #5d6d7e; 
+    background-image: repeating-linear-gradient(to bottom, transparent, transparent 15px, rgba(255,255,255,0.05) 15px, rgba(255,255,255,0.05) 20px);
+}
+
+/* --- TIPO: INDÚSTRIA (Baixa e bem larga) --- */
+.city-cube.factory { 
+    --w: 100px; --h: 30px; --d: 60px; 
+}
+.factory .city-face { background: #566573; border: 2px dashed #2c3e50; }
+
+/* --- TIPO: ÁRVORE (Um pequeno bloco verde sobre um tronco) --- */
+/* Para a árvore, você pode construir dois blocos, mas aqui vai um simplificado */
+.city-cube.tree { 
+    --w: 15px; --h: 40px; --d: 15px; 
+}
+.tree .city-face { background: #27ae60; }
+.tree .city-face.top { background: #2ecc71; }
+/* Brilho de seleção */
+.city-cube.selected .city-face {
+    outline: 3px solid #f1c40f !important;
+    box-shadow: 0 0 20px #f1c40f;
+    z-index: 100;
+}
+
+/* Cursor de movimento */
+.city-cube {
+    cursor: move;
+}
   </style>
 </head>
 <body>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+<script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
   <header>
     <div class="brand" onclick="showHome()">
       <div class="logo">A+</div>
@@ -189,7 +844,29 @@ const courses = [
           title: 'Função Quadrática (2º Grau)',
           content: { 
             basic: `
-        Representada por $f(x) = ax^2 + bx + c$, com gráfico em forma de parábola.`, 
+        <p>A função quadrática gera uma curva chamada <strong>parábola</strong>. 
+        Ajuste os coeficientes para ver como ela se comporta:</p>
+        <div style="background:#fff7ed; padding:15px; border-radius:10px; margin:10px 0; border:1px solid #ffedd5">
+          <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; margin-bottom:10px">
+            <div>
+              <label style="display:block; font-size:11px; color:#9a3412">Concavidade (a):</label>
+              <input type="range" id="input-quad-a" min="-0.5" max="0.5" step="0.05" value="0.1" style="width:100%">
+            </div>
+            <div>
+              <label style="display:block; font-size:11px; color:#9a3412">Inclinação (b):</label>
+              <input type="range" id="input-quad-b" min="-5" max="5" step="0.5" value="0" style="width:100%">
+            </div>
+            <div>
+              <label style="display:block; font-size:11px; color:#9a3412">Corte Y (c):</label>
+              <input type="range" id="input-quad-c" min="-50" max="50" value="0" style="width:100%">
+            </div>
+          </div>
+          <p id="formula-quad-text" style="text-align:center; font-family:monospace; font-weight:bold; color:#ea580c; margin-top:10px; font-size:16px">f(x) = 0.1x² + 0x + 0</p>
+        </div>
+        <div class="visual" style="justify-content:center">
+          <canvas id="math-canvas-intermediate" width="400" height="250" style="background:#fff; border:1px solid #ddd"></canvas>
+        </div>
+`, 
           }
        },
         { id: 'funcoes-logaritmicas', // ID que a openLesson usa
@@ -307,6 +984,113 @@ const courses = [
         }
       ]
     },
+     {
+  id: 'calculo',
+  title: 'Cálculo',
+  subtopics: [
+    {
+      id: 'calculo-diferencial',
+      title: 'Derivada',
+      content: {
+        basic: `
+         <div class="math-lab">
+    <canvas id="canvas-math" width="500" height="300" style="border:1px solid #ddd; background:#fff; display:block; margin: 0 auto;"></canvas>
+    <div id="math-info" style="text-align:center; margin-top:10px; font-family:monospace; color:#2980b9;"></div>
+</div>
+
+.`,
+      }
+      },
+        {
+        id: 'calculo-integral',
+      title: 'Integral',
+      content: {
+        basic: `
+          Dedica-se ao estudo da integral, utilizada para calcular áreas sob curvas, volumes de sólidos e outras somas acumuladas, sendo geometricamente ligada à área de figuras planas.`,
+     }
+        }
+      ]
+    },
+    {
+  id: 'laboratorio-matematica',
+  title: 'Laboratório de Matemática',
+  subtopics: [
+    {
+      id: 'geometria-interativa',
+      title: 'Painel de Geometria',
+      content: {
+        basic: `
+          <div class="math-lab">
+    <h3 style="color:#0056b3; text-align:center;">📐 Laboratório: Área e Perímetro</h3>
+    
+    <div class="shape-container">
+        <div id="geo-shape" style="width: 100px; height: 100px;"></div>
+        
+        <span id="label-h" style="position:absolute; left:30%; font-weight:bold;">H</span>
+        <span id="label-b" style="position:absolute; bottom:10%; font-weight:bold;">B</span>
+    </div>
+
+    <div style="background:#f8f9fa; padding:15px; border-radius:10px;">
+        <div style="margin-bottom:10px;">
+            <label>Base (Largura): <span id="b-val">100</span>px</label>
+            <input type="range" id="input-b" min="50" max="250" value="100" style="width:100%" oninput="updateMathLab()">
+        </div>
+        <div>
+            <label>Altura: <span id="h-val">100</span>px</label>
+            <input type="range" id="input-h" min="50" max="200" value="100" style="width:100%" oninput="updateMathLab()">
+        </div>
+    </div>
+
+    <div id="math-result" style="margin-top:15px; text-align:center; font-family:monospace; font-size:1.2rem; color:#0056b3;">
+        Área = 10.000 px² | Perímetro = 400 px
+    </div>
+</div>.`,
+         }
+      },
+        {
+        id: 'geometria',
+      title: 'Controles de Dimensões',
+      content: {
+        basic: `
+          <div class="math-lab-3d" style="background:white; padding:20px; border-radius:15px; border:2px solid #005088;">
+    <h3 style="color:#005088; text-align:center;">📐 Laboratório: Extrusão Espacial</h3>
+
+    <div class="scene-3d">
+        <div class="cube" id="shape-3d">
+            <div class="face front">Frente</div>
+            <div class="face back"></div>
+            <div class="face right"></div>
+            <div class="face left"></div>
+            <div class="face top"></div>
+            <div class="face bottom"></div>
+        </div>
+    </div>
+
+    <div style="margin-top:20px; display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+        <div>
+            <label>Largura (X): <span id="w-val">100</span>px</label>
+            <input type="range" id="input-w" min="50" max="150" value="100" style="width:100%" oninput="update3D()">
+            
+            <label>Altura (Y): <span id="h-val">100</span>px</label>
+            <input type="range" id="input-h" min="50" max="150" value="100" style="width:100%" oninput="update3D()">
+        </div>
+        <div>
+            <label>Profundidade/Extrusão (Z): <span id="z-val">100</span>px</label>
+            <input type="range" id="input-z" min="1" max="150" value="100" style="width:100%" oninput="update3D()">
+            
+            <label>Rotação Visual:</label>
+            <input type="range" id="input-rot" min="0" max="360" value="30" style="width:100%" oninput="update3D()">
+        </div>
+    </div>
+
+    <div id="volume-result" style="margin-top:20px; padding:10px; background:#e3f2fd; text-align:center; border-radius:8px; font-family:monospace; font-size:1.1rem;">
+        Volume (L × A × P) = 1.000.000 px³
+    </div>
+</div>.`,
+     }
+        }
+      ]
+    },
     {
   id: 'aritmetica',
   title: 'Aritmética',
@@ -363,7 +1147,7 @@ const courses = [
       title: 'Mecânica Clássica',
       subtopics: [ // Esta lista será lida pela openTopic
         {
-          id: 'cinematica', // ID que a openLesson usa
+          id: 'muv-id-da-sua-licao', // ID que a openLesson usa
           title: 'Cinemática',
           content: { 
             basic: `
@@ -477,11 +1261,33 @@ Estuda as forças atuantes em um corpo em equilíbrio estático, utilizando prin
      {
       id: 'ondulatoria', // ID único para o Quiz
       title: 'Ondulatória',
-      content: {
-        basic: 'Classificação das ondas (mecânicas vs. eletromagnéticas) e elementos de uma onda (crista, vale, frequência).',
-        intermediate: 'Fenômenos ondulatórios: reflexão, refração, difração e interferência simples.',
-        advanced: 'Polarização, ondas estacionárias e sobreposição de ondas complexas.'
-      }
+     subtopics: [ // Esta lista será lida pela openTopic
+        {
+          id: 'lei-zero', // ID que a openLesson usa
+          title: 'Lei Zero',
+          content: { 
+            basic: `
+  <h3>Simulador de Ondas</h3>
+            <canvas id="waveChart" style="max-height:250px;"></canvas>
+            <div style="margin-top:15px; background:#f8f9fa; padding:15px; border-radius:8px;">
+                <label>Amplitude:</label>
+                <input type="range" id="amp-slider" min="0.1" max="2" step="0.1" value="1" oninput="updateWave()">
+                <br>
+                <label>Frequência:</label>
+                <input type="range" id="freq-slider" min="0.5" max="5" step="0.1" value="1" oninput="updateWave()">
+                <p id="wave-info" style="font-weight:bold; color:#6f42c1; margin-top:10px;">Amplitude: 1 | Frequência: 1</p>
+            </div>
+        `,
+          }
+        },
+        { id: 'primeira-lei', // ID que a openLesson usa
+          title: 'Primeira Lei',
+          content: { 
+            basic: `
+   Baseada na conservação da energia, afirma que a variação da energia interna ( ΔU ) é igual ao calor fornecido ( Q ) menos o trabalho realizado pelo sistema ( W ): ΔU=Q−W.
+`,}       
+        }
+      ]
     },
     {
       id: 'relatividade', // ID único para o Quiz
@@ -509,6 +1315,166 @@ Estuda as forças atuantes em um corpo em equilíbrio estático, utilizando prin
         intermediate: 'Fissão e fusão nuclear, reatores nucleares e detecção de radiação.',
         advanced: 'O Modelo Padrão: quarks, léptons e bósons, e o funcionamento de aceleradores de partículas.'
       }
+    },
+     {
+      id: 'laboratorio-fisica', // ID único para o Quiz
+      title: 'Laboratório de Física',
+     subtopics: [ // Esta lista será lida pela openTopic
+        {
+          id: 'eletrodinamica', // ID que a openLesson usa
+          title: 'Bancada de Eletrodinâmica',
+          content: { 
+            basic: `
+  <div class="lab-physics">
+    <header style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <h2 style="margin:0; font-size:1.5rem;">⚡ Bancada Eletrotécnica v1.0</h2>
+        <div class="display-digital">
+            <span id="i-val">0.00</span> <small>AMPERES</small>
+        </div>
+    </header>
+
+    <div class="circuit-area">
+        <div style="background:#c0392b; width:50px; height:80px; border-radius:5px; display:flex; flex-direction:column; justify-content:center; align-items:center; font-weight:bold; color:white;">
+            <span>+</span><div style="height:40px;"></div><span>-</span>
+        </div>
+        
+        <div id="wire-1" class="wire"></div>
+        
+        <div class="bulb" id="light-bulb"></div>
+        
+        <div id="wire-2" class="wire"></div>
+        
+        <div style="width:60px; height:20px; background:#d35400; border-radius:10px; border:2px solid #a04000;"></div>
+    </div>
+
+    <div class="controls" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+        <div class="control-group">
+            <label>Fonte de Tensão (V): <strong id="v-label">12</strong>V</label>
+            <input type="range" id="volts" min="0" max="100" value="12" style="width:100%" oninput="updateCircuit()">
+        </div>
+        <div class="control-group">
+            <label>Resistência (R): <strong id="r-label">10</strong>Ω</label>
+            <input type="range" id="res" min="1" max="100" value="10" style="width:100%" oninput="updateCircuit()">
+        </div>
+    </div>
+    
+    <p id="physics-msg" style="margin-top:20px; text-align:center; font-style:italic; color:#bdc3c7;">Ajuste os valores para iniciar o fluxo.</p>
+</div>
+        `,
+       }
+      },
+       {
+          id: 'lancamento-foguete', // ID que a openLesson usa
+          title: 'Estação de Lançamento de Foguetes',
+          content: { 
+            basic: `
+  <div class="world" id="viewport" style="height: 300px; background: #87CEEB; overflow: hidden; position: relative;">
+        <div class="chunk-container" id="water-container"></div>
+    </div>
+
+    <div id="course-foguete" class="controles-usina" style="background:#1a1a2e; color:white; padding:15px; border-radius:8px; margin-top:10px;">
+        <h3 style="color:#e74c3c;">🚀 Centro de Comando Aeroespacial</h3>
+        <div style="margin-bottom: 15px;">
+            <label>Massa do Foguete (kg): </label>
+            <input type="range" id="py-massa" min="1000" max="10000" value="5000" oninput="this.nextElementSibling.value = this.value">
+            <output>5000</output>
+        </div>
+        <div style="margin-bottom: 15px;">
+            <label>Potência do Motor (kN): </label>
+            <input type="range" id="py-empuxo" min="0" max="200" value="100" oninput="this.nextElementSibling.value = this.value">
+            <output>100</output>
+        </div>
+        <div id="missao-status" style="color:#2ecc71; font-weight:bold;">🛰️ Status: Aguardando Ignição</div>
+    </div>
+
+    <textarea id="python-editor" style="width:100%; height:100px; margin-top:10px; background:#222; color:#0f0;"></textarea>
+    <iframe id="output-frame" style="width:100%; height:80px; background:#111;"></iframe>
+
+    <div style="text-align:center; margin-top: 10px;">
+        <button onclick="gerarMapaFoguete()">🚀 Construir Foguete</button>
+        <button onclick="runCode('lancamento-foguete')">🔥 Lançar!</button>
+        <button onclick="rotateWorld()">Girar Visão</button>
+        <button onclick="gerarMapaFoguete()">🔄 Resetar Missão</button>
+    </div>
+        `,
+       }
+      },
+       {
+       id: 'astronomia', // ID que a openLesson usa
+          title: 'Astronomia: Mini Sistema Solar 3D',
+          content: { 
+            basic: `
+  <div class="lab-astronomy" style="background:#000; padding:20px; border-radius:20px; color:white;">
+    <h3 style="text-align:center; color:#ffcc00;">🛰️ Laboratório: Mecânica Orbital</h3>
+
+    <div class="space-scene">
+        <div class="solar-system" id="universe">
+            <div class="sun"></div>
+
+            <div class="orbit" id="earth-orbit" style="width:250px; height:250px; animation-duration: 10s;">
+                <div class="planet" style="background: #2e7d32; box-shadow: 0 0 10px #4caf50;"></div>
+            </div>
+
+            <div class="orbit" id="mars-orbit" style="width:380px; height:380px; animation-duration: 18.8s;">
+                <div class="planet" style="background: #c0392b; width:15px; height:15px; box-shadow: 0 0 10px #e74c3c;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top:20px; display:grid; grid-template-columns: 1fr 1fr; gap:20px; background:rgba(255,255,255,0.1); padding:15px; border-radius:10px;">
+        <div>
+            <label>Ângulo da Câmera (Vertical):</label>
+            <input type="range" id="cam-x" min="0" max="90" value="65" style="width:100%" oninput="updateSpace()">
+        </div>
+        <div>
+            <label>Velocidade do Tempo:</label>
+            <input type="range" id="time-speed" min="0.1" max="5" step="0.1" value="1" style="width:100%" oninput="updateSpace()">
+        </div>
+    </div>
+</div>
+        `,
+     }
+      },
+    {
+          id: 'estresse-fisico', // ID que a openLesson usa
+          title: 'Painel de Controle de Estresse Físico',
+          content: { 
+            basic: `
+  <div class="eng-lab" style="background:#2c3e50; padding:20px; border-radius:20px; color:white;">
+    <h3 style="text-align:center; color:#ecf0f1;">🏗️ Simulação: Integridade Estrutural</h3>
+
+    <div class="world" style="height:350px; background:#1a1a1a;">
+        <div class="chunk" id="building-structure">
+            </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-top:20px; background:rgba(0,0,0,0.3); padding:15px; border-radius:10px;">
+        <div>
+            <label>🌡️ Temperatura (Dilatação): <span id="t-val">25</span>°C</label>
+            <input type="range" id="slider-temp" min="0" max="100" value="25" style="width:100%" oninput="updatePhysics()">
+            
+            <label>⚖️ Carga (Pressão): <span id="p-val">100</span>%</label>
+            <input type="range" id="slider-press" min="50" max="200" value="100" style="width:100%" oninput="updatePhysics()">
+        </div>
+        <div>
+            <label>🌍 Estabilidade do Solo (Gravidade):</label>
+            <input type="range" id="slider-grav" min="-20" max="20" value="0" style="width:100%" oninput="updatePhysics()">
+            
+            <div id="status-display" style="margin-top:10px; padding:10px; background:#c0392b; border-radius:5px; text-align:center; display:none;">
+                ⚠️ ALERTA DE COLAPSO!
+            </div>
+        </div>
+    </div>
+</div>
+<div style="padding:15px; background:#333; color:white; display:flex; gap:10px; justify-content:center; flex-wrap: wrap;">
+        <button onclick="generatePhysicsBuilding()" style="padding:10px; cursor:pointer;">Construir Prédio</button>
+         <button onclick="rotateWorld()">Girar Visão</button>
+    </div>
+</div>
+        `,
+       }       
+        }
+      ]
     },
     {
       id: 'optica',
@@ -572,6 +1538,7 @@ Estuda as forças atuantes em um corpo em equilíbrio estático, utilizando prin
           advanced: 'Eletroquímica (Pilhas e Eletrólise), Propriedades Coligativas e Equilíbrio de Solubilidade (K<sub>ps</sub>).'
         }
       },
+      
       {
         id: 'quimica-analitica',
         title: 'Química Analítica',
@@ -582,21 +1549,47 @@ Estuda as forças atuantes em um corpo em equilíbrio estático, utilizando prin
         }
       },
       {
+      id: 'laboratorio-quimica', // ID único para o Quiz
+      title: 'Laboratório de Química',
+     subtopics: [ // Esta lista será lida pela openTopic
+        {
+          id: 'indicador-ph', // ID que a openLesson usa
+          title: 'Escala de pH',
+          content: { 
+            basic: `
+  <div class="chemistry-lab" style="text-align: center; padding: 20px;">
+    <div id="bequer" style="width: 120px; height: 160px; border: 4px solid #eee; border-radius: 0 0 20px 20px; margin: 0 auto; position: relative; background: rgba(255,255,255,0.1); overflow: hidden;">
+        <div id="liquido-quimica" style="width: 100%; height: 80%; position: absolute; bottom: 0; background-color: #bdc3c7; transition: all 1s ease;"></div>
+    </div>
+    
+    <h2 id="ph-display" style="color: #eee; margin-top: 15px;">pH: 7 (Neutro)</h2>
+    
+    <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: center;">
+        <button onclick="mudarPH(2)" style="background: #e74c3c; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">Suco de Limão (Ácido)</button>
+        <button onclick="mudarPH(7)" style="background: #95a5a6; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">Água (Neutro)</button>
+        <button onclick="mudarPH(12)" style="background: #3498db; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">Soda Cáustica (Base)</button>
+    </div>
+</div>
+        `,
+             }
+      }
+    ]
+  },
+
+      {
+        id: 'reacoes-quimicas',
+        title: 'Reações Químicas',
+        content: {
+          basic: 'Balanceamento de equações por tentativa e classificação de reações (síntese, análise, simples e dupla troca).',
+        }
+      },
+         {
         id: 'bioquimica',
         title: 'Bioquímica',
         content: {
           basic: 'Estrutura e importância da água para os seres vivos e conceitos básicos de pH biológico.',
           intermediate: 'Estudo de biomoléculas: Carboidratos (açúcares), Lipídios (gorduras) e Aminoácidos.',
           advanced: 'Estrutura de Proteínas, cinética enzimática, metabolismo (Ciclo de Krebs) e estrutura do DNA/RNA.'
-        }
-      },
-      {
-        id: 'reacoes-quimicas',
-        title: 'Reações Químicas',
-        content: {
-          basic: 'Balanceamento de equações por tentativa e classificação de reações (síntese, análise, simples e dupla troca).',
-          intermediate: 'Reações de Oxirredução (ajuste de NOX) e estequiometria com reagente limitante e excesso.',
-          advanced: 'Termodinâmica química (Energia Livre de Gibbs e Espontaneidade) e catálise homogênea e heterogênea.'
         }
       }
     ]
@@ -651,6 +1644,47 @@ Estuda as forças atuantes em um corpo em equilíbrio estático, utilizando prin
           advanced: 'Ciclo celular (mitose e meiose), sinalização celular e controle de qualidade proteica.'
         }
       },
+       {
+  id: 'laboratorio-biologia',
+  title: 'Laboratório de Biologia',
+  subtopics: [
+    {
+      id: 'bancada-citologia',
+      title: 'Bancada de Citologia',
+      content: {
+        basic: `
+          <div class="lab-biology" style="font-family: sans-serif; max-width: 600px; margin: auto;">
+    <h3 style="color:#2e7d32; text-align:center;">🧪 Laboratório de Citologia: Microscopia</h3>
+    
+    <div class="microscope-viewport">
+        <img id="cell-image" src="https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=500" alt="Lâmina Biológica">
+    </div>
+
+    <div class="bio-controls">
+        <div style="margin-bottom:15px;">
+            <label>Ajuste de Foco (Nitidez):</label>
+            <input type="range" id="focus-slider" min="0" max="20" value="20" style="width:100%" oninput="updateMicroscope()">
+        </div>
+        
+        <div style="margin-bottom:15px;">
+            <label>Ajuste de Zoom (Objetiva):</label>
+            <input type="range" id="zoom-slider" min="1" max="3" step="0.1" value="1" style="width:100%" oninput="updateMicroscope()">
+        </div>
+
+        <div style="display:flex; gap:10px; justify-content:center;">
+            <button onclick="changeSlide('animal')" style="background:#2e7d32; color:white; border:none; padding:10px; border-radius:5px; cursor:pointer;">Célula Animal</button>
+            <button onclick="changeSlide('vegetal')" style="background:#1b5e20; color:white; border:none; padding:10px; border-radius:5px; cursor:pointer;">Célula Vegetal</button>
+        </div>
+    </div>
+
+    <div id="bio-info" style="margin-top:20px; padding:15px; background:#fff; border-left:5px solid #2e7d32; border-radius:5px;">
+        <strong>Status:</strong> Ajuste o foco para identificar as organelas.
+    </div>
+</div>.`,
+      }
+      }
+    ]
+  },
       {
         id: 'genetica',
         title: 'Genética',
@@ -806,6 +1840,177 @@ Estuda as forças atuantes em um corpo em equilíbrio estático, utilizando prin
           advanced: 'O conhecimento avançado em Geografia Ambiental concentra-se na análise integrada das interações sociedade-natureza, utilizando ferramentas geotecnológicas (SIG) para gestão territorial, avaliação de impactos (EIA/RIMA) e planejamento sustentável. Foca em sistemas complexos como bacias hidrográficas, mudanças climáticas, resíduos sólidos e conservação da biodiversidade.'
         }
       },
+        {
+  id: 'laboratorio-geografia',
+  title: 'Laboratório de Geografia',
+  subtopics: [
+    {
+      id: 'placas-tectonicas',
+      title: 'Simulador de Placas Tectônicas',
+      content: {
+        basic: `
+       <div class="geo-lab">
+    <h3 style="text-align:center;">🌋 Simulador de Limites Tectônicos</h3>
+    
+    <div class="crust-view" id="earth-box">
+        <div id="plate-left" class="plate"></div>
+        <div id="plate-right" class="plate"></div>
+        <div id="magma-leak" style="position:absolute; bottom:0; left:48%; width:4%; height:0%; background:#ff4500; transition: 1s;"></div>
+    </div>
+
+    <div class="controls" style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;">
+        <button onclick="simulatePlates('convergente')" style="background:#795548; color:white; padding:10px; border:none; cursor:pointer;">Convergent (Colisão)</button>
+        <button onclick="simulatePlates('divergente')" style="background:#5d4037; color:white; padding:10px; border:none; cursor:pointer;">Divergent (Afastamento)</button>
+        <button onclick="simulatePlates('transformante')" style="background:#3e2723; color:white; padding:10px; border:none; cursor:pointer;">Transform (Deslize)</button>
+    </div>
+
+    <div id="geo-info" style="margin-top:20px; padding:15px; background:rgba(255,255,255,0.1); border-radius:10px; text-align:center;">
+        Escolha um movimento para observar as consequências geológicas.
+    </div>
+</div>
+.`,
+        }
+  },
+     {
+      id: 'cidade',
+      title: 'Protótipo da Cidade',
+      content: {
+        basic: `
+<div id="city-project-wrapper" style="background: #1a1a1a; padding: 20px; border-radius: 12px; font-family: sans-serif; color: white;">
+    
+    <div class="city-editor-section">
+        <label style="color: #4db8ff; display: block; margin-bottom: 8px; font-weight: bold;">💻 Controlador da Rede Elétrica (Python):</label>
+        <textarea id="city-python-editor" style="width: 100%; height: 120px; background: #1e1e1e; color: #9cdcfe; font-family: monospace; padding: 12px; border-radius: 6px; border: 1px solid #333; resize: vertical;"></textarea>
+        
+        <div style="margin-top: 10px;">
+            <label style="color: #888; display: block; font-size: 11px; margin-bottom: 4px;">> Console de Saída:</label>
+            <iframe id="city-output-frame" style="width: 100%; height: 60px; background: #000; border: 1px solid #333; border-radius: 4px;"></iframe>
+        </div>
+    </div>
+
+    <div style="background: #111; padding: 15px; border-radius: 8px; margin-top: 20px; border: 1px solid #333;">
+        <canvas id="city-energy-chart" style="max-height: 150px; width: 100%;"></canvas>
+    </div>
+
+    <div id="city-viewport-container" style="perspective: 1000px; height: 400px; background: #111; margin-top: 20px; border-radius: 8px; overflow: hidden; position: relative; border: 1px solid #333;">
+        <div id="city-world" class="city-world">
+            <div id="city-grid-base"></div>
+        </div>
+        <div id="city-power-indicator" style="position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.8); color: #f1c40f; padding: 8px 15px; border-radius: 20px; border: 1px solid #f1c40f; font-size: 11px;">
+            ⚡ REDE: DESLIGADA
+        </div>
+    </div>
+
+    <div id="city-ui-controls" style="margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #222; padding: 15px; border-radius: 8px;">
+        <div class="control-group">
+            <label style="color: #ccc; font-size: 12px;">Simulação de Vazão (m³/s):</label>
+            <input type="range" id="city-input-vazao" min="0" max="1000" value="500" style="width: 100%;" oninput="this.nextElementSibling.innerText = this.value">
+            <span style="color: white; margin-left: 10px;">500</span>
+        </div>
+
+        <div style="display: flex; gap: 8px; align-items: flex-end;">
+            <button onclick="getCity().rotate('left')" style="flex: 1; padding: 8px; background: #444; color: white; border: none; border-radius: 4px; cursor: pointer;">↺</button>
+            <button onclick="getCity().rotate('right')" style="flex: 1; padding: 8px; background: #444; color: white; border: none; border-radius: 4px; cursor: pointer;">↻</button>
+        </div>
+
+        <div style="grid-column: span 2; display: flex; gap: 10px;">
+            <button onclick="acao_gerar_usina()" style="flex: 1; padding: 12px; background: #27ae60; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">🏗️ Construir</button>
+            <button onclick="acao_executar_python()" style="flex: 1; padding: 12px; background: #2980b9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▶ Executar Python</button>
+        </div>
+    </div>
+</div>
+<div id="city-move-controls" style="margin-top: 10px; display: flex; flex-direction: column; align-items: center; gap: 5px; background: #333; padding: 10px; border-radius: 8px;">
+    <label style="color: #eee; font-size: 11px; margin-bottom: 5px;">Mover Estrutura Selecionada:</label>
+    
+    <button onclick="mover(0, -1)" style="width: 40px; padding: 5px;">▲</button>
+    <div style="display: flex; gap: 5px;">
+        <button onclick="mover(-1, 0)" style="width: 40px; padding: 5px;">◀</button>
+        <button onclick="mover(1, 0)" style="width: 40px; padding: 5px;">▶</button>
+    </div>
+    <button onclick="mover(0, 1)" style="width: 40px; padding: 5px;">▼</button>
+</div>
+.`,
+         }
+  },
+     {
+  id: 'usina-hidreletrica',
+  title: 'Protótipo da Usina Hidrelétrica (CSS 3D + Chunks)',
+  content: {
+    basic: `
+    <div style="margin-top: 15px;">
+    <label style="color: white; display: block; margin-bottom: 5px;">💻 Editor Python:</label>
+    <textarea id="python-editor" style="width: 100%; height: 120px; background: #1e1e1e; color: #9cdcfe; font-family: 'Courier New', monospace; padding: 10px; border-radius: 4px; border: 1px solid #444;" placeholder="# Digite seu código aqui..."></textarea>
+</div>
+<div style="margin-top: 10px;">
+    <label style="color: #aaa; display: block; font-size: 12px; margin-bottom: 5px;">> Console de Saída:</label>
+    <iframe id="output-frame" style="width: 100%; height: 100px; background: #1e1e1e; border: 1px solid #444; border-radius: 4px;"></iframe>
+</div>
+    <div class="minecraft-lab">
+        <div class="world" id="viewport">
+            <div class="chunk" id="water-container"></div>
+        </div>
+        
+       <div class="controles-usina" style="background:#222; color:white; padding:15px; border-radius:8px;">
+    <div style="margin-bottom: 20px;">
+        <label>Vazão (m³/s): </label>
+        <input type="range" id="py-vazao" min="0" max="1000" value="500" 
+               oninput="this.nextElementSibling.value = this.value">
+        <output>500</output>
+    </div>
+
+    <div style="margin-bottom: 10px;">
+        <label>Queda d'água (m): </label>
+        <input type="range" id="py-queda" min="0" max="100" value="50" 
+               oninput="this.nextElementSibling.value = this.value">
+        <output>50</output>
+    </div>
+
+    <div id="energia-status" style="color:#f1c40f; font-weight:bold; margin-top:10px;">
+        ⚡ PRODUZINDO: 0.00 MW
+    </div>
+</div>
+
+        <div style="padding:15px; background:#333; display:flex; gap:10px; justify-content:center;">
+             <button onclick="gerarMapaChunks()">Construir Usina</button>
+             <button onclick="rotateWorld()">Girar Visão</button>
+             <button onclick="runCode('usina-hidreletrica')">Executar Simulação</button>
+        </div>
+    </div>
+    `
+  }
+},
+       {
+      id: 'impacto-ambiental',
+      title: 'Impacto Ambiental: Oceano 3D',
+      content: {
+        basic: `
+       <div class="env-lab" style="color:white; font-family:sans-serif;">
+    <h3 style="text-align:center;">🐢 Impacto Ambiental: Acúmulo de Resíduos</h3>
+
+    <div class="ocean-container">
+        <div class="water-cube" id="ocean">
+            <div class="water-face front" id="water-front"></div>
+            <div class="water-face bottom" id="sea-floor">
+                <div id="trash-container" style="position:relative; width:100%; height:100%;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top:20px; background:#333; padding:20px; border-radius:10px;">
+        <label>Nível de Poluição Urbana:</label>
+        <input type="range" id="pollution-level" min="0" max="100" value="0" style="width:100%" oninput="simulatePollution()">
+        
+        <div id="impact-msg" style="margin-top:15px; text-align:center; font-weight:bold; color:#2ecc71;">
+            Ecossistema Saudável - Biodiversidade Alta
+        </div>
+    </div>
+</div>
+.`,
+      }
+      }
+    ]
+  },
+      
       {
         id: 'cartografia-geotecnologias',
         title: 'Cartografia e Geotecnologias',
@@ -857,6 +2062,22 @@ Estuda as forças atuantes em um corpo em equilíbrio estático, utilizando prin
           title: 'Variáveis e Tipos',
           content: { basic: "<h3>O Início de Tudo</h3><p>Entenda como armazenar números, textos (strings) e listas em Python.</p>" }
         },
+       {
+  id: 'terminal-interativo',
+  title: 'Campo de Input do Usuário',
+  content: {
+    basic: `
+      <div class="input-terminal-container" style="margin-top: 15px; background: #0d0d1a; padding: 12px; border-radius: 8px 8px 0 0; border: 1px solid #444;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="color: #2ecc71; font-family: 'Fira Code', monospace; font-weight: bold;">>>></span>
+          <input type="text" id="python-input" 
+                 placeholder="Digite aqui..." 
+                 style="flex: 1; background: transparent; border: none; color: #9cdcfe; font-family: monospace; outline: none; font-size: 15px;">
+      </div>
+  </div>
+    `
+  }
+},
         {
           id: 'py-condicionais',
           title: 'If, Else e Elif',
@@ -922,12 +2143,45 @@ const quizzes = {
   "css-layout": [{ question: "Qual propriedade ativa o Flexbox?", options: ["display: block", "display: flex", "float: left"], correct: 1 }],
   "js-dom": [{ question: "Como selecionar um elemento por ID no JS?", options: ["getElementById", "selectID", "queryID"], correct: 0 }],
   
+  "impacto-ambiental": [
+    {
+        question: "Qual o impacto principal da criação de grandes reservatórios?",
+        options: ["Alagamento de áreas vegetais", "Aumento da neve", "Melhora do solo", "Criação de desertos"],
+        correct: "Alagamento de áreas vegetais"
+    }
+],
+"usina-hidreletrica": [
+    {
+        question: "O que move as turbinas?",
+        options: ["Vento", "Gravidade/Água", "Fogo", "Eletricidade"],
+        correct: "Gravidade/Água"
+    }
+],
   // Python
   "py-vars": [{ question: "Como imprimir algo na tela em Python?", options: ["echo", "console.log", "print()", "system.out"], correct: 2 }],
   "py-condicionais": [{ question: "Qual a sintaxe correta do 'senão se'?", options: ["else if", "elseif", "elif"], correct: 2 }],
   "py-loops": [{ question: "Qual comando interrompe um loop imediatamente?", options: ["stop", "break", "exit", "end"], correct: 1 }],
-  
-   
+  "usina-hidreletrica": [
+        {
+            question: "Qual a principal força que move as turbinas de uma hidroelétrica?",
+            options: ["Gravidade", "Vento", "Magnetismo", "Calor"],
+            correct: "Gravidade"
+        },
+        {
+            question: "O que significa a sigla MW em uma usina?",
+            options: ["MegaWatts", "MiniWatts", "MuitoWatt", "MotorWater"],
+            correct: "MegaWatts"
+        }
+    ],
+   "estresse-fisico": [
+        { question: "O que acontece com a barragem sob muita pressão da água?", options: ["Estresse Físico", "Dilatação", "Evaporação"], correct: "Estresse Físico" }
+    ],
+    "astronomia": [
+        { question: "A gravidade da Lua afeta as marés na Terra?", options: ["Sim", "Não"], correct: "Sim" }
+    ],
+    "gerador-chunks": [
+        { question: "Em computação, o que é um 'Chunk'?", options: ["Um pedaço de dados", "Um vírus", "Um tipo de monitor"], correct: "Um pedaço de dados" }
+    ],
   quimica: [
     {question:"Partícula com carga positiva:", options:["Próton","Elétron","Nêutron","Íon negativo"], correct:0, explanation:"Próton tem carga positiva."},
     {question:"Ligação covalente envolve:", options:["Compartilhar elétrons","Transferir elétrons","Prótons","Nêutrons"], correct:0, explanation:"Covalente = compartilhamento."},
@@ -940,68 +2194,15 @@ const quizzes = {
     {question:"Ligação iônica acontece entre:", options:["Metal + não-metal","2 metais","2 gases nobres","2 não-metais"], correct:0, explanation:"Metal doa elétron, não-metal recebe."},
     {question:"Estado padrão de O2 à T ambiente:", options:["Gasoso","Líquido","Sólido","Plasma"], correct:0, explanation:"Oxigênio é gasoso em condições padrão."}
   ],
-  geografia: [
-    {
-      question: "Qual camada da Terra é composta principalmente por ferro e níquel em estado sólido e líquido?",
-      options: ["Crosta", "Manto", "Núcleo", "Litosfera"],
-      correct: 2,
-      explanation: "O núcleo é a parte mais interna da Terra, dividido em interno (sólido) e externo (líquido)."
-    },
-    {
-      question: "O fenômeno do 'Êxodo Rural' refere-se a:",
-      options: ["Migração da cidade para o campo", "Migração do campo para a cidade", "Mudança entre capitais", "Turismo rural"],
-      correct: 1,
-      explanation: "O êxodo rural é o deslocamento em massa da população do campo para as áreas urbanas."
-    },
-    {
-      question: "Qual destes é o principal gás do efeito estufa emitido pela queima de combustíveis fósseis?",
-      options: ["Oxigênio", "Nitrogênio", "Dióxido de Carbono (CO2)", "Hélio"],
-      correct: 2,
-      explanation: "O CO2 é o principal resíduo da queima de carvão e petróleo, intensificando o aquecimento global."
-    },
-    {
-      question: "O que a escala de um mapa indica?",
-      options: ["A altitude do terreno", "A relação entre a distância no mapa e a distância real", "O nome dos países", "A direção do Norte"],
-      correct: 1,
-      explanation: "A escala diz quantas vezes o mundo real foi reduzido para caber no papel."
-    },
-    {
-      question: "Qual bioma brasileiro é conhecido como a 'Savana mais rica do mundo'?",
-      options: ["Pantanal", "Caatinga", "Cerrado", "Pampa"],
-      correct: 2,
-      explanation: "O Cerrado é considerado a savana com maior biodiversidade do planeta."
-    },
-    {
-      question: "As linhas imaginárias horizontais que circundam a Terra são chamadas de:",
-      options: ["Longitudes", "Latitudes", "Meridianos", "Fusos Horários"],
-      correct: 1,
-      explanation: "As latitudes são as linhas horizontais (paralelos), enquanto as verticais são as longitudes."
-    },
-    {
-      question: "O que caracteriza uma 'Megalópole'?",
-      options: ["Uma cidade com mais de 100 habitantes", "A união espacial de duas ou mais metrópoles", "Cidades sem saneamento", "Cidades exclusivamente rurais"],
-      correct: 1,
-      explanation: "Megalópoles ocorrem quando metrópoles crescem tanto que suas áreas urbanas se conectam."
-    },
-    {
-      question: "Qual tipo de rocha se forma através do resfriamento e solidificação do magma?",
-      options: ["Sedimentar", "Metamórfica", "Magmática (ou Ígnea)", "Fóssil"],
-      correct: 2,
-      explanation: "As rochas magmáticas surgem do resfriamento do material fundido do interior da Terra."
-    },
-    {
-      question: "O conceito de 'Desenvolvimento Sustentável' busca equilibrar:",
-      options: ["Apenas o lucro", "Preservação ambiental, justiça social e eficiência econômica", "Somente a limpeza dos oceanos", "O fim de todas as indústrias"],
-      correct: 1,
-      explanation: "Sustentabilidade é usar os recursos hoje sem comprometer as gerações futuras."
-    },
-    {
-      question: "Qual projeção cartográfica é famosa por manter as formas, mas distorcer o tamanho das massas de terra (como a Groenlândia)?",
-      options: ["Projeção de Peters", "Projeção de Mercator", "Projeção de Mollweide", "Projeção Cônica"],
-      correct: 1,
-      explanation: "A Projeção de Mercator é eurocêntrica e distorce as áreas polares para manter os ângulos de navegação."
-    }
-  ],
+  
+  'geografia': [
+        { q: "Qual camada da Terra é composta principalmente por ferro e níquel?", a: "Núcleo", options: ["Crosta", "Manto", "Núcleo"] },
+        { q: "Rochas formadas pelo resfriamento do magma são...", a: "Ígneas", options: ["Sedimentares", "Metamórficas", "Ígneas"] }
+    ],
+    'fisica': [
+        { q: "Se a base de um prédio é reduzida, a pressão no solo...", a: "Aumenta", options: ["Diminui", "Aumenta", "Fica igual"] }
+      
+    ],
   biologia: [
     {question:"Organelas celulares que produzem energia:", options:["Mitocôndrias","Lisossomos","Ribossomos","Cloroplastos"], correct:0, explanation:"Mitocôndrias produzem ATP (energia)."},
     {question:"Material genético principal em eucariotos:", options:["DNA no núcleo","RNA no citoplasma","Proteínas","Lipídios"], correct:0, explanation:"DNA no núcleo contem instruções genéticas."},
@@ -1228,66 +2429,105 @@ function runDev() {
   doc.write(code);
   doc.close();
 }
-    
-   // 1. IMPORTANTE: Esta linha deve ficar FORA de qualquer função.
-// Isso garante que o Python carregue uma única vez e fique salvo na memória.
-// Carregamento antecipado (opcional)
 
 let pyodideInstance = null; 
-// Carregamento antecipado (opcional)
-window.addEventListener('load', async () => {
-    if (typeof loadPyodide !== 'undefined') {
+let sqlDB = null;
+
+// 1. Inicialização Robusta
+async function getPython() {
+    if (!pyodideInstance) {
         pyodideInstance = await loadPyodide();
-        console.log("Python pronto para uso!");
+        // Resolve o erro "Illegal invocation" redirecionando o STDIN globalmente
+        await pyodideInstance.runPython(`
+import sys, io
+sys.stdin = io.StringIO("")
+        `);
+        console.log("🐍 Motor Python configurado e isolado.");
     }
-});
+    return pyodideInstance;
+}
+
 async function runCode(courseId) {
-  // Busca o código digitado no editor
-  const codeInput = document.getElementById('code-input');
-  if (!codeInput) return; 
-  
-  const code = codeInput.value;
-  const outputFrame = document.getElementById('output-frame');
-  const doc = outputFrame.contentDocument || outputFrame.contentWindow.document;
-  
-  // 2. Limpa o console do iframe e prepara o visual escuro
-  doc.open();
-  doc.write('<body style="background:#1e1e1e; color:#d4d4d4; font-family:monospace; padding:10px; margin:0;">');
-  doc.write('<p style="color:#6a9955;">> Executando...</p>');
+    // 1. Localiza o editor de forma flexível (tenta um ID ou outro)
+    const editor = document.getElementById('python-editor') || document.getElementById('code-input');
+    const outputFrame = document.getElementById('output-frame');
 
-  try {
-    if (courseId === 'desenvolvimento') {
-      // HTML/CSS/JS: Roda nativamente no navegador
-      doc.write(code);
-    } 
-    else if (courseId === 'python') {
-      // 3. Lógica para o Python Real
-      if (!pyodideInstance) {
-        doc.write('<p style="color:#ce9178;">Iniciando motor Python (isso leva alguns segundos na primeira vez)...</p>');
-        // Carrega o motor Pyodide que está no seu <head>
-        pyodideInstance = await loadPyodide();
-      }
-      
-      // Redireciona o print() do Python para o seu iframe
-      pyodideInstance.setStdout({ batched: (text) => {
-        doc.write(`<p style="margin:0; color:#9cdcfe;">${text}</p>`);
-      }});
-
-      await pyodideInstance.runPythonAsync(code);
-      doc.write('<p style="color:#6a9955; border-top:1px solid #333; margin-top:10px;">[Execução finalizada]</p>');
-    } 
-    else {
-      // Outras linguagens (C, Java) continuam como simulação visual
-      doc.write(`<p style="color:#ce9178;">Simulação de terminal para ${courseId.toUpperCase()}:</p>`);
-      doc.write(`<p style="color:#fff;">${code.includes('printf') || code.includes('System.out') ? 'Saída: Olá Mundo!' : 'Código processado com sucesso.'}</p>`);
+    // Se não encontrar o editor, avisa e para
+    if (!editor) {
+        console.error("❌ Erro: Campo de código não encontrado para " + courseId);
+        return;
     }
-  } catch (err) {
-    // Exibe erros de sintaxe do aluno diretamente no console do editor
-    doc.write(`<p style="color:#f44336;">❌ Erro de Execução: ${err}</p>`);
-  }
-  
-  doc.write('</body>');
-  doc.close();
+
+    const code = editor.value; // DECLARAÇÃO ÚNICA DO CÓDIGO
+    const doc = outputFrame ? (outputFrame.contentDocument || outputFrame.contentWindow.document) : null;
+
+    // Prepara o console visual se o iframe existir
+    if (doc) {
+        doc.open();
+        doc.write(`<body style="background:#1e1e1e; color:#d4d4d4; font-family:monospace; padding:15px; margin:0; line-height:1.5;">
+                   <p style="color:#6a9955; margin:0 0 10px 0;">> Console ${courseId.toUpperCase()}...</p>`);
+    }
+
+    try {
+        // --- DESENVOLVIMENTO WEB ---
+        if (courseId === 'desenvolvimento') {
+            doc.write(code);
+        } 
+
+        // --- PYTHON (PADRÃO, FOGUETE OU USINA) ---
+        else if (courseId === 'python' || courseId === 'lancamento-foguete' || courseId === 'usina-hidreletrica') {
+            const py = await getPython();
+            
+            // Redireciona o print() do Python para o Iframe
+            py.setStdout({ batched: (text) => {
+                if(doc) doc.write(`<p style="margin:0; color:#9cdcfe;">${text}</p>`);
+                console.log("PyOutput:", text);
+            }});
+
+            // Injeta as pontes necessárias dependendo do curso
+            if (courseId === 'lancamento-foguete') {
+                await py.runPythonAsync(`import js\nfrom js import window\njs.animarLancamento = window.animarLancamento`);
+            } else if (courseId === 'usina-hidreletrica') {
+                await py.runPythonAsync(`import js\nfrom js import window\njs.aplicarPotenciaHidro = window.aplicarPotenciaHidro`);
+            }
+
+            await py.runPythonAsync(code);
+            if(doc) doc.write('<p style="color:#6a9955; border-top:1px solid #333; margin-top:10px;">[Processo finalizado]</p>');
+        }
+
+        // --- SQL ---
+        else if (courseId === 'banco-de-dados') {
+            if (!window.sqlDB) {
+                const SQL = await initSqlJs({ locateFile: f => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/${f}` });
+                window.sqlDB = new SQL.Database();
+                window.sqlDB.run("CREATE TABLE alunos (id INT, nome TEXT, curso TEXT);");
+                window.sqlDB.run("INSERT INTO alunos VALUES (1, 'Filipe', 'Python'), (2, 'Ana', 'Dev Web');");
+            }
+            const res = window.sqlDB.exec(code);
+            if (res.length > 0 && doc) {
+                let table = "<table style='border:1px solid #444; width:100%; color:#9cdcfe;'>";
+                res[0].values.forEach(row => { table += `<tr>${row.map(v => `<td>${v}</td>`).join('')}</tr>`; });
+                doc.write(table + "</table>");
+            }
+        }
+
+        // --- JAVA, C E OUTROS ---
+        else {
+            if(doc) {
+                doc.write(`<p style="color:#ce9178;">Simulação concluída:</p>`);
+                doc.write(`<p style="color:#fff;">Código recebido com sucesso (${code.length} caracteres).</p>`);
+            }
+        }
+
+    } catch (err) {
+        if(doc) doc.write(`<p style="color:#f44336; margin-top:10px;">❌ Erro: ${err}</p>`);
+        console.error(err);
+    }
+
+    if(doc) {
+        doc.write('</body>');
+        doc.close();
+    }
 }
     /* ====== FUNÇÕES DO QUIZ ====== */
 
@@ -1377,6 +2617,341 @@ function checkAnswer(btn, selected, correct, explanation) {
         `;
     });
     quizBox.innerHTML = html;
+}
+    
+ // --- COLOQUE NO FINAL DO ARQUIVO JS ---
+
+function initQuiz(id, targetBoxId = null) {
+    const containerId = targetBoxId || `${id}-quiz-box`;
+    const container = document.getElementById(containerId);
+    const questions = quizzes[id];
+
+    if (!container || !questions) {
+        console.warn(`Quiz não encontrado para: ${id}`);
+        return false; 
+    }
+
+    container.innerHTML = questions.map((q, index) => {
+        // Resolve o problema do 'undefined' buscando por vários nomes possíveis
+        const textoDaPergunta = q.question || q.text || q.pergunta || "Pergunta sem texto";
+        
+        return `
+        <div class="quiz-item" style="margin-bottom: 25px; padding: 15px; border: 1px solid #eee; border-radius: 8px;">
+            <p><strong>${index + 1}. ${textoDaPergunta}</strong></p>
+            <div class="options" style="display: flex; flex-direction: column; gap: 10px;">
+                ${q.options.map((opt, i) => `
+                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                        <input type="radio" name="q${index}" value="${i}">
+                        <span>${opt}</span>
+                    </label>
+                `).join('')}
+            </div>
+            <button class="btn" onclick="checkAnswer(this, ${q.correct}, 'q${index}')" style="margin-top: 15px; background: #007bff; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">
+                Verificar
+            </button>
+            <div class="feedback" style="margin-top: 10px; font-weight: bold; min-height: 20px;"></div>
+        </div>
+    `}).join('');
+
+    return true;
+}
+
+// Função auxiliar para verificar a resposta (Correct/Wrong)
+
+
+// Função chamada pelo "oninput" do slider
+window.updateMuvChart = () => {
+    const a = parseFloat(document.getElementById('accel-slider').value);
+    const tempos = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    
+    // Atualiza o texto da fórmula
+    document.getElementById('formula-display').innerText = `a = ${a} m/s² | v = ${a}t`;
+    
+    // Atualiza os dados do gráfico
+    muvChartInstance.data.datasets[0].data = tempos.map(t => a * t);
+    muvChartInstance.update('none'); // 'none' para atualizar sem animação travada
+};
+    function initDerivativeChart() {
+    const canvas = document.getElementById('math-canvas-advanced');
+    const inputX = document.getElementById('input-der-x');
+    const text = document.getElementById('formula-der-text');
+    
+    if (!canvas || !inputX) return;
+    const ctx = canvas.getContext('2d');
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Configurações do gráfico
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height - 50;
+        const scale = 20;
+
+        // 1. Desenha os Eixos
+        ctx.strokeStyle = '#ddd';
+        ctx.beginPath();
+        ctx.moveTo(0, centerY); ctx.lineTo(canvas.width, centerY);
+        ctx.moveTo(centerX, 0); ctx.lineTo(centerX, canvas.height);
+        ctx.stroke();
+
+        // 2. Desenha a Parábola: f(x) = 0.1 * x²
+        ctx.strokeStyle = '#333';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        for (let x = -10; x <= 10; x += 0.1) {
+            let canvasX = centerX + x * scale;
+            let canvasY = centerY - (0.1 * x * x) * scale;
+            if (x === -10) ctx.moveTo(canvasX, canvasY);
+            else ctx.lineTo(canvasX, canvasY);
+        }
+        ctx.stroke();
+
+        // 3. Lógica da Derivada
+        const x0 = inputX.value / 10; // Valor do slider
+        const y0 = 0.1 * x0 * x0;     // Ponto na curva
+        const m = 0.2 * x0;           // Derivada de 0.1x² é 0.2x (Inclinação)
+
+        // 4. Desenha a Reta Tangente
+        ctx.strokeStyle = '#16a34a'; // Verde do seu HTML
+        ctx.beginPath();
+        for (let x = x0 - 3; x <= x0 + 3; x += 0.1) {
+            let yTan = y0 + m * (x - x0);
+            ctx.lineTo(centerX + x * scale, centerY - yTan * scale);
+        }
+        ctx.stroke();
+
+        // 5. Ponto de Contato
+        ctx.fillStyle = '#ff4d4d';
+        ctx.beginPath();
+        ctx.arc(centerX + x0 * scale, centerY - y0 * scale, 4, 0, Math.PI * 2);
+        ctx.fill();
+
+        text.innerText = `Ponto x = ${x0.toFixed(1)} | Inclinação (m) = ${m.toFixed(2)}`;
+    }
+
+    inputX.oninput = draw;
+    draw();
+}
+  function initChemistryInteractivity() {
+    const slider = document.getElementById('ph-slider');
+    const display = document.getElementById('ph-display');
+    const box = document.getElementById('ph-box');
+
+    if (!slider) return;
+
+    slider.addEventListener('input', () => {
+        const val = parseFloat(slider.value);
+        display.innerText = val.toFixed(1);
+        
+        // Lógica de cores (Vermelho -> Azul)
+        if (val < 7) {
+            box.style.background = `rgba(255, 0, 0, ${1 - val/7})`;
+            box.innerText = "Ambiente Ácido 🍋";
+        } else if (val > 7) {
+            box.style.background = `rgba(0, 0, 255, ${(val-7)/7})`;
+            box.innerText = "Ambiente Básico (Alcalino) 🧼";
+        } else {
+            box.style.background = "#e2e8f0";
+            box.innerText = "Neutro (Água Pura) 💧";
+        }
+    });
+}
+    function checkAnswer(btn, correctIdx, radioName) {
+    const selected = document.querySelector(`input[name="${radioName}"]:checked`);
+    const feedback = btn.nextElementSibling;
+
+    if (!selected) {
+        feedback.innerHTML = "⚠️ Selecione uma opção!";
+        feedback.style.color = "orange";
+        return;
+    }
+
+    if (parseInt(selected.value) === correctIdx) {
+        feedback.innerHTML = "✅ Correto!";
+        feedback.style.color = "green";
+        btn.parentElement.style.borderLeft = "5px solid green";
+    } else {
+        feedback.innerHTML = "❌ Tente novamente.";
+        feedback.style.color = "red";
+        btn.parentElement.style.borderLeft = "5px solid red";
+    }
+}
+    
+    // Função para renderizar os Tópicos de um curso (ex: Álgebra, Cálculo)
+// 1. Mostra as áreas (ex: Álgebra, Cálculo)
+// 1. Abre a lista de Tópicos (Álgebra, Geometria...)
+// PASSO 1: Mostra as Áreas (Ex: Álgebra)
+function showTopics(courseId) {
+    const course = courses.find(c => c.id === courseId);
+    const container = document.getElementById('content-container');
+    
+    let html = `<h2>Áreas de ${course.title}</h2><div class="grid-container">`;
+    course.topics.forEach(topic => {
+        html += `
+            <div class="course-card" onclick="showSubTopics('${courseId}', '${topic.id}')">
+                <div class="course-icon">${topic.icon || '📚'}</div>
+                <h3>${topic.title}</h3>
+                <button class="btn-estudar">Ver Assuntos</button>
+            </div>`;
+    });
+    html += `</div><button onclick="renderMainSelection()" class="btn-voltar">← Voltar aos Cursos</button>`;
+    container.innerHTML = html;
+}
+
+// PASSO 2: Mostra os Assuntos (Ex: Função Linear, Funções Básicas)
+function showSubTopics(courseId, topicId) {
+    const course = courses.find(c => c.id === courseId);
+    const topic = course.topics.find(t => t.id === topicId);
+    const container = document.getElementById('content-container');
+
+    let html = `<h2>${topic.title}</h2><div class="grid-container">`;
+    topic.subtopics.forEach(sub => {
+        html += `
+            <div class="course-card" onclick="renderLesson('${courseId}', '${topicId}', '${sub.id}')">
+                <h3>${sub.title}</h3>
+                <p>Clique para estudar este assunto.</p>
+            </div>`;
+    });
+    html += `</div><button onclick="showTopics('${courseId}')" class="btn-voltar">← Voltar para Áreas</button>`;
+    container.innerHTML = html;
+}
+
+// PASSO 3: Abre a Lição Final (Onde o conteúdo aparece)
+function renderLesson(courseId, topicId, subId) {
+    const course = courses.find(c => c.id === courseId);
+    const topic = course.topics.find(t => t.id === topicId);
+    const lesson = topic.subtopics.find(s => s.id === subId);
+    const container = document.getElementById('content-container');
+
+    container.innerHTML = `
+        <div class="lesson-container">
+            ${lesson.content.basic}
+            <hr>
+            <button onclick="showSubTopics('${courseId}', '${topicId}')" class="btn-voltar">← Voltar aos Assuntos</button>
+        </div>
+    `;
+
+    // Ativa Quiz e Gráficos
+    setTimeout(() => {
+        if (typeof initQuiz === 'function') initQuiz(subId, "main-quiz-box");
+        if (subId === 'funcao-linear') initLinearChart(); // Ativa o simulador de reta
+    }, 100);
+}
+    function openLesson(courseId, topicId, subId) {
+  const course = courses.find(c => c.id === courseId);
+  if (!course) return;
+
+  const topic = topicId ? course.topics.find(t => t.id === topicId) : null;
+  const sub = (topic && subId) ? topic.subtopics.find(s => s.id === subId) : null;
+
+  let finalContent, finalTitle, backBtnAction;
+
+  if (sub) {
+    finalContent = sub.content;
+    finalTitle = sub.title;
+    backBtnAction = `openTopic('${courseId}', '${topicId}')`;
+  } else if (topic) {
+    finalContent = topic.content;
+    finalTitle = topic.title;
+    backBtnAction = `openCourse('${courseId}')`;
+  } else {
+    finalContent = course.content;
+    finalTitle = course.title;
+    backBtnAction = `showHome()`;
+  }
+
+  const basicText = (finalContent && finalContent.basic) ? finalContent.basic : (finalContent || "Conteúdo em breve...");
+
+  // Editor de código apenas se o curso for de TI
+  let editorHtml = '';
+  const programmingCourses = ['desenvolvimento', 'python', 'java', 'banco-de-dados', 'c', 'lancamento-foguete', 'usina-hidreletrica', 'terminal-interativo'];
+  if (programmingCourses.includes(courseId)) {
+    const placeholder = getPlaceholderCode(courseId); // Agora a função existe!
+    editorHtml = `
+  <div class="code-editor-section" style="margin-top:25px; background:#1e1e1e; padding:15px; border-radius:8px;">
+    <h3 style="color:#4ec9b0;">💻 Prática: ${finalTitle}</h3>
+    
+    <div style="background:#1a1a2e; padding:8px; border-radius:5px 5px 0 0; border:1px solid #333; display:flex; align-items:center; gap:10px;">
+        <span style="color:#6a9955; font-family:monospace;">>>></span>
+        <input type="text" id="python-input" placeholder="Entrada de dados aqui..." style="flex:1; background:transparent; border:none; color:white; outline:none;">
+    </div>
+
+    <textarea id="python-editor" style="width:100%; height:150px; font-family:monospace; background:#2d2d2d; color:#9cdcfe; border:1px solid #333; border-top:none; padding:10px; border-radius:0 0 5px 5px;">${placeholder}</textarea>
+    
+    <button class="btn" onclick="runCode('${courseId}')" style="margin-top:10px; background:#007bff; color:white;">⚡ Executar</button>
+    
+    <iframe id="output-frame" style="width:100%; height:200px; background:#1e1e1e; margin-top:10px; border-radius:5px; border:1px solid #333;"></iframe>
+  </div>`;
+  }
+
+  courseContainer.innerHTML = `
+    <div class="lesson-content">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+         <h2>${finalTitle}</h2>
+         <button class="btn secondary" onclick="${backBtnAction}">← Voltar</button>
+      </div>
+      <div class="content-body" style="background:white; padding:20px; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.05);">
+        ${basicText}
+      </div>
+      ${editorHtml}
+      <div id="main-quiz-box" style="margin-top:40px;"></div>
+    </div>
+  `;
+
+  setTimeout(() => {
+    window.scrollTo(0, 0);
+    const quizId = subId || topicId || courseId;
+
+    // Tenta carregar tudo, mas não trava se falhar
+    try {
+      if (typeof initQuiz === 'function') initQuiz(quizId, "main-quiz-box");
+      
+      // Ativação de Gráficos
+      if (courseId === 'matematica') {
+          if (typeof initMathInteractivity === 'function') initMathInteractivity();
+          if (typeof initQuadraticInteractivity === 'function') initQuadraticInteractivity();
+          if (typeof initDerivativeChart === 'calculo-diferencial') initDerivativeChart();
+      }
+      if (courseId === 'quimica' && typeof initChemistryInteractivity === 'function') initChemistryInteractivity();
+      if (courseId === 'biologia' && typeof initBiologyInteractivity === 'function') initBiologyInteractivity();
+      if (courseId === 'fisica' && typeof initPhysicsInteractivity === 'function') initPhysicsInteractivity();
+      if (courseId === 'geografia' && typeof initGeographyInteractivity === 'function') initGeographyInteractivity();
+      // Dentro do seu setTimeout na openLesson
+if (courseId === 'fisica') {
+    initPhysicsInteractivity(); // O de Termodinâmica que fizemos antes
+    initWaveInteractivity();    // O novo de Ondas
+    initElectroInteractivity(); // O novo de Eletricidade
+}
+      // Dentro do método build da sua classe:
+if (type === 'office') {
+    // Exemplo de ajuste de profundidade para o Top do prédio
+    faceTop.style.transform = `rotateX(90deg) translateZ(20px) translateY(-20px)`; 
+    // O translateZ do topo deve ser metade da largura para fechar o cubo
+}
+      const IDsSemQuiz = ['terminal-interativo'];
+if (!IDsSemQuiz.includes(quizId)) {
+    if (typeof initQuiz === 'function') initQuiz(quizId, "main-quiz-box");
+}
+     if (courseId === 'lancamento-foguete') {
+        // Aguarda 100ms para o navegador processar o novo HTML antes de desenhar
+        setTimeout(() => {
+            gerarMapaFoguete();
+        }, 100);
+    }
+    
+      if (editorHtml && typeof runCode === 'function') runCode(courseId);
+    } catch (e) {
+      console.error("Erro na interatividade:", e);
+    }
+  }, 150);
+}
+    function getPlaceholderCode(courseId) {
+    if (courseId === 'python') return 'print("Olá Mundo em Python!")';
+    if (courseId === 'java') return 'public class Main {\n  public static void main(String[] args) {\n    System.out.println("Olá Java!");\n  }\n}';
+    if (courseId === 'c') return '#include <stdio.h>\n\nint main() {\n    printf("Olá Mundo em C!\\n");\n    return 0;\n}';
+    if (courseId === 'desenvolvimento') return '<!DOCTYPE html>\n<html>\n<body>\n  <h1>Olá Mundo!</h1>\n</body>\n</html>';
+    if (courseId === 'banco-de-dados') return '-- SQL Exemplo\nSELECT * FROM alunos;';
+    return '// Digite seu código aqui...';
 }
     function initPhysicsInteractivity() {
   const canvas = document.getElementById('physics-canvas');
@@ -1538,150 +3113,157 @@ function initQuadraticInteractivity() {
   [inputA, inputB, inputC].forEach(input => input.addEventListener('input', draw));
   draw();
 }
- function initDerivativeInteractivity() {
-  const canvas = document.getElementById('math-canvas-advanced');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const inputX = document.getElementById('input-der-x');
-  const formulaText = document.getElementById('formula-der-text');
+    function updateMicroscope() {
+    const focusVal = document.getElementById('focus-slider').value;
+    const zoomVal = document.getElementById('zoom-slider').value;
+    const img = document.getElementById('cell-image');
+    const info = document.getElementById('bio-info');
 
-  function draw() {
-    const px = parseFloat(inputX.value);
-    const a = 0.05; // Fixamos uma parábola simples: f(x) = 0.05x²
-    
-    // f(x) = a*x² -> Derivada f'(x) = 2*a*x
-    const slope = 2 * a * px;
-    const py = a * (px * px);
+    // O foco perfeito é quando o slider está em 0 (blur 0)
+    const blurEffect = focusVal / 2;
+    img.style.filter = `blur(${blurEffect}px) brightness(1.1)`;
+    img.style.transform = `scale(${zoomVal})`;
 
-    formulaText.innerText = `No ponto x = ${px}, a inclinação é ${slope.toFixed(2)}`;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Eixos
-    ctx.strokeStyle = '#e2e8f0';
-    ctx.beginPath(); ctx.moveTo(200, 0); ctx.lineTo(200, 250); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(0, 125); ctx.lineTo(400, 125); ctx.stroke();
-
-    // 1. Desenha a Parábola (fundo)
-    ctx.strokeStyle = '#cbd5e1';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    for (let x = -100; x <= 100; x++) {
-      let y = a * (x * x);
-      ctx.lineTo(200 + x * 2, 125 - y);
-    }
-    ctx.stroke();
-
-    // 2. Desenha a Reta Tangente (A Derivada)
-    ctx.strokeStyle = '#16a34a';
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    for (let x = px - 50; x <= px + 50; x++) {
-      // Equação da reta tangente: y - y1 = m(x - x1) -> y = m(x - px) + py
-      let y = slope * (x - px) + py;
-      ctx.lineTo(200 + x * 2, 125 - y);
-    }
-    ctx.stroke();
-
-    // 3. Desenha o Ponto do contato
-    ctx.fillStyle = '#16a34a';
-    ctx.beginPath();
-    ctx.arc(200 + px * 2, 125 - py, 5, 0, Math.PI * 2);
-    ctx.fill();
-  }
-
-  inputX.addEventListener('input', draw);
-  draw();
-}
- // --- COLOQUE NO FINAL DO ARQUIVO JS ---
-
-function initQuiz(id, targetBoxId = null) {
-    const containerId = targetBoxId || `${id}-quiz-box`;
-    const container = document.getElementById(containerId);
-    const questions = quizzes[id];
-
-    if (!container || !questions) {
-        console.warn(`Quiz não encontrado para: ${id}`);
-        return false; 
-    }
-
-    container.innerHTML = questions.map((q, index) => {
-        // Resolve o problema do 'undefined' buscando por vários nomes possíveis
-        const textoDaPergunta = q.question || q.text || q.pergunta || "Pergunta sem texto";
-        
-        return `
-        <div class="quiz-item" style="margin-bottom: 25px; padding: 15px; border: 1px solid #eee; border-radius: 8px;">
-            <p><strong>${index + 1}. ${textoDaPergunta}</strong></p>
-            <div class="options" style="display: flex; flex-direction: column; gap: 10px;">
-                ${q.options.map((opt, i) => `
-                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
-                        <input type="radio" name="q${index}" value="${i}">
-                        <span>${opt}</span>
-                    </label>
-                `).join('')}
-            </div>
-            <button class="btn" onclick="checkAnswer(this, ${q.correct}, 'q${index}')" style="margin-top: 15px; background: #007bff; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">
-                Verificar
-            </button>
-            <div class="feedback" style="margin-top: 10px; font-weight: bold; min-height: 20px;"></div>
-        </div>
-    `}).join('');
-
-    return true;
-}
-
-// Função auxiliar para verificar a resposta (Correct/Wrong)
-function checkAnswer(btn, correctIdx, radioName) {
-    const selected = document.querySelector(`input[name="${radioName}"]:checked`);
-    const feedback = btn.nextElementSibling;
-
-    if (!selected) {
-        feedback.innerHTML = "⚠️ Selecione uma opção!";
-        feedback.style.color = "orange";
-        return;
-    }
-
-    if (parseInt(selected.value) === correctIdx) {
-        feedback.innerHTML = "✅ Correto!";
-        feedback.style.color = "green";
-        btn.parentElement.style.borderLeft = "5px solid green";
+    if (blurEffect < 1) {
+        info.innerHTML = "<strong>Organelas Identificadas:</strong> Núcleo, Mitocôndrias e Membrana Plasmática visíveis com nitidez.";
+        info.style.color = "#2e7d32";
     } else {
-        feedback.innerHTML = "❌ Tente novamente.";
-        feedback.style.color = "red";
-        btn.parentElement.style.borderLeft = "5px solid red";
+        info.innerHTML = "<strong>Status:</strong> Imagem desfocada. Ajuste o parafuso micrométrico.";
+        info.style.color = "#666";
     }
 }
-  function initChemistryInteractivity() {
-    const slider = document.getElementById('ph-slider');
-    const display = document.getElementById('ph-display');
-    const box = document.getElementById('ph-box');
 
-    if (!slider) return;
+function changeSlide(type) {
+    const img = document.getElementById('cell-image');
+    if (type === 'animal') {
+        img.src = "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTgf_nM_mTq-RHTnAzb1JmmYgWT8hBf7moLWNSz6r3B1JfoEU-GXRXjI8ZhiDj3"; // Exemplo de imagem de célula animal
+    } else {
+        img.src = "https://imgs.search.brave.com/0wXgL3j3uW3lIxav9W9MyaP7RSRX4wguXTsVExz49u8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9iaW9j/b25lY3RhZG9zLmNv/bS5ici9ibG9nL3N0/b3JhZ2UvaW1hZ2Vz/LzIwMjQvMDgvcG9z/dC0xNzIzODM1MzY1/LmpwZw"; // Exemplo de imagem de célula vegetal
+    }
+    // Reseta o foco ao trocar a lâmina para o aluno ter que ajustar de novo
+    document.getElementById('focus-slider').value = 20;
+    updateMicroscope();
+}
+    // geo-lab-script.js
 
-    slider.addEventListener('input', () => {
-        const val = parseFloat(slider.value);
-        display.innerText = val.toFixed(1);
-        
-        // Lógica de cores (Vermelho -> Azul)
-        if (val < 7) {
-            box.style.background = `rgba(255, 0, 0, ${1 - val/7})`;
-            box.innerText = "Ambiente Ácido 🍋";
-        } else if (val > 7) {
-            box.style.background = `rgba(0, 0, 255, ${(val-7)/7})`;
-            box.innerText = "Ambiente Básico (Alcalino) 🧼";
-        } else {
-            box.style.background = "#e2e8f0";
-            box.innerText = "Neutro (Água Pura) 💧";
+function simulatePlates(type) {
+    const left = document.getElementById('plate-left');
+    const right = document.getElementById('plate-right');
+    const magma = document.getElementById('magma-leak');
+    const info = document.getElementById('geo-info');
+    const box = document.getElementById('earth-box');
+
+    // Resetar posições e animações
+    left.style.transform = "none";
+    right.style.transform = "none";
+    magma.style.height = "0%";
+    box.classList.remove('shaking');
+
+    if (type === 'convergente') {
+        left.style.transform = "translateX(20px) translateY(-10px)"; // Uma sobe
+        right.style.transform = "translateX(-20px) translateY(10px)"; // Outra desce (subducção)
+        info.innerHTML = "<strong>Convergente:</strong> Formação de cordilheiras e fossas oceânicas. Ex: Cordilheira dos Andes.";
+    } 
+    else if (type === 'divergente') {
+        left.style.transform = "translateX(-40px)";
+        right.style.transform = "translateX(40px)";
+        magma.style.height = "40%"; // Magma sobe para criar nova crosta
+        info.innerHTML = "<strong>Divergente:</strong> Ocorre a expansão do assoalho oceânico e formação de dorsais. Ex: Dorsal Mesoatlântica.";
+    }
+    else if (type === 'transformante') {
+        box.classList.add('shaking'); // Efeito de terremoto
+        left.style.transform = "translateY(-10px)";
+        right.style.transform = "translateY(10px)";
+        info.innerHTML = "<strong>Transformante:</strong> As placas deslizam lateralmente, acumulando tensão e gerando terremotos. Ex: Falha de San Andreas.";
+        setTimeout(() => box.classList.remove('shaking'), 2000);
+    }
+}
+    let rotation = 45;
+
+// Limpar apartir daqui
+function rotateWorld(angle) {
+    const world = document.getElementById('world'); // Verifique se o ID do seu container 3D é 'world'
+    if (world) {
+        world.style.transform = `rotateX(-20deg) rotateY(${angle}deg)`;
+    } else {
+        console.warn("Elemento 'world' não encontrado para rotação.");
+    }
+}
+
+// Inicia o mundo
+generateTerrain('plano');
+    function update3D() {
+      const slider = document.getElementById('vazao-slider'); // ou o nome do seu slider
+    
+    // SE O SLIDER NÃO EXISTIR, PARA AQUI E NÃO DÁ ERRO
+    if (!slider) return; 
+
+    const valor = slider.value;
+    const w = document.getElementById('input-w').value;
+    const h = document.getElementById('input-h').value;
+    const z = document.getElementById('input-z').value;
+    const rot = document.getElementById('input-rot').value;
+    
+    const cube = document.getElementById('shape-3d');
+    const result = document.getElementById('volume-result');
+
+    // 1. Atualiza labels
+    document.getElementById('w-val').innerText = w;
+    document.getElementById('h-val').innerText = h;
+    document.getElementById('z-val').innerText = z;
+
+    // 2. Aplica a rotação e dimensões
+    cube.style.transform = `rotateX(-20deg) rotateY(${rot}deg)`;
+    
+    // 3. Ajusta cada face para as novas dimensões
+    const faces = cube.querySelectorAll('.face');
+    faces.forEach(face => {
+        if (face.classList.contains('front') || face.classList.contains('back')) {
+            face.style.width = w + 'px';
+            face.style.height = h + 'px';
+            face.style.transform = face.classList.contains('front') 
+                ? `translateZ(${z/2}px)` 
+                : `rotateY(180deg) translateZ(${z/2}px)`;
+        }
+        if (face.classList.contains('right') || face.classList.contains('left')) {
+            face.style.width = z + 'px';
+            face.style.height = h + 'px';
+            face.style.left = (w/2 - z/2) + 'px';
+            face.style.transform = face.classList.contains('right') 
+                ? `rotateY(90deg) translateZ(${w/2}px)` 
+                : `rotateY(-90deg) translateZ(${w/2}px)`;
+        }
+        if (face.classList.contains('top') || face.classList.contains('bottom')) {
+            face.style.width = w + 'px';
+            face.style.height = z + 'px';
+            face.style.top = (h/2 - z/2) + 'px';
+            face.style.transform = face.classList.contains('top') 
+                ? `rotateX(90deg) translateZ(${h/2}px)` 
+                : `rotateX(-90deg) translateZ(${h/2}px)`;
         }
     });
-}
-    function initBiologyInteractivity() {
-    const canvas = document.getElementById('bioChart');
-    if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
-    const slider = document.getElementById('bioSlider');
-    const display = document.getElementById('bioValue');
+    // 4. Cálculo do Volume
+    const volume = w * h * z;
+    result.innerHTML = `<strong>Volume:</strong> ${volume.toLocaleString()} px³ <br>
+                        <small>(Área da Base: ${w*h}px² × Profundidade: ${z}px)</small>`;
+}
+    
+// Inicializa o gráfico ao carregar
+function update3D() {
+    const slider = document.getElementById('vazao-slider');
+    const shape = document.getElementById('shape-3d');
+    
+    // Se não estivermos na aba que tem o simulador 3D, para tudo
+    if (!slider || !shape) return; 
+
+    // Use o operador ?. ou verifique se cada um existe
+    const getVal = (id) => document.getElementById(id)?.value || 0;
+
+    const w = getVal('input-w');
+    const h = getVal('input-h');
+    const z = getVal('input-z');
+    const rot = getVal('input-rot');
 
     function calculateGrowth(rate) {
         let pop = 10;
@@ -1720,40 +3302,7 @@ function checkAnswer(btn, correctIdx, radioName) {
         bioChart.update();
     });
 }
-
-function initGeographyInteractivity() {
-    const canvas = document.getElementById('geo-climograma');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-
-    new Chart(ctx, {
-        data: {
-            labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-            datasets: [{
-                type: 'bar',
-                label: 'Precipitação (mm)',
-                data: [250, 210, 160, 100, 50, 20, 15, 30, 70, 120, 180, 230],
-                backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                yAxisID: 'y'
-            }, {
-                type: 'line',
-                label: 'Temperatura (°C)',
-                data: [28, 27, 26, 24, 22, 20, 19, 21, 23, 25, 26, 27],
-                borderColor: 'rgb(255, 99, 132)',
-                yAxisID: 'y1'
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: { type: 'linear', position: 'left', title: { display: true, text: 'Chuva (mm)' } },
-                y1: { type: 'linear', position: 'right', grid: { drawOnChartArea: false }, title: { display: true, text: 'Temp (°C)' } }
-            }
-        }
-    });
-}
-    function initPhysicsInteractivity() {
+function initPhysicsInteractivity() {
     const ctx = document.getElementById('physicsChart');
     if (!ctx) return;
 
@@ -1788,6 +3337,28 @@ function initGeographyInteractivity() {
         
         // Opcional: Você pode atualizar o ponto no gráfico aqui
     };
+}
+    function updateSpace() {
+    const angle = document.getElementById('cam-x').value;
+    const speed = document.getElementById('time-speed').value;
+    
+    const universe = document.getElementById('universe');
+    const planets = document.querySelectorAll('.planet');
+    const earthOrbit = document.getElementById('earth-orbit');
+    const marsOrbit = document.getElementById('mars-orbit');
+
+    // 1. Move a Câmera
+    universe.style.transform = `rotateX(${angle}deg)`;
+
+    // 2. Ajusta a inclinação dos planetas para que não fiquem "achatados"
+    planets.forEach(p => {
+        p.style.transform = `rotateX(-${angle}deg)`;
+    });
+
+    // 3. Ajusta a velocidade do tempo (duração da animação)
+    // Terra leva 10s no padrão. Marte leva 18.8s.
+    earthOrbit.style.animationDuration = (10 / speed) + "s";
+    marsOrbit.style.animationDuration = (18.8 / speed) + "s";
 }
     function initTrigChart() {
     const canvas = document.getElementById('trigChart');
@@ -1836,6 +3407,387 @@ function initGeographyInteractivity() {
         trigChart.data.datasets[1].data = newData.cosData;
         trigChart.update();
     });
+}
+    function initWaveInteractivity() {
+    const ctx = document.getElementById('waveChart');
+    if (!ctx) return;
+
+    const labels = [];
+    for (let i = 0; i <= 20; i += 0.5) labels.push(i);
+
+    const waveChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Onda Senoidal',
+                data: labels.map(x => Math.sin(x)),
+                borderColor: '#6f42c1',
+                tension: 0.4,
+                pointRadius: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: { y: { min: -2, max: 2 } }
+        }
+    });
+
+    window.updateWave = () => {
+        const amp = document.getElementById('amp-slider').value;
+        const freq = document.getElementById('freq-slider').value;
+        
+        waveChart.data.datasets[0].data = labels.map(x => amp * Math.sin(x * freq));
+        waveChart.update();
+        
+        document.getElementById('wave-info').innerText = `Amplitude: ${amp} | Frequência: ${freq}`;
+    };
+}
+    function initElectroInteractivity() {
+    const ctx = document.getElementById('electroChart');
+    if (!ctx) return;
+
+    const distancias = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const electroChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: distancias,
+            datasets: [{
+                label: 'Força Elétrica (N)',
+                data: distancias.map(d => 100 / (d * d)),
+                borderColor: '#e83e8c',
+                backgroundColor: 'rgba(232, 62, 140, 0.1)',
+                fill: true
+            }]
+        }
+    });
+}
+    let currentPH = 7;
+let hasIndicator = false;
+
+function addChemical(type) {
+    const liquid = document.getElementById('liquid');
+    const status = document.getElementById('status-lab');
+
+    if (type === 'acid') {
+        currentPH = Math.max(1, currentPH - 2);
+    } else if (type === 'base') {
+        currentPH = Math.min(14, currentPH + 2);
+    } else if (type === 'indicator') {
+        hasIndicator = true;
+    }
+
+    // Lógica de Cor (Fenolftaleína fica rosa em meio básico pH > 8.2)
+    let color = '#e0e0e0'; // Neutro/Ácido sem indicador
+    if (hasIndicator) {
+        if (currentPH > 8.5) color = '#ff66b2'; // Rosa vibrante
+        else color = '#f8f9fa'; // Incolor em ácido
+    }
+
+    liquid.style.background = color;
+    status.innerText = `PH Atual: ${currentPH.toFixed(1)} | ${getPhStatus(currentPH)}`;
+}
+    function simulatePollution() {
+    const level = document.getElementById('pollution-level').value;
+    const water = document.getElementById('water-front');
+    const floor = document.getElementById('sea-floor');
+    const msg = document.getElementById('impact-msg');
+    const trashContainer = document.getElementById('trash-container');
+
+    // 1. Mudança de Cor da Água (De azul para marrom/cinza)
+    const blue = 148 - (level * 1.2);
+    const green = 105 - (level * 0.5);
+    const red = level * 0.8;
+    water.style.background = `rgba(${red}, ${green}, ${blue}, 0.7)`;
+
+    // 2. Acúmulo de Lixo Visual
+    trashContainer.innerHTML = ''; // Limpa para redesenhar conforme o nível
+    for(let i = 0; i < level / 5; i++) {
+        const trash = document.createElement('div');
+        trash.className = 'trash-particle';
+        trash.style.opacity = "1";
+        trash.style.left = Math.random() * 90 + "%";
+        trash.style.top = Math.random() * 90 + "%";
+        trash.style.transform = `translateZ(${Math.random() * 20}px) rotate(${Math.random() * 360}deg)`;
+        trash.style.background = i % 2 === 0 ? '#7f8c8d' : '#2c3e50'; // Cores de plástico/pneu
+        trashContainer.appendChild(trash);
+    }
+
+    // 3. Feedback Educativo
+    if (level < 30) {
+        msg.innerText = "Ecossistema Saudável - Biodiversidade Alta";
+        msg.style.color = "#2ecc71";
+    } else if (level < 70) {
+        msg.innerText = "Alerta: Presença de Microplásticos e Turvação da Água";
+        msg.style.color = "#f1c40f";
+    } else {
+        msg.innerText = "ZONA MORTA: Hipóxia e Extinção Local de Espécies";
+        msg.style.color = "#e74c3c";
+    }
+}
+    function updatePhysics() {
+    const sliderTemp = document.getElementById('slider-temp');
+    // Se o slider não existir (aba fechada), para a função aqui
+    if (!sliderTemp) return;
+
+    
+    const temp = parseFloat(document.getElementById('slider-temp').value);
+    const press = parseFloat(document.getElementById('slider-press').value);
+    const grav = parseFloat(document.getElementById('slider-grav').value);
+     
+    // Selecionamos todos os blocos gerados pela função da Geografia
+    const blocks = document.querySelectorAll('.block');
+    const status = document.getElementById('status-display');
+
+    blocks.forEach(block => {
+        // Pegamos as coordenadas x, y, z que você salvou no elemento
+        const x = parseFloat(block.style.getPropertyValue('--x'));
+        const y = parseFloat(block.style.getPropertyValue('--y'));
+        const z = parseFloat(block.style.getPropertyValue('--z'));
+
+        // --- CÁLCULO DE FÍSICA ---
+
+        // 1. Dilatação Térmica: O bloco cresce levemente
+        const scale = 1 + (temp / 2000);
+
+        // 2. Pressão: Blocos de baixo (y menor) achatam mais
+        // Simulamos que a deformação é maior na base
+        const pressureEffect = (press / 1000) * (8 - y); 
+        const yDeformation = 1 - (pressureEffect / 10);
+
+        // 3. Inclinação (Gravidade): O deslocamento em X aumenta com a altura (y)
+        // Delta X = Altura * tangente do ângulo (simplificado)
+        const tiltX = y * (grav / 10);
+
+        // --- APLICAÇÃO VISUAL ---
+        
+        // Aplicamos a transformação individual do bloco
+        // Mantemos o posicionamento original (translate3d) e adicionamos os efeitos
+        block.style.transform = `
+            translate3d(
+                calc(${x} * 30px + ${tiltX}px), 
+                calc(${y} * -30px), 
+                calc(${z} * 30px)
+            )
+            scale(${scale})
+            scaleY(${yDeformation})
+        `;
+
+        // Feedback de Cor: Bloco fica "quente" ou "sob pressão"
+        if (temp > 70 || press > 170) {
+            block.style.filter = `hue-rotate(${temp}deg) brightness(${1 - pressureEffect})`;
+        } else {
+            block.style.filter = "none";
+        }
+    });
+
+    // Alerta de Colapso
+    status.style.display = (temp > 85 || press > 185 || Math.abs(grav) > 15) ? "block" : "none";
+}
+    function generatePhysicsBuilding() {
+    const container = document.getElementById('building-structure');
+    if (!container) return;
+
+    container.innerHTML = '';
+    
+    // Prédio simples 3x3x8
+    for (let x = 0; x < 3; x++) {
+        for (let z = 0; z < 3; z++) {
+            for (let y = 0; y < 8; y++) {
+                createBlock(x, y, z, 'concrete', 'building-structure');
+            }
+        }
+    }
+    // Força uma atualização da física logo após construir
+    if (typeof updatePhysics === "function") updatePhysics();
+}
+
+function applyPhysics(effect) {
+    const building = document.getElementById('building-structure');
+    const info = document.getElementById('physics-info'); // Uma div para texto
+    
+    // Limpa efeitos anteriores
+    building.classList.remove('heat-stress', 'pressure-stress', 'gravity-fail');
+
+    if (effect === 'calor') {
+        building.classList.add('heat-stress');
+        info.innerHTML = "<strong>Dilatação Térmica:</strong> O aumento da temperatura faz as moléculas vibrarem mais, expandindo o concreto. Sem juntas de dilatação, o prédio pode rachar.";
+    } 
+    else if (effect === 'pressao') {
+        building.classList.add('pressure-stress');
+        info.innerHTML = "<strong>Pressão:</strong> Peso excessivo nos andares superiores comprime a base. Se a pressão exceder a resistência do material, ocorre o colapso.";
+    }
+    else if (effect === 'gravidade') {
+        building.classList.add('gravity-fail');
+        info.innerHTML = "<strong>Centro de Gravidade:</strong> Se o prédio inclina e o centro de massa sai da base, a gravidade gera um torque que derruba a estrutura.";
+    }
+}
+    function updateCircuit() {
+    const v = parseFloat(document.getElementById('volts').value);
+    const r = parseFloat(document.getElementById('res').value);
+    const i = v / r;
+
+    // Atualiza Labels
+    document.getElementById('v-label').innerText = v;
+    document.getElementById('r-label').innerText = r;
+    document.getElementById('i-val').innerText = i.toFixed(2);
+
+    const bulb = document.getElementById('light-bulb');
+    const wires = document.querySelectorAll('.wire');
+    const msg = document.getElementById('physics-msg');
+
+    if (i > 8) { // Sobrecarga
+        bulb.style.background = '#333';
+        bulb.style.boxShadow = 'none';
+        msg.innerText = "❌ ERRO: FILAMENTO ROMPIDO POR SOBRECARGA!";
+        msg.style.color = "#e74c3c";
+        wires.forEach(w => w.style.background = "#c0392b"); // Fio "vermelho vivo"
+    } else if (i > 0) {
+        const brightness = i * 15;
+        const glowColor = `rgba(241, 196, 15, ${i / 8})`;
+        
+        // Efeito na Lâmpada
+        bulb.style.background = `rgb(255, 255, ${255 - brightness * 2})`;
+        bulb.style.boxShadow = `0 0 ${brightness}px ${brightness/2}px ${glowColor}`;
+        
+        // Efeito no Fio (Brilho de corrente passando)
+        wires.forEach(w => {
+            w.style.background = "#f1c40f";
+            w.style.boxShadow = `0 0 ${i * 2}px ${glowColor}`;
+        });
+
+        msg.innerText = i < 2 ? "Corrente fraca..." : "Fluxo de elétrons estável.";
+        msg.style.color = "#2ecc71";
+    } else {
+        // Circuito Aberto / Desligado
+        bulb.style.background = "#95a5a6";
+        bulb.style.boxShadow = "none";
+        wires.forEach(w => {
+            w.style.background = "#34495e";
+            w.style.boxShadow = "none";
+        });
+        msg.innerText = "Fonte desligada.";
+    }
+}
+    function updateMathLab() {
+    const b = document.getElementById('input-b').value;
+    const h = document.getElementById('input-h').value;
+    const shape = document.getElementById('geo-shape');
+    const result = document.getElementById('math-result');
+
+    // Atualiza a forma visualmente
+    shape.style.width = b + 'px';
+    shape.style.height = h + 'px';
+
+    // Atualiza os labels numéricos
+    document.getElementById('b-val').innerText = b;
+    document.getElementById('h-val').innerText = h;
+
+    // Cálculos Matemáticos
+    const area = b * h;
+    const perimetro = (2 * b) + (2 * h);
+
+    result.innerHTML = `<strong>Área (B × H):</strong> ${area.toLocaleString()} px² <br> 
+                        <strong>Perímetro:</strong> ${perimetro} px`;
+}
+
+function mudarPH(valor) {
+    const liquido = document.getElementById('liquido-quimica');
+    const display = document.getElementById('ph-display');
+    
+    if (!liquido || !display) return; // Trava de segurança: só roda se o HTML estiver na tela
+
+    let cor = "";
+    let nome = "";
+
+    // Lógica baseada na Escala de pH
+    if (valor < 7) {
+        cor = `rgb(231, ${76 + (valor * 20)}, 60)`; // Tons de vermelho/laranja
+        nome = "Ácido";
+    } else if (valor === 7) {
+        cor = "#bdc3c7"; // Cinza/Transparente
+        nome = "Neutro";
+    } else {
+        cor = `rgb(52, 152, ${219 - (valor * 5)})`; // Tons de azul/roxo
+        nome = "Base (Alcalino)";
+    }
+
+    // Aplica as mudanças
+    liquido.style.backgroundColor = cor;
+    liquido.style.boxShadow = `inset 0 0 20px ${cor}, 0 0 15px ${cor}`; // Efeito de brilho químico
+    display.innerText = `pH: ${valor} (${nome})`;
+    display.style.color = cor;
+}
+    function renderMathGraph(type, value) {
+    const canvas = document.getElementById('canvas-math');
+    const info = document.getElementById('math-info');
+    
+    if (!canvas) return; // Trava de segurança contra erro "null"
+    
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width;
+    const h = canvas.height;
+    const originX = 50;
+    const originY = 250;
+
+    // Limpa o desenho anterior
+    ctx.clearRect(0, 0, w, h);
+
+    // 1. Desenha Eixos X e Y
+    ctx.beginPath();
+    ctx.strokeStyle = "#333";
+    ctx.lineWidth = 2;
+    ctx.moveTo(originX, 20); ctx.lineTo(originX, originY); // Y
+    ctx.moveTo(originX, originY); ctx.lineTo(w - 20, originY); // X
+    ctx.stroke();
+
+    // 2. Lógica Específica
+    if (type === 'cinematica') {
+        const a = parseFloat(value); // Aceleração do slider
+        ctx.beginPath();
+        ctx.strokeStyle = "#e74c3c";
+        ctx.moveTo(originX, originY);
+        
+        // Desenha a parábola do MUV: s = s0 + v0t + (at²)/2
+        for (let t = 0; t < 20; t++) {
+            let x = originX + (t * 15);
+            let y = originY - (0.5 * a * Math.pow(t, 2));
+            ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+        info.innerHTML = `Equação: s = ${0.5 * a}t² | Aceleração: ${a} m/s²`;
+    } 
+    
+    else if (type === 'derivada') {
+        const xPoint = parseFloat(value); // Ponto X do slider
+        // Função original: f(x) = x² / 40 (uma parábola suave)
+        ctx.beginPath();
+        ctx.strokeStyle = "#3498db";
+        for (let px = 0; px < 300; px++) {
+            let x = originX + px;
+            let y = originY - (Math.pow(px, 2) / 40);
+            if (px === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        // Desenha a Reta Tangente (Derivada: f'(x) = 2x / 40)
+        const slope = (2 * xPoint) / 40;
+        const yPoint = Math.pow(xPoint, 2) / 40;
+        
+        ctx.beginPath();
+        ctx.strokeStyle = "#2ecc71";
+        ctx.lineWidth = 3;
+        // Ponto da tangente
+        ctx.arc(originX + xPoint, originY - yPoint, 4, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Linha da tangente (y - y0 = m(x - x0))
+        ctx.moveTo(originX + xPoint - 50, originY - (yPoint - (slope * 50)));
+        ctx.lineTo(originX + xPoint + 50, originY - (yPoint + (slope * 50)));
+        ctx.stroke();
+        
+        info.innerHTML = `Ponto x: ${xPoint} | Inclinação (Derivada): ${slope.toFixed(2)}`;
+    }
 }
     let currentCalcMode = 'derivada';
 
@@ -1913,151 +3865,782 @@ function initCalculusInteractivity() {
         calcChart.update();
     };
 }
-    // Função para renderizar os Tópicos de um curso (ex: Álgebra, Cálculo)
-// 1. Mostra as áreas (ex: Álgebra, Cálculo)
-// 1. Abre a lista de Tópicos (Álgebra, Geometria...)
-// PASSO 1: Mostra as Áreas (Ex: Álgebra)
-function showTopics(courseId) {
-    const course = courses.find(c => c.id === courseId);
-    const container = document.getElementById('content-container');
+    // Limpar acima
+function initGeographyInteractivity() {
+    const canvas = document.getElementById('geo-climograma');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    new Chart(ctx, {
+        data: {
+            labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+            datasets: [{
+                type: 'bar',
+                label: 'Precipitação (mm)',
+                data: [250, 210, 160, 100, 50, 20, 15, 30, 70, 120, 180, 230],
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                yAxisID: 'y'
+            }, {
+                type: 'line',
+                label: 'Temperatura (°C)',
+                data: [28, 27, 26, 24, 22, 20, 19, 21, 23, 25, 26, 27],
+                borderColor: 'rgb(255, 99, 132)',
+                yAxisID: 'y1'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { type: 'linear', position: 'left', title: { display: true, text: 'Chuva (mm)' } },
+                y1: { type: 'linear', position: 'right', grid: { drawOnChartArea: false }, title: { display: true, text: 'Temp (°C)' } }
+            }
+        }
+    });
+}
     
-    let html = `<h2>Áreas de ${course.title}</h2><div class="grid-container">`;
-    course.topics.forEach(topic => {
-        html += `
-            <div class="course-card" onclick="showSubTopics('${courseId}', '${topic.id}')">
-                <div class="course-icon">${topic.icon || '📚'}</div>
-                <h3>${topic.title}</h3>
-                <button class="btn-estudar">Ver Assuntos</button>
-            </div>`;
-    });
-    html += `</div><button onclick="renderMainSelection()" class="btn-voltar">← Voltar aos Cursos</button>`;
-    container.innerHTML = html;
-}
+    function createBlock(x, y, z, material, containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
 
-// PASSO 2: Mostra os Assuntos (Ex: Função Linear, Funções Básicas)
-function showSubTopics(courseId, topicId) {
-    const course = courses.find(c => c.id === courseId);
-    const topic = course.topics.find(t => t.id === topicId);
-    const container = document.getElementById('content-container');
+    const block = document.createElement('div');
+    block.className = `block ${material}`;
+    
+    // Define as coordenadas para o CSS processar
+    block.style.setProperty('--x', x);
+    block.style.setProperty('--y', y);
+    block.style.setProperty('--z', z);
 
-    let html = `<h2>${topic.title}</h2><div class="grid-container">`;
-    topic.subtopics.forEach(sub => {
-        html += `
-            <div class="course-card" onclick="renderLesson('${courseId}', '${topicId}', '${sub.id}')">
-                <h3>${sub.title}</h3>
-                <p>Clique para estudar este assunto.</p>
-            </div>`;
-    });
-    html += `</div><button onclick="showTopics('${courseId}')" class="btn-voltar">← Voltar para Áreas</button>`;
-    container.innerHTML = html;
-}
-
-// PASSO 3: Abre a Lição Final (Onde o conteúdo aparece)
-function renderLesson(courseId, topicId, subId) {
-    const course = courses.find(c => c.id === courseId);
-    const topic = course.topics.find(t => t.id === topicId);
-    const lesson = topic.subtopics.find(s => s.id === subId);
-    const container = document.getElementById('content-container');
-
-    container.innerHTML = `
-        <div class="lesson-container">
-            ${lesson.content.basic}
-            <hr>
-            <button onclick="showSubTopics('${courseId}', '${topicId}')" class="btn-voltar">← Voltar aos Assuntos</button>
-        </div>
+    // Agora criamos as 6 faces para o bloco não ser "transparente"
+    block.innerHTML = `
+        <div class="face top"></div>
+        <div class="face bottom"></div>
+        <div class="face front"></div>
+        <div class="face back"></div>
+        <div class="face left"></div>
+        <div class="face right"></div>
     `;
 
-    // Ativa Quiz e Gráficos
+    // CLIQUE ESQUERDO: Minerar (Perfeito como você fez)
+    block.onclick = function(e) {
+        e.stopPropagation();
+        this.classList.add('breaking');
+        setTimeout(() => {
+            const labAtual = containerId === 'main-chunk' ? 'geografia' : 'usina-hidreletrica';
+            this.remove();
+            // Dispara quiz aleatório conforme sua lógica
+            if (Math.random() < 0.2) dispararQuiz(labAtual);
+        }, 200);
+    };
+
+    // CLIQUE DIREITO: Destacar/Brilho
+    block.oncontextmenu = function(e) {
+        e.preventDefault(); 
+        this.style.filter = this.style.filter === "brightness(1.5)" ? "none" : "brightness(1.5)";
+    };
+
+    container.appendChild(block);
+}
+// Atualizamos a função de gerar terreno para passar o yMax
+// Uma única função para tudo: terreno natural ou usina
+
+    function desenharGraficoMatematica() {
+    const canvas = document.getElementById('canvas-math');
+    if (!canvas) return; // Segurança
+
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpa o quadro
+
+    // Exemplo: Desenha os eixos X e Y
+    ctx.beginPath();
+    ctx.strokeStyle = "#333";
+    ctx.moveTo(50, 250); ctx.lineTo(350, 250); // Eixo X
+    ctx.moveTo(50, 250); ctx.lineTo(50, 50);   // Eixo Y
+    ctx.stroke();
+
+    function initDerivativeInteractivity() {
+  const canvas = document.getElementById('math-canvas-advanced');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const inputX = document.getElementById('input-der-x');
+  const formulaText = document.getElementById('formula-der-text');
+
+  function draw() {
+    const px = parseFloat(inputX.value);
+    const a = 0.05; // Fixamos uma parábola simples: f(x) = 0.05x²
+    
+    // f(x) = a*x² -> Derivada f'(x) = 2*a*x
+    const slope = 2 * a * px;
+    const py = a * (px * px);
+
+    formulaText.innerText = `No ponto x = ${px}, a inclinação é ${slope.toFixed(2)}`;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Eixos
+    ctx.strokeStyle = '#e2e8f0';
+    ctx.beginPath(); ctx.moveTo(200, 0); ctx.lineTo(200, 250); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, 125); ctx.lineTo(400, 125); ctx.stroke();
+
+    // 1. Desenha a Parábola (fundo)
+    ctx.strokeStyle = '#cbd5e1';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    for (let x = -100; x <= 100; x++) {
+      let y = a * (x * x);
+      ctx.lineTo(200 + x * 2, 125 - y);
+    }
+    ctx.stroke();
+
+    // 2. Desenha a Reta Tangente (A Derivada)
+    ctx.strokeStyle = '#16a34a';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    for (let x = px - 50; x <= px + 50; x++) {
+      // Equação da reta tangente: y - y1 = m(x - x1) -> y = m(x - px) + py
+      let y = slope * (x - px) + py;
+      ctx.lineTo(200 + x * 2, 125 - y);
+    }
+    ctx.stroke();
+
+    // 3. Desenha o Ponto do contato
+    ctx.fillStyle = '#16a34a';
+    ctx.beginPath();
+    ctx.arc(200 + px * 2, 125 - py, 5, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  inputX.addEventListener('input', draw);
+  draw();
+}
+    let muvChartInstance = null;
+
+function initMuvChart() {
+    const ctx = document.getElementById('muvChart');
+    if (!ctx) return;
+
+    // Se já existir um gráfico, destrói para criar um novo
+    if (muvChartInstance) muvChartInstance.destroy();
+
+    const tempos = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const aceleracaoInicial = 2;
+
+    muvChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: tempos,
+            datasets: [{
+                label: 'Velocidade (m/s)',
+                data: tempos.map(t => aceleracaoInicial * t),
+                borderColor: '#ff4d4d', // Vermelho como o seu slider
+                backgroundColor: 'rgba(255, 77, 77, 0.1)',
+                fill: true,
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: { title: { display: true, text: 'Velocidade (v)' }, min: 0, max: 100 },
+                x: { title: { display: true, text: 'Tempo (t)' } }
+            }
+        }
+    });
+}
+}
+   function trocarAba(nomeAba) {
+    // 1. Mostra o HTML da aba selecionada
+    exibirConteudo(nomeAba);
+
+    // 2. Gatilho Único para inicializar os laboratórios
     setTimeout(() => {
-        if (typeof initQuiz === 'function') initQuiz(subId, "main-quiz-box");
-        if (subId === 'funcao-linear') initLinearChart(); // Ativa o simulador de reta
+        console.log(`Inicializando laboratório: ${nomeAba}`);
+
+        // Inicialização Visual
+        if (nomeAba === 'gerador-chunks') generateTerrain('plano');
+        if (nomeAba === 'usina-hidreletrica') construirCenario('usina', 'water-container');
+        if (nomeAba === 'estresse-fisico') generatePhysicsBuilding();
+      if (nomeAba === 'usina-hidreletrica') {
+    construirCenario('usina', 'water-container');
+    carregarTemplatePythonUsina(); // O editor já nasce com o código pronto!
+}
+        if (nomeAba === 'cinematica' || nomeAba === 'derivada') initDerivativeChart();
+        if (nomeAba === 'escala-ph') mudarPH('neutro');
+
+        // Sincronização com Python (Pyodide)
+        if (window.pyodide && (nomeAba === 'usina-hidreletrica' || nomeAba === 'derivada')) {
+            pyodide.runPython(`
+            `);
+        }
+    }, 150); // 150ms é o tempo ideal para garantir que o DOM renderizou
+}
+    function abrirAbaMatematica() {
+    const container = document.getElementById('container-do-site');
+    if (!container) return;
+
+    container.innerHTML = meuObjetoMatematica.content.basic;
+    
+    setTimeout(() => {
+        // Verifica se a função de gráfico existe antes de chamar
+        if (typeof renderMathGraph === "function") {
+            renderMathGraph('cinematica', 2);
+        }
+        // Inicia o cubo 3D de geometria se estiver na tela
+        if (typeof update3D === "function") update3D();
     }, 100);
 }
-    function openLesson(courseId, topicId, subId) {
-  const course = courses.find(c => c.id === courseId);
-  if (!course) return;
 
-  const topic = topicId ? course.topics.find(t => t.id === topicId) : null;
-  const sub = (topic && subId) ? topic.subtopics.find(s => s.id === subId) : null;
 
-  let finalContent, finalTitle, backBtnAction;
+    function gerarUsina() {
+    const container = document.getElementById('hydro-chunk');
+    if (!container) return;
+    container.innerHTML = '';
 
-  if (sub) {
-    finalContent = sub.content;
-    finalTitle = sub.title;
-    backBtnAction = `openTopic('${courseId}', '${topicId}')`;
-  } else if (topic) {
-    finalContent = topic.content;
-    finalTitle = topic.title;
-    backBtnAction = `openCourse('${courseId}')`;
-  } else {
-    finalContent = course.content;
-    finalTitle = course.title;
-    backBtnAction = `showHome()`;
-  }
-
-  const basicText = (finalContent && finalContent.basic) ? finalContent.basic : (finalContent || "Conteúdo em breve...");
-
-  // Editor de código apenas se o curso for de TI
-  let editorHtml = '';
-  const programmingCourses = ['desenvolvimento', 'python', 'java', 'banco-de-dados', 'c'];
-  if (programmingCourses.includes(courseId)) {
-    const placeholder = getPlaceholderCode(courseId); // Agora a função existe!
-    editorHtml = `
-      <div class="code-editor-section" style="margin-top:25px; background:#1e1e1e; padding:15px; border-radius:8px;">
-        <h3 style="color:#4ec9b0;">💻 Prática: ${finalTitle}</h3>
-        <textarea id="code-input" style="width:100%; height:150px; font-family:monospace; background:#2d2d2d; color:#9cdcfe; border:none; padding:10px; border-radius:5px;">${placeholder}</textarea>
-        <button class="btn" onclick="runCode('${courseId}')" style="margin-top:10px; background:#007bff; color:white;">⚡ Executar</button>
-        <iframe id="output-frame" style="width:100%; height:200px; background:white; margin-top:10px; border-radius:5px; border:none;"></iframe>
-      </div>`;
-  }
-
-  courseContainer.innerHTML = `
-    <div class="lesson-content">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-         <h2>${finalTitle}</h2>
-         <button class="btn secondary" onclick="${backBtnAction}">← Voltar</button>
-      </div>
-      <div class="content-body" style="background:white; padding:20px; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.05);">
-        ${basicText}
-      </div>
-      ${editorHtml}
-      <div id="main-quiz-box" style="margin-top:40px;"></div>
-    </div>
-  `;
-
-  setTimeout(() => {
-    window.scrollTo(0, 0);
-    const quizId = subId || topicId || courseId;
-
-    // Tenta carregar tudo, mas não trava se falhar
-    try {
-      if (typeof initQuiz === 'function') initQuiz(quizId, "main-quiz-box");
-      
-      // Ativação de Gráficos
-      if (courseId === 'matematica') {
-          if (typeof initMathInteractivity === 'function') initMathInteractivity();
-          if (typeof initQuadraticInteractivity === 'function') initQuadraticInteractivity();
-      }
-      if (courseId === 'quimica' && typeof initChemistryInteractivity === 'function') initChemistryInteractivity();
-      if (courseId === 'biologia' && typeof initBiologyInteractivity === 'function') initBiologyInteractivity();
-      if (courseId === 'fisica' && typeof initPhysicsInteractivity === 'function') initPhysicsInteractivity();
-      if (courseId === 'geografia' && typeof initGeographyInteractivity === 'function') initGeographyInteractivity();
-      
-      if (editorHtml && typeof runCode === 'function') runCode(courseId);
-    } catch (e) {
-      console.error("Erro na interatividade:", e);
+    // 1. Criar a Barragem (Blocos de Pedra/Concreto)
+    for(let z=0; z<5; z++) {
+        for(let y=0; y<6; y++) {
+            createBlock(0, y, z, 'stone', 'hydro-chunk');
+        }
     }
-  }, 150);
+
+    // 2. Criar a Água (Blocos Azuis Translúcidos)
+    for(let z=0; z<5; z++) {
+        for(let y=0; y<5; y++) {
+            createBlock(-1, y, z, 'water', 'hydro-chunk');
+        }
+    }
 }
-    function getPlaceholderCode(courseId) {
-    if (courseId === 'python') return 'print("Olá Mundo em Python!")';
-    if (courseId === 'java') return 'public class Main {\n  public static void main(String[] args) {\n    System.out.println("Olá Java!");\n  }\n}';
-    if (courseId === 'c') return '#include <stdio.h>\n\nint main() {\n    printf("Olá Mundo em C!\\n");\n    return 0;\n}';
-    if (courseId === 'desenvolvimento') return '<!DOCTYPE html>\n<html>\n<body>\n  <h1>Olá Mundo!</h1>\n</body>\n</html>';
-    if (courseId === 'banco-de-dados') return '-- SQL Exemplo\nSELECT * FROM alunos;';
-    return '// Digite seu código aqui...';
+    // APAGUE a gerarUsina() e a generateTerrain()
+
+// USE APENAS ESTA (Ajustada para o seu modelo de duto/turbina):
+function construirCenario(tipoCenario, containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return; 
+
+    container.innerHTML = ''; 
+    const size = 6; 
+
+    for (let x = 0; x < size; x++) {
+        for (let z = 0; z < size; z++) {
+            
+            // Define a altura máxima baseada no tipo
+            let yMax = 0;
+            if (tipoCenario === 'montanha') yMax = Math.floor(Math.random() * 4);
+            if (tipoCenario === 'usina') {
+                if (x === 3) yMax = 4;      // Altura da Barragem
+                else if (x < 3) yMax = 3;   // Profundidade da Água
+                else yMax = 0;              // Chão seco na frente
+            }
+
+            for (let y = 0; y <= yMax; y++) {
+                let material = 'dirt';
+
+                if (tipoCenario === 'usina') {
+                    if (x === 3) material = 'stone';
+                    else if (x < 3) material = 'water';
+                    else material = 'grass';
+                } else {
+                    material = (y === yMax) ? 'grass' : (y < yMax - 1 ? 'stone' : 'dirt');
+                }
+
+                createBlock(x, y, z, material, containerId);
+            }
+        }
+    }
 }
+    let produzindo = false;
+
+// APAGUE as duas versões anteriores de simularFluxo
+function simularFluxo() {
+    // Usamos o container que está visível no momento
+    const containerId = document.getElementById('water-container') ? 'water-container' : 'hydro-chunk';
+    const status = document.getElementById('energia-status');
+    const dutoExistente = document.querySelector('.water-moving');
+
+    if (!dutoExistente) {
+        // ABRIR COMPORTAS
+        // Colocamos o bloco no local do duto (x=3 é a barragem, x=4 é a saída)
+        createBlock(4, 1, 2, 'water water-moving', containerId);
+        
+        if (status) status.innerHTML = "⚡ <span style='color:#f1c40f;'>PRODUZINDO: 14.000 MW</span>";
+        
+        // Ativa brilho no gerador
+        const gen = document.querySelector('.generator');
+        if (gen) gen.style.filter = "brightness(1.5) drop-shadow(0 0 10px gold)";
+        
+        console.log("Fluxo iniciado no container: " + containerId);
+    } else {
+        // FECHAR COMPORTAS
+        dutoExistente.remove();
+        if (status) status.innerHTML = "Produção: 0 MW (Comportas Fechadas)";
+        
+        const gen = document.querySelector('.generator');
+        if (gen) gen.style.filter = "none";
+    }
+}
+   
+    // Chame essa função quando o aluno clicar no botão para abrir a aba da Usina
+// Local: Função carregarLaboratorioHidro
+   function gerarMapaChunks() {
+    const container = document.getElementById('water-container') || document.getElementById('building-structure');
+    if (!container) return;
+    container.innerHTML = ''; 
+    
+    const tamanho = 10; 
+
+    for (let x = 0; x < tamanho; x++) {
+        for (let z = 0; z < tamanho; z++) {
+            
+            // 1. BASE: Chão de Grama (Nível 0)
+            createBlock(x, 0, z, 'grass', container.id);
+
+            // 2. BARRAGEM (X=4) e ESCADA DE PEIXES (Z=0)
+            if (x === 4) {
+                for (let y = 1; y <= 5; y++) {
+                    // Vertedouro no topo
+                    if ((z === 4 || z === 5) && y === 5) continue;
+                    // Escada de peixes (mais baixa que o muro)
+                    if (z === 0 && y > 3) continue; 
+                    
+                    createBlock(x, y, z, 'stone', container.id);
+                }
+            }
+
+            // 3. RESERVATÓRIO (X < 4)
+            else if (x < 4) {
+                for (let y = 1; y <= 4; y++) {
+                    createBlock(x, y, z, 'water', container.id);
+                }
+            }
+
+            // 4. CASA DE FORÇA (Turbinas - X=5)
+            else if (x === 5 && z >= 3 && z <= 6) {
+                for (let y = 1; y <= 2; y++) {
+                    createBlock(x, y, z, 'iron', container.id);
+                }
+            }
+
+            // 5. SUBESTAÇÃO (X=8 a 9)
+            else if (x >= 8 && x <= 9 && z >= 2 && z <= 4) {
+                createBlock(x, 1, z, 'stone', container.id);
+                if (x === 8 && z === 3) {
+                    createBlock(x, 2, z, 'iron', container.id); // Transformador
+                }
+            }
+
+            // 6. RIO DE SAÍDA (Onde a água flui após as turbinas)
+            else if (x > 5 && z >= 3 && z <= 6) {
+                createBlock(x, 1, z, 'water', container.id);
+            }
+
+            // 7. TORRE DE TRANSMISSÃO
+            if (x === 1 && z === 8) {
+                for (let y = 1; y <= 7; y++) {
+                    createBlock(x, y, z, 'iron', container.id);
+                }
+                createBlock(0, 6, 8, 'iron', container.id);
+                createBlock(2, 6, 8, 'iron', container.id);
+            }
+        }
+    }
+    console.log("Usina Hidrelétrica Completa Renderizada!");
+}
+    function mudarParaUsina() {
+    const areaPrincipal = document.getElementById('container-do-site');
+    if (!areaPrincipal) return;
+
+    areaPrincipal.innerHTML = meuObjetoUsina.content.basic;
+
+    setTimeout(() => {
+        gerarMapaChunks(); // Chama a função definitiva
+        carregarLaboratorioHidro(); // Carrega o Python
+    }, 100);
+}
+   
+let rotationY = 45; 
+
+function rotateWorld() {
+    const container = document.getElementById('water-container');
+    if (container) {
+        rotationY += 45; 
+        // Use -15deg aqui para bater com o gerarMapaFoguete
+        container.style.transform = `rotateX(-15deg) rotateY(${rotationY}deg)`;
+    }
+}
+    function simularFluxo() {
+    const blocosAgua = document.querySelectorAll('#water-container .water');
+    if (blocosAgua.length === 0) return alert("Construa a usina primeiro!");
+    
+    blocosAgua.forEach(b => b.classList.toggle('fluxo-ativo'));
+}
+    function configurarEditorPython() {
+    js.window.aplicarPotenciaHidro(999)
+print("Comando enviado com sucesso!")
+}
+    function generateTerrain(tipo) {
+    gerarMapaChunks(); // Isso redireciona o clique para a nossa usina nova
+}
+    // VERIFICAÇÃO 1: A FUNÇÃO DE POTÊNCIA
+window.aplicarPotenciaHidro = function(mw) {
+    console.log("Executando aplicação de potência:", mw);
+    
+    const status = document.getElementById('energia-status');
+    if (status) {
+        status.innerHTML = `⚡ PRODUZINDO: <strong>${Number(mw).toFixed(2)} MW</strong>`;
+    }
+
+    const geradores = document.querySelectorAll('.iron');
+    if (geradores.length === 0) {
+        console.warn("Aviso: Nenhum bloco com a classe '.iron' foi encontrado!");
+    }
+
+    geradores.forEach(g => {
+        g.style.filter = mw > 0 ? "brightness(2) drop-shadow(0 0 15px gold)" : "none";
+    });
+};
+    window.animarLancamento = function(altitude, sucesso) {
+    const foguete = document.getElementById('foguete-container'); // O ID do grupo de blocos do foguete
+    const status = document.getElementById('missao-status');
+
+    if (sucesso) {
+        status.innerHTML = "🚀 LANÇAMENTO BEM SUCEDIDO!";
+        status.style.color = "#2ecc71";
+        
+        // Animação de subida suave
+        foguete.style.transition = "transform 5s ease-in";
+        foguete.style.transform = `translateY(-1500px) scale(0.5)`;
+    } else {
+        status.innerHTML = "💥 FALHA: Empuxo insuficiente para decolar!";
+        status.style.color = "#e74c3c";
+        
+        // Efeito de tremer (falha)
+        foguete.style.animation = "shake 0.5s cubic-bezier(.36,.07,.19,.97) both";
+    }
+};
+   window.gerarMapaFoguete = function() {
+    const container = document.getElementById('water-container');
+    if (!container) return;
+    container.innerHTML = ''; 
+    
+    // Aplica a rotação inicial para não ficar "de frente" (2D)
+    container.style.transform = `rotateX(-15deg) rotateY(${rotationY}deg)`;
+
+    // 🏗️ Criando a Base/Torre de Lançamento (lado esquerdo)
+    // Usamos x = -1 para ficar ao lado do foguete (que estará em x = 0)
+    for (let h = 1; h <= 6; h++) {
+        window.criarBloco(-1, h, 0, 'iron', container); 
+    }
+    // Uma plataforma no chão
+    for (let x = -2; x <= 2; x++) {
+        for (let z = -2; z <= 2; z++) {
+            window.criarBloco(x, 0, z, 'stone', container);
+        }
+    }
+
+    // 🚀 Criando o Container do Foguete
+    const foguete = document.createElement('div');
+    foguete.id = 'foguete-container';
+    foguete.style.position = 'absolute';
+    foguete.style.transformStyle = 'preserve-3d';
+    foguete.style.transform = 'translate3d(0, 0, 0)';
+    container.appendChild(foguete);
+
+    // Montagem do Foguete (x=0 para não bater na torre)
+    window.criarBloco(0, 1, 0, 'gold', foguete);    
+    window.criarBloco(0, 2, 0, 'diamond', foguete); 
+    window.criarBloco(0, 3, 0, 'diamond', foguete); 
+    window.criarBloco(0, 4, 0, 'glass', foguete);   
+};
+    window.criarBloco = function(x, y, z, tipo, pai) {
+    const bloco = document.createElement('div');
+    bloco.className = `chunk ${tipo}`;
+    
+    const s = 32; // Tamanho do bloco
+    const tx = x * s;
+    const ty = -y * s;
+    const tz = z * s;
+
+    // Posiciona o container do bloco
+    bloco.style.transform = `translate3d(${tx}px, ${ty}px, ${tz}px)`;
+
+    // Cria as 6 faces do cubo
+    const faces = ['front', 'back', 'top', 'bottom', 'left', 'right'];
+    faces.forEach(face => {
+        const divFace = document.createElement('div');
+        divFace.className = `face ${face}`;
+        bloco.appendChild(divFace);
+    });
+
+    pai.appendChild(bloco);
+};
+    window.animarLancamento = function(sucesso) {
+    const foguete = document.getElementById('foguete-container');
+    const status = document.getElementById('missao-status');
+
+    if (sucesso) {
+        // Ativa trepidação
+        foguete.classList.add('tremendo');
+        
+        // Sobe após um pequeno delay da ignição
+        setTimeout(() => {
+            foguete.classList.remove('tremendo');
+            foguete.style.transition = "transform 4s cubic-bezier(.62,-0.01,.91,.47)";
+            foguete.style.transform = "translate3d(0, -1500px, 0) scale(0.7)";
+            status.innerHTML = "🚀 STATUS: EM ÓRBITA";
+            status.style.color = "#2ecc71";
+        }, 500); 
+    } else {
+        // Apenas treme e para
+        foguete.classList.add('tremendo');
+        status.innerHTML = "💥 STATUS: FALHA NO LANÇAMENTO";
+        status.style.color = "#ff4444";
+        setTimeout(() => foguete.classList.remove('tremendo'), 1000);
+    }
+};
+   // 1. Declarar globalmente para evitar o erro de "before initialization"
+window.city_instancia = null;
+
+// 1. Definição da Classe (Mantenha no topo)
+class Cidade3D {
+    constructor() {
+        this.world = document.getElementById('city-world');
+        this.selectedElement = null; // Guarda o que está selecionado
+        this.rotationY = -45;
+        this.rotationX = -30;
+        console.log("🏗️ Modo Editor Ativado!");
+    }
+
+    build(x, z, type = 'house') {
+        const cube = document.createElement('div');
+        cube.className = `city-cube ${type}`;
+        
+        // Guardamos a posição na grade dentro do elemento
+        cube.dataset.x = x;
+        cube.dataset.z = z;
+      
+      this.rotate('right'); 
+setTimeout(() => this.rotate('left'), 200);
+
+        ['front', 'back', 'left', 'right', 'top'].forEach(f => {
+            const face = document.createElement('div');
+            face.className = `city-face ${f}`;
+            cube.appendChild(face);
+        });
+
+        // Evento de clique para selecionar
+        cube.onclick = (e) => {
+            e.stopPropagation();
+            this.select(cube);
+        };
+
+        this.world.appendChild(cube);
+        this.updatePos(cube);
+    }
+
+    select(el) {
+        // Remove seleção anterior
+        if (this.selectedElement) this.selectedElement.classList.remove('selected');
+        
+        // Seleciona o novo
+        this.selectedElement = el;
+        el.classList.add('selected');
+        console.log(`📍 Selecionado: ${el.classList[1]} em [${el.dataset.x}, ${el.dataset.z}]`);
+    }
+
+    moveSelected(dx, dz) {
+        if (!this.selectedElement) return alert("Clique em um prédio primeiro!");
+        
+        // Atualiza as coordenadas no dataset
+        let newX = parseInt(this.selectedElement.dataset.x) + dx;
+        let newZ = parseInt(this.selectedElement.dataset.z) + dz;
+        
+        this.selectedElement.dataset.x = newX;
+        this.selectedElement.dataset.z = newZ;
+        
+        this.updatePos(this.selectedElement);
+    }
+
+    updatePos(el) {
+        const x = parseInt(el.dataset.x);
+        const z = parseInt(el.dataset.z);
+        const offset = 60; // Tamanho da grade
+        
+        // Ajuste de altura automático por tipo
+        let y = 0;
+        if (el.classList.contains('office')) y = -50;
+        else if (el.classList.contains('power-plant')) y = -25;
+        else if (el.classList.contains('apartment')) y = -40;
+        else y = -15;
+
+        el.style.transform = `translate3d(${x * offset}px, ${y}px, ${z * offset}px)`;
+    }
+
+    rotate(dir) {
+        this.rotationY += (dir === 'left' ? -15 : 15);
+        this.world.style.transform = `rotateX(${this.rotationX}deg) rotateY(${this.rotationY}deg)`;
+    }
+}
+
+// Inicialização e Ações dos Botões
+// Função de inicialização aprimorada
+function getCity() {
+    // Se a instância não existe ou o elemento do mundo foi perdido, reinicia
+    if (!window.city_instancia || !window.city_instancia.world) {
+        window.city_instancia = new Cidade3D();
+    }
+    return window.city_instancia;
+}
+
+// Modifique a função mover para ser mais tolerante
+function mover(dx, dz) {
+    const c = getCity();
+    if (c) c.moveSelected(dx, dz);
+}
+
+// Certifique-se de que a acao_gerar_usina comece chamando getCity()
+function acao_gerar_usina() {
+    const c = getCity(); 
+    
+    // Verificação de segurança: se o mundo ainda não apareceu no DOM
+    if (!c.world) {
+        console.error("Mundo 3D ainda não carregou totalmente.");
+        return;
+    }
+
+    // Limpa para não duplicar ao clicar várias vezes (opcional)
+    c.world.innerHTML = '<div id="city-grid-base"></div>';
+    
+    c.build(0, 0, 'power-plant');
+    c.build(1, 1, 'office');
+    c.build(-1, 0, 'house');
+    c.build(0, 0, 'power-plant');
+    c.build(1, 1, 'office');
+    c.build(-1, 0, 'house');
+    console.log("🏗️ Estruturas geradas com sucesso!");
+}
+    var pyodideInstancia = null;
+
+// Função que liga o motor do Python assim que a página abre
+// Variável global para o motor do Python
+var pyodideInstancia = null;
+
+// Função que liga o motor do Python assim que a página abre
+async function inicializarPython() {
+    console.log("⏳ Iniciando motor do Python (Pyodide)...");
+    try {
+        // loadPyodide é a função vinda da CDN no seu HTML
+        pyodideInstancia = await loadPyodide();
+        console.log("🐍 Python pronto para uso!");
+    } catch (e) {
+        console.error("❌ Falha ao carregar Pyodide:", e);
+    }
+}
+
+// Inicia o processo imediatamente
+inicializarPython();
+
+async function acao_executar_python() {
+    if (!pyodideInstancia) {
+        alert("O Python ainda está aquecendo os motores. Aguarde 5 segundos e tente de novo.");
+        return;
+    }
+
+    const codigo = document.getElementById('city-python-editor').value;
+    
+    try {
+        // Executa o código do editor
+        await pyodideInstancia.runPythonAsync(codigo);
+        console.log("🚀 Executado com sucesso!");
+    } catch (err) {
+        console.error("Erro no Python:", err);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('city-project-wrapper');
+    
+    if (container && !window.city_instancia) {
+        // Inicializa a classe apenas se ela não existir
+        window.city_instancia = new Cidade3D('city-project-wrapper');
+        console.log("✅ Cidade 3D pronta para construir!");
+    }
+});
+    // Adicione dentro da classe Cidade3D ou como uma função global
+function obterStatusCidade() {
+    const total = document.querySelectorAll('.city-cube').length;
+    const energia = document.getElementById('city-project-wrapper').classList.contains('power-on');
+    
+    return {
+        total_estruturas: total,
+        rede_ativa: energia
+    };
+}
+    // Funções que o Python vai usar como atalhos
+window.setRedeEletrica = function(estado) {
+    const wrapper = document.getElementById('city-project-wrapper');
+    const indicador = document.getElementById('city-power-indicator');
+    
+    if(estado) {
+        wrapper.classList.add('power-on');
+        indicador.innerText = "⚡ REDE: ATIVA";
+        indicador.style.color = "#2ecc71";
+    } else {
+        wrapper.classList.remove('power-on');
+        indicador.innerText = "⚡ REDE: DESLIGADA";
+        indicador.style.color = "#f1c40f";
+    }
+};
+
+window.obterVazao = function() {
+    return parseInt(document.getElementById('city-input-vazao').value);
+};
+    // Função para inicializar o gráfico com segurança
+// Forçamos a criação do gráfico de forma isolada
+function montarGrafico() {
+    const canvas = document.getElementById('city-energy-chart');
+    if (!canvas) return;
+
+    // Destruir se já existir para evitar erro de "Canvas is already in use"
+    if (window.meuGrafico) {
+        window.meuGrafico.destroy();
+    }
+
+    window.meuGrafico = new Chart(canvas.getContext('2d'), {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Energia',
+                data: [],
+                borderColor: '#f1c40f',
+                tension: 0.3,
+                fill: true,
+                backgroundColor: 'rgba(241, 196, 15, 0.1)'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: { x: { display: false }, y: { beginAtZero: true } }
+        }
+    });
+}
+
+// Ponte simplificada para o Python
+window.atualizarGrafico = function(v) {
+    if (window.meuGrafico) {
+        window.meuGrafico.data.labels.push("");
+        window.meuGrafico.data.datasets[0].data.push(v);
+        if (window.meuGrafico.data.labels.length > 10) {
+            window.meuGrafico.data.labels.shift();
+            window.meuGrafico.data.datasets[0].data.shift();
+        }
+        window.meuGrafico.update();
+    }
+};
+
+// Inicializa tudo após o CodePen carregar
+setTimeout(montarGrafico, 1500);
 /* Inicial: nada mais */
   </script>
 </body>
