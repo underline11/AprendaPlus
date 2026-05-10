@@ -47,3 +47,79 @@ Download de eBooks
 Autor
 
 Fillipe – Projeto acadêmico
+
+Código para lançar o foguete:
+import js
+import time
+
+# 1. Coleta de dados
+massa = float(js.document.getElementById('py-massa').value)
+empuxo_kn = float(js.document.getElementById('py-empuxo').value)
+
+# 2. Física básica
+peso = massa * 9.81
+forca_motor = empuxo_kn * 1000
+
+print("🚀 Iniciando sequência de lançamento...")
+
+# 3. Contagem Regressiva
+for i in range(3, 0, -1):
+    print(f"{i}...")
+    time.sleep(1) # Pausa de 1 segundo
+
+if forca_motor > peso:
+    print("🔥 IGNICÃO! Decolando...")
+    js.animarLancamento(True)
+else:
+    print("❌ FALHA: Potência insuficiente para vencer a gravidade.")
+    js.animarLancamento(False)
+
+
+
+Código para ativar a usina:
+import js
+
+print("--- Lendo sensores da Usina ---")
+
+try:
+    # Usamos o 'window' direto para garantir acesso aos elementos
+    v_val = js.window.document.getElementById('py-vazao').value
+    q_val = js.window.document.getElementById('py-queda').value
+
+    vazao = float(v_val)
+    queda = float(q_val)
+    
+    potencia = (0.9 * 1000 * 9.81 * vazao * queda) / 1000000
+    
+    print(f"✅ Vazão: {vazao}m³/s | Queda: {queda}m")
+    print(f"⚡ Potência: {potencia:.2f} MW")
+    
+    # Chama a função de brilho
+    js.window.aplicarPotenciaHidro(potencia)
+
+except Exception as e:
+    # Se o erro persistir, tentamos com o 'parent'
+    try:
+        v_val = js.window.parent.document.getElementById('py-vazao').value
+        q_val = js.window.parent.document.getElementById('py-queda').value
+        # ... (mesmo cálculo abaixo) ...
+        potencia = (0.9 * 1000 * 9.81 * float(v_val) * float(q_val)) / 1000000
+        js.window.parent.aplicarPotenciaHidro(potencia)
+        print("✅ Conectado via Parent!")
+    except:
+        print(f"⚠️ Erro persistente: {e}")
+
+
+
+Código para ligar a cidade:
+import js
+
+# Força a classe 'power-on' no container principal
+wrapper = js.document.getElementById('city-project-wrapper')
+wrapper.classList.add('power-on')
+
+# Atualiza o texto do indicador
+indicador = js.document.getElementById('city-power-indicator')
+indicador.innerText = "⚡ REDE: ATIVADA VIA PYTHON"
+
+print("Comando enviado do Python para o DOM!")
