@@ -543,16 +543,6 @@ input[type="range"] {
     from { transform: rotateZ(0deg); }
     to { transform: rotateZ(360deg); }
 }
-.ocean-container {
-    perspective: 1000px;
-    width: 100%;
-    height: 400px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #1a1a1a;
-    border-radius: 15px;
-}
 
 /* 1. O AMBIENTE (A Câmera) */
 .world {
@@ -565,86 +555,6 @@ input[type="range"] {
     align-items: center;
     overflow: hidden;
 }
-
-.chunk {
-    position: relative;
-    transform-style: preserve-3d;
-    transform: rotateX(-30deg) rotateY(45deg);
-    transition: transform 0.5s;
-}
-
-/* 2. O BLOCO (Estrutura) */
-.block {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    transform-style: preserve-3d;
-    transform: translate3d(calc(var(--x) * 30px), calc(var(--y) * -30px), calc(var(--z) * 30px));
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-/* 3. AS 6 FACES (Obrigatório para não ficar transparente) */
-.face {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    border: 1px solid rgba(0,0,0,0.1);
-    backface-visibility: hidden;
-}
-
-/* Posicionamento 3D das faces */
-.face.front  { transform: translateZ(15px); }
-.face.back   { transform: rotateY(180deg) translateZ(15px); }
-.face.left   { transform: rotateY(-90deg) translateZ(15px); }
-.face.right  { transform: rotateY(90deg) translateZ(15px); }
-.face.top    { transform: rotateX(90deg) translateZ(15px); }
-.face.bottom { transform: rotateX(-90deg) translateZ(15px); }
-
-/* 4. MATERIAIS (Cores corrigidas) */
-.grass .face { background: #795548; } /* Lados terra */
-.grass .top  { background: #5d8233; } /* Topo grama */
-
-.stone .face { background: #95a5a6; }
-.stone .right { background: #707b7c; }
-
-.water .face { background: rgba(0, 105, 148, 0.6); border: none; }
-
-/* 5. EFEITOS DE ESTRESSE FÍSICO */
-.block.breaking { transform: scale(0); opacity: 0; }
-.heat-stress { filter: sepia(0.5) saturate(2); transform: scale(1.05); }
-/* Efeito de Gravidade/Instabilidade (Inclinação) */
-    
-/* 1. ESTRUTURA DO BLOCO */
-.block {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    transform-style: preserve-3d;
-    /* Usa o Y negativo para o prédio subir e não afundar no chão */
-    transform: translate3d(calc(var(--x) * 30px), calc(var(--y) * -30px), calc(var(--z) * 30px));
-    transform-origin: bottom; 
-    transition: transform 0.3s ease-out, filter 0.5s;
-    cursor: pointer;
-}
-
-/* 2. AS FACES */
-.face {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    border: 1px solid rgba(0,0,0,0.1);
-    backface-visibility: hidden; /* Melhora a performance */
-    pointer-events: none; 
-}
-
-/* Posicionamento (Obrigatório para o cubo fechar) */
-.face.front  { transform: translateZ(15px); }
-.face.back   { transform: rotateY(180deg) translateZ(15px); }
-.face.left   { transform: rotateY(-90deg) translateZ(15px); }
-.face.right  { transform: rotateY(90deg) translateZ(15px); }
-.face.top    { transform: rotateX(90deg) translateZ(15px); }
-.face.bottom { transform: rotateX(-90deg) translateZ(15px); }
 
 /* 3. MATERIAIS E ANIMAÇÕES */
 .water .face { background: rgba(41, 128, 185, 0.6); }
@@ -676,115 +586,16 @@ input[type="range"] {
     50% { filter: brightness(1.3) saturate(1.2); }
     100% { filter: brightness(1); }
 }
-/* Bloco de Metal (Ferro) */
-.block.iron .face {
-    background: #4a4a4a; /* Um cinza bem escuro, metálico */
-    border: 1px solid #222;
-}
-.block.iron .top {
-    background: #666; /* Topo levemente mais claro */
-}
 
-/* Ajuste de profundidade para o Viewport */
-/* O Container que segura os blocos precisa de perspectiva */
-.world {
-    perspective: 1000px;
-    perspective-origin: center;
-}
-
-/* O local onde os blocos são gerados precisa manter o 3D */
-/* O container azul que você criou */
-#water-container {
-    position: absolute; /* Mudado de relative para absolute */
-    transform-style: preserve-3d;
-    top: 50%;  /* Desci um pouco para você ver mais o céu */
-    left: 50%;
-    width: 0; 
-    height: 0;
-    /* Remova o transform daqui */
-}
-
-/* O container específico do foguete */
-#foguete-container {
-    position: absolute;
-    top: 50%; /* Centraliza no meio da área azul */
-    left: 50%;
-    transform-style: preserve-3d;
-    transition: transform 4s ease-in;
-}
-
-/* A classe dos blocos */
-.chunk {
-    position: absolute; /* Obrigatório para o posicionamento 3D */
-    width: 32px;
-    height: 32px;
-    transform-style: preserve-3d;
-    backface-visibility: visible;
-    /* Adicione uma borda leve para ajudar a ver o 3D */
-    border: 0.5px solid rgba(0, 0, 0, 0.1);
-}
-
-.iron { background-color: #7f8c8d; }   /* Torre Cinza */
-.stone { background-color: #95a5a6; }  /* Chão Cinza Claro */
-.gold { background-color: #f1c40f; }   /* Motor */
-.diamond { background-color: #3498db; }/* Corpo */
-.glass { background-color: #ecf0f1; border: 1px solid white; } /* Ponta */
-@keyframes shake {
-    0% { transform: translate3d(0, 0, 0); }
-    25% { transform: translate3d(2px, 0, 0); }
-    50% { transform: translate3d(-2px, 0, 0); }
-    75% { transform: translate3d(2px, 0, 0); }
-    100% { transform: translate3d(0, 0, 0); }
-}
-
-.tremendo {
-    animation: shake 0.1s infinite;
-}
 #viewport {
-    perspective: 1200px; /* Aumentei um pouco a profundidade */
+    perspective: 1400px; /* Profundidade corrigida */
     perspective-origin: 50% 50%;
     background: #87CEEB;
     overflow: hidden; 
     position: relative;
-    width: 100%;
-    height: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-/* Container do bloco (agora vazio, apenas posiciona) */
-.chunk {
-    position: absolute;
-    width: 32px;
-    height: 32px;
-    transform-style: preserve-3d;
-}
-
-/* Estilo comum para todas as faces */
-.face {
-    position: absolute;
-    width: 32px;
-    height: 32px;
-    background-size: cover;
-    border: 0.5px solid rgba(0,0,0,0.2); /* Ajuda a ver as bordas */
-}
-
-/* Posicionamento de cada face no espaço 3D */
-.front  { transform: rotateY(0deg) translateZ(16px); }
-.back   { transform: rotateY(180deg) translateZ(16px); }
-.top    { transform: rotateX(90deg) translateZ(16px); }
-.bottom { transform: rotateX(-90deg) translateZ(16px); }
-.left   { transform: rotateY(-90deg) translateZ(16px); }
-.right  { transform: rotateY(90deg) translateZ(16px); }
-
-/* Aplica a cor/textura à face baseada no tipo do bloco pai */
-.iron .face { background-color: #7f8c8d; }
-.stone .face { background-color: #95a5a6; }
-.gold .face { background-color: #f1c40f; box-shadow: inset 0 0 10px #d35400; }
-.diamond .face { background-color: #3498db; }
-.glass .face { background-color: rgba(236, 240, 241, 0.6); border: 1px solid white; }
-#python-input:focus {
-    color: #9cdcfe !important;
+    width: 100% !important;
+    height: 350px !important; /* Trava a altura para o cálculo do JS */
+    display: block !important; /* Remove o Flex que quebra posições absolutas */
 }
 
 /* 1. Reset e Container Principal */
@@ -1816,6 +1627,209 @@ button,input{
     margin-top:20px;
     font-size:18px;
 }
+    #renderCanvasMotor, #motor-canvas {
+    outline: none;
+    touch-action: none; /* ESSENCIAL para o Babylon capturar gestos no mobile e trackpads */
+}
+    /* =======================================================================
+   CORREÇÃO DE DIMENSÃO DO NOVO MOTOR INTERATIVO
+   ======================================================================= */
+/* =======================================================================
+   ESTRUTURA PRINCIPAL DO SIMULADOR (CANVAS & WRAPPER)
+   ======================================================================= */
+.motor-wrapper {
+    position: relative;
+    width: 100%;
+    height: 550px; /* Mantém a altura ideal para visualização */
+    background-color: #16171a;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 15px;
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.7);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+#motor-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    outline: none;
+    touch-action: none; /* CRUCIAL: Captura gestos de rotação orbital no Babylon */
+}
+
+/* =======================================================================
+   PAINEL LATERAL ESQUERDO (CONTROLES E OFICINA MODULAR)
+   ======================================================================= */
+.motor-ui-control {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: rgba(26, 27, 30, 0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 16px;
+    border-radius: 12px;
+    width: 250px;
+    max-height: 90%; /* Evita que o painel transborde em telas menores */
+    overflow-y: auto; /* Adiciona scroll interno se houver muitas peças */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    z-index: 5;
+    color: #eeeeee;
+}
+
+/* Estilização dos Títulos dentro do Painel */
+.motor-ui-control h2 {
+    margin: 0 0 12px 0;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #4caf50;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 6px;
+}
+
+/* Divisor estético entre controles e customização */
+.ui-divider {
+    border: 0;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
+    margin: 16px 0;
+}
+
+/* Grupos de Sliders (RPM / Opacidade) */
+.motor-control-group {
+    margin-bottom: 12px;
+}
+
+.motor-control-group label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 5px;
+    color: #b3b3b3;
+}
+
+.motor-control-group input[type="range"] {
+    width: 100%;
+    background: #2a2b30;
+    height: 6px;
+    border-radius: 4px;
+    outline: none;
+    accent-color: #4caf50; /* Alinha a cor do controle com o tema */
+}
+
+/* =======================================================================
+   SISTEMA DE BOTÕES DA OFICINA (PEÇAS MODULARES)
+   ======================================================================= */
+.oficina-secao {
+    margin-bottom: 14px;
+}
+
+.oficina-categoria {
+    display: block;
+    font-size: 11px;
+    color: #888888;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.oficina-botoes {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Botão de Adição de Peça */
+.btn-peca {
+    background: #25262b;
+    color: #e4e6eb;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 10px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.btn-peca .icon {
+    margin-right: 8px;
+    font-size: 14px;
+}
+
+.btn-peca:hover {
+    background: #2c2e33;
+    border-color: #4caf50;
+    transform: translateX(2px);
+}
+
+.btn-peca:active {
+    transform: scale(0.98);
+}
+
+/* Botão de Reset */
+.btn-reset {
+    width: 100%;
+    background: transparent;
+    color: #ff6b6b;
+    border: 1px dashed rgba(255, 107, 107, 0.3);
+    padding: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 11px;
+    margin-top: 10px;
+    transition: all 0.2s ease;
+}
+
+.btn-reset:hover {
+    background: rgba(255, 107, 107, 0.08);
+    border-style: solid;
+    border-color: #ff6b6b;
+}
+
+/* =======================================================================
+   PAINEL DE TELEMETRIA (LADO DIREITO INTERATIVO)
+   ======================================================================= */
+.motor-ui-telemetria {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    background: rgba(20, 21, 23, 0.9);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-left: 4px solid #00bcff;
+    padding: 14px 16px;
+    border-radius: 0 8px 8px 0;
+    width: 210px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+    z-index: 5;
+    color: #ffffff;
+}
+
+.motor-ui-telemetria h3 {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    color: #00bcff;
+    letter-spacing: 0.5px;
+}
+
+.motor-ui-telemetria p {
+    margin: 6px 0;
+    font-size: 13px;
+    color: #cccccc;
+    display: flex;
+    justify-content: space-between;
+}
+
+.motor-ui-telemetria span {
+    font-family: monospace;
+    font-weight: bold;
+    color: #ffffff;
+}
   </style>
 </head>
 <body>
@@ -1885,7 +1899,7 @@ const courses = [
       `,
           }
         },
-       { id: 'funcoes-quadraticas', // ID que a openLesson usa
+       { id: 'funcoes-quadraticas', // ID qu
           title: 'Função Quadrática (2º Grau)',
           content: { 
             basic: `
@@ -2975,38 +2989,124 @@ proporcional à pressão exercida sobre ele (Lei de Boyle).
        }
       },
        {
+          id: 'sistema-motor', // ID que a openLesson usa
+          title: 'Sistema de motores',
+          content: { 
+            basic: `
+ <div class="motor-wrapper">
+    <canvas id="motor-canvas"></canvas>
+    
+    <div class="motor-ui-control">
+    <h2>Arquitetura do Motor</h2>
+<div class="motor-control-group">
+    <label for="motor-select-tipo">Configuração:</label>
+    <select id="motor-select-tipo" style="width: 100%; background: #25262b; color: #fff; border: 1px solid rgba(255,255,255,0.1); padding: 8px; border-radius: 6px; outline: none; cursor: pointer;">
+        <option value="1cil">1 Cilindro (Monocilíndrico)</option>
+        <option value="2cil">2 Cilindros em Linha</option>
+        <option value="4cil" selected>4 Cilindros em Linha</option>
+        <option value="V6">6 Cilindros em V (V6)</option>
+        <option value="V8">8 Cilindros em V (V8)</option>
+        <option value="Boxer">2 Cilindros Contrapostos (Boxer)</option>
+    </select>
+</div>
+<h2>Sistema de Arrefecimento</h2>
+<div style="display: flex; gap: 10px; margin-bottom: 15px;">
+    <button id="btn-toggle-ventoinha" style="flex: 1; background: #25262b; color: #fff; border: 1px solid rgba(255,255,255,0.1); padding: 10px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: all 0.2s;">
+        ❄️ Ligar Ventoinha
+    </button>
+    <button id="btn-add-radiador" style="flex: 1; background: #25262b; color: #fff; border: 1px solid rgba(255,255,255,0.1); padding: 10px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: all 0.2s;">
+        ➕ Radiador Alta Vazão
+    </button>
+</div>
+
+<div class="telemetria-group" style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 6px; font-family: monospace;">
+    <div>🌡️ Temp. Óleo/Motor: <span id="motor-txt-temperatura" style="color: #4caf50; font-weight: bold;">25</span>°C</div>
+    <div>💧 Eficiência Resfriamento: <span id="motor-txt-arrefecimento" style="color: #2196f3;">0</span>%</div>
+    <div>⚠️ Status Mecânico: <span id="motor-txt-status" style="color: #4caf50; font-weight: bold;">OK</span></div>
+</div>
+
+<hr class="ui-divider">
+        <h2>Controle do Motor</h2>
+        <div class="motor-control-group">
+            <label>Velocidade (RPM): <span id="motor-txt-rpm">0</span></label>
+            <input type="range" id="motor-slider-rpm" min="0" max="100" value="0">
+        </div>
+        <div class="motor-control-group">
+            <label>Bloco (Opacidade): <span id="motor-txt-opacity">40%</span></label>
+            <input type="range" id="motor-slider-opacity" min="10" max="100" value="40">
+        </div>
+
+        <hr class="ui-divider">
+
+        <h2>Customização Modular</h2>
+        
+        <div class="oficina-secao">
+            <label class="oficina-categoria">Indução & Performance</label>
+            <div class="oficina-botoes">
+                <button class="btn-peca" id="btn-add-turbo" data-peca="turbo">
+                    <span class="icon">🌀</span> + Instalar Turbo
+                </button>
+                <button class="btn-peca" id="btn-add-filtro" data-peca="filtro">
+                    <span class="icon">🌪️</span> + Filtro Cônico
+                </button>
+            </div>
+        </div>
+
+        <div class="oficina-secao">
+            <label class="oficina-categoria">Exaustão</label>
+            <div class="oficina-botoes">
+                <button class="btn-peca" id="btn-add-escape" data-peca="escape">
+                    <span class="icon">💨</span> + Escape Esportivo
+                </button>
+            </div>
+        </div>
+        
+        <button class="btn-reset" id="btn-reset-motor">Resetar Configuração</button>
+    </div>
+
+    <div class="motor-ui-telemetria">
+        <h3>Telemetria</h3>
+        <p>Ciclo: <span id="motor-txt-ciclo">-</span></p>
+        <p>Pressão: <span id="motor-txt-pressao">1.0</span> atm</p>
+        <p>Temperatura: <span id="motor-txt-temp">25</span>°C</p>
+        <p>Potência Est.: <span id="motor-txt-potencia">120</span> cv</p> </div>
+</div>
+        `,
+       }
+      },
+       {
           id: 'lancamento-foguete', // ID que a openLesson usa
           title: 'Estação de Lançamento de Foguetes',
           content: { 
             basic: `
-  <div class="world" id="viewport" style="height: 300px; background: #87CEEB; overflow: hidden; position: relative;">
-        <div class="chunk-container" id="water-container"></div>
-    </div>
+ <div class="world" id="viewport" style="width: 100%; height: 350px; background: #87CEEB; position: relative;">
+    <canvas id="renderCanvasFoguete" style="width: 100%; height: 100%; outline: none;"></canvas>
+</div>
 
-    <div id="course-foguete" class="controles-usina" style="background:#1a1a2e; color:white; padding:15px; border-radius:8px; margin-top:10px;">
-        <h3 style="color:#e74c3c;">🚀 Centro de Comando Aeroespacial</h3>
-        <div style="margin-bottom: 15px;">
-            <label>Massa do Foguete (kg): </label>
-            <input type="range" id="py-massa" min="1000" max="10000" value="5000" oninput="this.nextElementSibling.value = this.value">
-            <output>5000</output>
-        </div>
-        <div style="margin-bottom: 15px;">
-            <label>Potência do Motor (kN): </label>
-            <input type="range" id="py-empuxo" min="0" max="200" value="100" oninput="this.nextElementSibling.value = this.value">
-            <output>100</output>
-        </div>
-        <div id="missao-status" style="color:#2ecc71; font-weight:bold;">🛰️ Status: Aguardando Ignição</div>
+<div id="course-foguete" class="controles-usina" style="background:#1a1a2e; color:white; padding:15px; border-radius:8px; margin-top:10px;">
+    <h3 style="color:#e74c3c;">🚀 Centro de Comando Aeroespacial</h3>
+    <div style="margin-bottom: 15px;">
+        <label>Massa do Foguete (kg): </label>
+        <input type="range" id="py-massa" min="1000" max="10000" value="5000" oninput="this.nextElementSibling.value = this.value">
+        <output>5000</output>
     </div>
-
-    <textarea id="python-editor" style="width:100%; height:100px; margin-top:10px; background:#222; color:#0f0;"></textarea>
-    <iframe id="output-frame" style="width:100%; height:80px; background:#111;"></iframe>
-
-    <div style="text-align:center; margin-top: 10px;">
-        <button onclick="gerarMapaFoguete()">🚀 Construir Foguete</button>
-        <button onclick="runCode('lancamento-foguete')">🔥 Lançar!</button>
-        <button onclick="rotateWorld()">Girar Visão</button>
-        <button onclick="gerarMapaFoguete()">🔄 Resetar Missão</button>
+    <div style="margin-bottom: 15px;">
+        <label>Potência do Motor (kN): </label>
+        <input type="range" id="py-empuxo" min="0" max="200" value="100" oninput="this.nextElementSibling.value = this.value">
+        <output>100</output>
     </div>
+    <div id="missao-status" style="color:#2ecc71; font-weight:bold;">🛰️ Status: Aguardando Ignição</div>
+</div>
+
+<textarea id="python-editor" style="width:100%; height:100px; margin-top:10px; background:#222; color:#0f0;"></textarea>
+<iframe id="output-frame" style="width:100%; height:80px; background:#111;"></iframe>
+
+<div style="text-align:center; margin-top: 10px;">
+    <button onclick="gerarMapaFoguete()">🚀 Construir Foguete</button>
+    <button onclick="runCode('lancamento-foguete')">🔥 Lançar!</button>
+    <button onclick="rotateWorld()">Girar Visão</button>
+    <button onclick="gerarMapaFoguete()">🔄 Resetar Missão</button>
+</div>
         `,
        }
       },
@@ -5143,45 +5243,57 @@ class Pessoa {
   title: 'Protótipo da Usina Hidrelétrica (CSS 3D + Chunks)',
   content: {
     basic: `
-    <div style="margin-top: 15px;">
-    <label style="color: white; display: block; margin-bottom: 5px;">💻 Editor Python:</label>
-    <textarea id="python-editor" style="width: 100%; height: 120px; background: #1e1e1e; color: #9cdcfe; font-family: 'Courier New', monospace; padding: 10px; border-radius: 4px; border: 1px solid #444;" placeholder="# Digite seu código aqui..."></textarea>
-</div>
-<div style="margin-top: 10px;">
-    <label style="color: #aaa; display: block; font-size: 12px; margin-bottom: 5px;">> Console de Saída:</label>
-    <iframe id="output-frame" style="width: 100%; height: 100px; background: #1e1e1e; border: 1px solid #444; border-radius: 4px;"></iframe>
-</div>
-    <div class="minecraft-lab">
-        <div class="world" id="viewport">
-            <div class="chunk" id="water-container"></div>
+    <div class="minecraft-lab-container" style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; background: #1a1a1a; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #fff; border-radius: 12px;">
+    
+    <div class="control-panel" style="flex: 1; min-width: 320px; display: flex; flex-direction: column; gap: 15px;">
+        
+        <div>
+            <label style="color: #4caf50; font-weight: bold; display: block; margin-bottom: 5px;">💻 Editor Python:</label>
+            <textarea id="python-editor" style="width: 100%; height: 140px; background: #2d2d2d; color: #a6e22e; font-family: 'Courier New', monospace; padding: 12px; border-radius: 6px; border: 1px solid #444; resize: vertical;" placeholder="# Digite seu código de controle aqui..."></textarea>
+        </div>
+
+        <div>
+            <label style="color: #aaa; display: block; font-size: 12px; margin-bottom: 5px;">&gt;_ Console de Saída:</label>
+            <iframe id="output-frame" style="width: 100%; height: 90px; background: #2d2d2d; border: 1px solid #444; border-radius: 6px;"></iframe>
         </div>
         
-       <div class="controles-usina" style="background:#222; color:white; padding:15px; border-radius:8px;">
-    <div style="margin-bottom: 20px;">
-        <label>Vazão (m³/s): </label>
-        <input type="range" id="py-vazao" min="0" max="1000" value="500" 
-               oninput="this.nextElementSibling.value = this.value">
-        <output>500</output>
-    </div>
+        <div class="controles-usina" style="background: #252525; padding: 15px; border-radius: 8px; border: 1px solid #333;">
+            <h3 style="margin-top: 0; color: #00bcd4; font-size: 16px; border-bottom: 1px solid #444; padding-bottom: 5px;">⚙️ Parâmetros Operacionais</h3>
+            
+            <div style="margin-bottom: 15px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                    <label>Vazão Defluente (Q):</label>
+                    <span style="color: #00bcd4; font-weight: bold;"><span id="vazao-val">500</span> m³/s</span>
+                </div>
+                <input type="range" id="py-vazao" min="0" max="1000" value="500" style="width: 100%;" oninput="document.getElementById('vazao-val').innerText = this.value; window.update3D();">
+            </div>
 
-    <div style="margin-bottom: 10px;">
-        <label>Queda d'água (m): </label>
-        <input type="range" id="py-queda" min="0" max="100" value="50" 
-               oninput="this.nextElementSibling.value = this.value">
-        <output>50</output>
-    </div>
+            <div style="margin-bottom: 10px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                    <label>Queda Líquida (H):</label>
+                    <span style="color: #00bcd4; font-weight: bold;"><span id="queda-val">50</span> m</span>
+                </div>
+                <input type="range" id="py-queda" min="0" max="100" value="50" style="width: 100%;" oninput="document.getElementById('queda-val').innerText = this.value; window.update3D();">
+            </div>
 
-    <div id="energia-status" style="color:#f1c40f; font-weight:bold; margin-top:10px;">
-        ⚡ PRODUZINDO: 0.00 MW
-    </div>
-</div>
+            <div id="energia-status" style="background: #1e1e1e; padding: 10px; border-radius: 4px; text-align: center; color: #f1c40f; font-weight: bold; border-left: 4px solid #f1c40f; margin-top: 15px;">
+                ⚡ PRODUZINDO: 0.00 MW
+            </div>
+        </div>
 
-        <div style="padding:15px; background:#333; display:flex; gap:10px; justify-content:center;">
-             <button onclick="gerarMapaChunks()">Construir Usina</button>
-             <button onclick="rotateWorld()">Girar Visão</button>
-             <button onclick="runCode('usina-hidreletrica')">Executar Simulação</button>
+        <div style="display: flex; gap: 10px;">
+             <button onclick="window.gerarMapaChunks()" style="flex: 1; padding: 12px; background: #388e3c; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">🏗️ Resetar Usina</button>
+             <button onclick="runCode('usina-hidreletrica')" style="flex: 1; padding: 12px; background: #0288d1; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">▶️ Rodar Simulação</button>
         </div>
     </div>
+
+    <div class="viewport-panel" style="flex: 1.5; min-width: 360px; display: flex; flex-direction: column; gap: 10px;">
+        <div style="color: #00bcd4; font-weight: bold; font-size: 14px;">🌐 Simulador Hidráulico 3D Real-Time:</div>
+        <div id="viewport-hydro" style="width: 100%; height: 440px; background: #000; position: relative; border-radius: 8px; overflow: hidden; border: 2px solid #333;">
+            <canvas id="renderCanvasHydro" style="width: 100%; height: 100%; outline: none; display: block;"></canvas>
+        </div>
+    </div>
+</div>
     `
   }
 },
@@ -6565,58 +6677,66 @@ function renderLesson(courseId, topicId, subId) {
     </div>
   `;
 
-  setTimeout(() => {
+ setTimeout(() => {
     window.scrollTo(0, 0);
     const quizId = subId || topicId || courseId;
 
     try {
-      // 1. Ativação de Gráficos e Interatividades Específicas por Curso
-      if (courseId === 'matematica') {
-          if (typeof initMathInteractivity === 'function') initMathInteractivity();
-          if (typeof initQuadraticInteractivity === 'function') initQuadraticInteractivity();
-          if (typeof initDerivativeChart === 'function') initDerivativeChart(); // CORRIGIDO: Agora checa se a função existe
-      }
-      
-      if (courseId === 'quimica' && typeof initChemistryInteractivity === 'function') initChemistryInteractivity();
-      if (courseId === 'biologia' && typeof initBiologyInteractivity === 'function') initBiologyInteractivity();
-      if (courseId === 'geografia' && typeof initGeographyInteractivity === 'function') initGeographyInteractivity();
-      
-      if (courseId === 'fisica') {
-          if (typeof initPhysicsInteractivity === 'function') initPhysicsInteractivity(); 
-          if (typeof initWaveInteractivity === 'function') initWaveInteractivity();    
-          if (typeof initElectroInteractivity === 'function') initElectroInteractivity(); 
-      }
+        // 1. Ativação de Gráficos e Interatividades Específicas por Curso
+        if (courseId === 'matematica') {
+            if (typeof initMathInteractivity === 'function') initMathInteractivity();
+            if (typeof initQuadraticInteractivity === 'function') initQuadraticInteractivity();
+            if (typeof initDerivativeChart === 'function') initDerivativeChart(); 
+        }
+        
+        if (courseId === 'quimica' && typeof initChemistryInteractivity === 'function') initChemistryInteractivity();
+        if (courseId === 'biologia' && typeof initBiologyInteractivity === 'function') initBiologyInteractivity();
+        if (courseId === 'geografia' && typeof initGeographyInteractivity === 'function') initGeographyInteractivity();
+        
+        if (courseId === 'fisica') {
+            if (typeof initPhysicsInteractivity === 'function') initPhysicsInteractivity(); 
+            if (typeof initWaveInteractivity === 'function') initWaveInteractivity();    
+            if (typeof initElectroInteractivity === 'function') initElectroInteractivity(); 
+        }
 
-      if (courseId === 'lancamento-foguete') {
-          setTimeout(() => {
-              if (typeof gerarMapaFoguete === 'function') gerarMapaFoguete();
-          }, 100);
-      }
+        // 🔥 ROTEADOR DO FOGUETE
+        if (courseId === 'lancamento-foguete') {
+            if (typeof engineBiologia !== 'undefined' && engineBiologia) {
+                engineBiologia.dispose();
+                engineBiologia = null;
+            }
+            if (typeof initFoguete3DSpace === "function") initFoguete3DSpace();
+        }
 
-      // CORREÇÃO DO ECOSSISTEMA/FLORESTA: Se o curso for o da floresta 3D, chame a função dele aqui!
-     if (courseId === 'ecossistema') {
-    setTimeout(() => {
-        init3DSpace(); // Só dispara após o HTML se assentar na tela
-    }, 250);
-} else if (courseId === 'geometria') {
-    setTimeout(() => {
-        initGeometria(); 
-    }, 250);
-}
-      
-      if (editorHtml && typeof runCode === 'function') runCode(courseId);
+        // 🔥 ROTEADOR DO ECOSSISTEMA
+        if (courseId === 'ecossistema') {
+            if (typeof engineFoguete !== 'undefined' && engineFoguete) {
+                engineFoguete.dispose();
+                engineFoguete = null;
+            }
+            if (typeof init3DSpace === "function") init3DSpace();
+        }
 
-      // 2. Inicialização ÚNICA do Quiz (Apenas se não estiver na lista de exclusão)
-      const IDsSemQuiz = ['terminal-interativo'];
-      if (!IDsSemQuiz.includes(quizId)) {
-          if (typeof initQuiz === 'function') initQuiz(quizId, "main-quiz-box");
-      }
+        // 🔥 ROTEADOR DA GEOMETRIA (Ajustado para IF limpo)
+        if (courseId === 'geometria') {
+            setTimeout(() => {
+                if (typeof initGeometria === 'function') initGeometria(); 
+            }, 250);
+        }
+        
+        if (editorHtml && typeof runCode === 'function') runCode(courseId);
+
+        // 2. Inicialização ÚNICA do Quiz
+        const IDsSemQuiz = ['terminal-interativo'];
+        if (!IDsSemQuiz.includes(quizId)) {
+            if (typeof initQuiz === 'function') initQuiz(quizId, "main-quiz-box");
+        }
 
     } catch (e) {
-      console.error("Erro na interatividade:", e);
+        console.error("Erro na interatividade:", e);
     }
-  }, 150);
-}
+}, 150);
+      }// <- Este fecha corretamente o setTimeout principal lá do início!
     function getPlaceholderCode(courseId) {
     if (courseId === 'python') return 'print("Olá Mundo em Python!")';
     if (courseId === 'java') return 'public class Main {\n  public static void main(String[] args) {\n    System.out.println("Olá Java!");\n  }\n}';
@@ -6920,76 +7040,7 @@ function simulatePlates(type) {
         setTimeout(() => box.classList.remove('shaking'), 2000);
     }
 }
-    let rotation = 45;
 
-// Limpar apartir daqui
-function rotateWorld(angle) {
-    const world = document.getElementById('world'); // Verifique se o ID do seu container 3D é 'world'
-    if (world) {
-        world.style.transform = `rotateX(-20deg) rotateY(${angle}deg)`;
-    } else {
-        console.warn("Elemento 'world' não encontrado para rotação.");
-    }
-}
-
-// Inicia o mundo
-generateTerrain('plano');
-    function update3D() {
-      const slider = document.getElementById('vazao-slider'); // ou o nome do seu slider
-    
-    // SE O SLIDER NÃO EXISTIR, PARA AQUI E NÃO DÁ ERRO
-    if (!slider) return; 
-
-    const valor = slider.value;
-    const w = document.getElementById('input-w').value;
-    const h = document.getElementById('input-h').value;
-    const z = document.getElementById('input-z').value;
-    const rot = document.getElementById('input-rot').value;
-    
-    const cube = document.getElementById('shape-3d');
-    const result = document.getElementById('volume-result');
-
-    // 1. Atualiza labels
-    document.getElementById('w-val').innerText = w;
-    document.getElementById('h-val').innerText = h;
-    document.getElementById('z-val').innerText = z;
-
-    // 2. Aplica a rotação e dimensões
-    cube.style.transform = `rotateX(-20deg) rotateY(${rot}deg)`;
-    
-    // 3. Ajusta cada face para as novas dimensões
-    const faces = cube.querySelectorAll('.face');
-    faces.forEach(face => {
-        if (face.classList.contains('front') || face.classList.contains('back')) {
-            face.style.width = w + 'px';
-            face.style.height = h + 'px';
-            face.style.transform = face.classList.contains('front') 
-                ? `translateZ(${z/2}px)` 
-                : `rotateY(180deg) translateZ(${z/2}px)`;
-        }
-        if (face.classList.contains('right') || face.classList.contains('left')) {
-            face.style.width = z + 'px';
-            face.style.height = h + 'px';
-            face.style.left = (w/2 - z/2) + 'px';
-            face.style.transform = face.classList.contains('right') 
-                ? `rotateY(90deg) translateZ(${w/2}px)` 
-                : `rotateY(-90deg) translateZ(${w/2}px)`;
-        }
-        if (face.classList.contains('top') || face.classList.contains('bottom')) {
-            face.style.width = w + 'px';
-            face.style.height = z + 'px';
-            face.style.top = (h/2 - z/2) + 'px';
-            face.style.transform = face.classList.contains('top') 
-                ? `rotateX(90deg) translateZ(${h/2}px)` 
-                : `rotateX(-90deg) translateZ(${h/2}px)`;
-        }
-    });
-
-    // 4. Cálculo do Volume
-    const volume = w * h * z;
-    result.innerHTML = `<strong>Volume:</strong> ${volume.toLocaleString()} px³ <br>
-                        <small>(Área da Base: ${w*h}px² × Profundidade: ${z}px)</small>`;
-}
     
 // Inicializa o gráfico ao carregar
 function update3D() {
@@ -7633,49 +7684,6 @@ function initGeographyInteractivity() {
     });
 }
     
-    function createBlock(x, y, z, material, containerId) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-
-    const block = document.createElement('div');
-    block.className = `block ${material}`;
-    
-    // Define as coordenadas para o CSS processar
-    block.style.setProperty('--x', x);
-    block.style.setProperty('--y', y);
-    block.style.setProperty('--z', z);
-
-    // Agora criamos as 6 faces para o bloco não ser "transparente"
-    block.innerHTML = `
-        <div class="face top"></div>
-        <div class="face bottom"></div>
-        <div class="face front"></div>
-        <div class="face back"></div>
-        <div class="face left"></div>
-        <div class="face right"></div>
-    `;
-
-    // CLIQUE ESQUERDO: Minerar (Perfeito como você fez)
-    block.onclick = function(e) {
-        e.stopPropagation();
-        this.classList.add('breaking');
-        setTimeout(() => {
-            const labAtual = containerId === 'main-chunk' ? 'geografia' : 'usina-hidreletrica';
-            this.remove();
-            // Dispara quiz aleatório conforme sua lógica
-            if (Math.random() < 0.2) dispararQuiz(labAtual);
-        }, 200);
-    };
-
-    // CLIQUE DIREITO: Destacar/Brilho
-    block.oncontextmenu = function(e) {
-        e.preventDefault(); 
-        this.style.filter = this.style.filter === "brightness(1.5)" ? "none" : "brightness(1.5)";
-    };
-
-    container.appendChild(block);
-}
-// Atualizamos a função de gerar terreno para passar o yMax
 // Uma única função para tudo: terreno natural ou usina
 
     function desenharGraficoMatematica() {
@@ -7827,313 +7835,332 @@ function initMuvChart() {
     }, 100);
 }
 
+// Escopo global seguro para os motores gráficos da Usina
+// Configurações Globais de Estado
+window.engineHydro = null;
+window.sceneHydro = null;
+window.geradorMesh = null;
+window.condutoMesh = null; // Tubulação de adução
 
-    function gerarUsina() {
-    const container = document.getElementById('hydro-chunk');
-    if (!container) return;
-    container.innerHTML = '';
-
-    // 1. Criar a Barragem (Blocos de Pedra/Concreto)
-    for(let z=0; z<5; z++) {
-        for(let y=0; y<6; y++) {
-            createBlock(0, y, z, 'stone', 'hydro-chunk');
-        }
-    }
-
-    // 2. Criar a Água (Blocos Azuis Translúcidos)
-    for(let z=0; z<5; z++) {
-        for(let y=0; y<5; y++) {
-            createBlock(-1, y, z, 'water', 'hydro-chunk');
-        }
-    }
-}
-    // APAGUE a gerarUsina() e a generateTerrain()
-
-// USE APENAS ESTA (Ajustada para o seu modelo de duto/turbina):
-function construirCenario(tipoCenario, containerId) {
-    const container = document.getElementById(containerId);
-    if (!container) return; 
-
-    container.innerHTML = ''; 
-    const size = 6; 
-
-    for (let x = 0; x < size; x++) {
-        for (let z = 0; z < size; z++) {
-            
-            // Define a altura máxima baseada no tipo
-            let yMax = 0;
-            if (tipoCenario === 'montanha') yMax = Math.floor(Math.random() * 4);
-            if (tipoCenario === 'usina') {
-                if (x === 3) yMax = 4;      // Altura da Barragem
-                else if (x < 3) yMax = 3;   // Profundidade da Água
-                else yMax = 0;              // Chão seco na frente
-            }
-
-            for (let y = 0; y <= yMax; y++) {
-                let material = 'dirt';
-
-                if (tipoCenario === 'usina') {
-                    if (x === 3) material = 'stone';
-                    else if (x < 3) material = 'water';
-                    else material = 'grass';
-                } else {
-                    material = (y === yMax) ? 'grass' : (y < yMax - 1 ? 'stone' : 'dirt');
-                }
-
-                createBlock(x, y, z, material, containerId);
-            }
-        }
-    }
-}
-    let produzindo = false;
-
-// APAGUE as duas versões anteriores de simularFluxo
-function simularFluxo() {
-    // Usamos o container que está visível no momento
-    const containerId = document.getElementById('water-container') ? 'water-container' : 'hydro-chunk';
-    const status = document.getElementById('energia-status');
-    const dutoExistente = document.querySelector('.water-moving');
-
-    if (!dutoExistente) {
-        // ABRIR COMPORTAS
-        // Colocamos o bloco no local do duto (x=3 é a barragem, x=4 é a saída)
-        createBlock(4, 1, 2, 'water water-moving', containerId);
-        
-        if (status) status.innerHTML = "⚡ <span style='color:#f1c40f;'>PRODUZINDO: 14.000 MW</span>";
-        
-        // Ativa brilho no gerador
-        const gen = document.querySelector('.generator');
-        if (gen) gen.style.filter = "brightness(1.5) drop-shadow(0 0 10px gold)";
-        
-        console.log("Fluxo iniciado no container: " + containerId);
-    } else {
-        // FECHAR COMPORTAS
-        dutoExistente.remove();
-        if (status) status.innerHTML = "Produção: 0 MW (Comportas Fechadas)";
-        
-        const gen = document.querySelector('.generator');
-        if (gen) gen.style.filter = "none";
-    }
-}
-   
-    // Chame essa função quando o aluno clicar no botão para abrir a aba da Usina
-// Local: Função carregarLaboratorioHidro
-   function gerarMapaChunks() {
-    const container = document.getElementById('water-container') || document.getElementById('building-structure');
-    if (!container) return;
-    container.innerHTML = ''; 
+window.gerarMapaChunks = function() {
+    console.log("🏗️ Construindo cenário técnico da Usina Hidrelétrica...");
+    const canvas = document.getElementById("renderCanvasHydro");
     
-    const tamanho = 10; 
+    if (!canvas) return;
 
-    for (let x = 0; x < tamanho; x++) {
-        for (let z = 0; z < tamanho; z++) {
-            
-            // 1. BASE: Chão de Grama (Nível 0)
-            createBlock(x, 0, z, 'grass', container.id);
-
-            // 2. BARRAGEM (X=4) e ESCADA DE PEIXES (Z=0)
-            if (x === 4) {
-                for (let y = 1; y <= 5; y++) {
-                    // Vertedouro no topo
-                    if ((z === 4 || z === 5) && y === 5) continue;
-                    // Escada de peixes (mais baixa que o muro)
-                    if (z === 0 && y > 3) continue; 
-                    
-                    createBlock(x, y, z, 'stone', container.id);
-                }
-            }
-
-            // 3. RESERVATÓRIO (X < 4)
-            else if (x < 4) {
-                for (let y = 1; y <= 4; y++) {
-                    createBlock(x, y, z, 'water', container.id);
-                }
-            }
-
-            // 4. CASA DE FORÇA (Turbinas - X=5)
-            else if (x === 5 && z >= 3 && z <= 6) {
-                for (let y = 1; y <= 2; y++) {
-                    createBlock(x, y, z, 'iron', container.id);
-                }
-            }
-
-            // 5. SUBESTAÇÃO (X=8 a 9)
-            else if (x >= 8 && x <= 9 && z >= 2 && z <= 4) {
-                createBlock(x, 1, z, 'stone', container.id);
-                if (x === 8 && z === 3) {
-                    createBlock(x, 2, z, 'iron', container.id); // Transformador
-                }
-            }
-
-            // 6. RIO DE SAÍDA (Onde a água flui após as turbinas)
-            else if (x > 5 && z >= 3 && z <= 6) {
-                createBlock(x, 1, z, 'water', container.id);
-            }
-
-            // 7. TORRE DE TRANSMISSÃO
-            if (x === 1 && z === 8) {
-                for (let y = 1; y <= 7; y++) {
-                    createBlock(x, y, z, 'iron', container.id);
-                }
-                createBlock(0, 6, 8, 'iron', container.id);
-                createBlock(2, 6, 8, 'iron', container.id);
-            }
-        }
+    if (window.engineHydro) {
+        window.engineHydro.dispose();
     }
-    console.log("Usina Hidrelétrica Completa Renderizada!");
-}
-    function mudarParaUsina() {
-    const areaPrincipal = document.getElementById('container-do-site');
-    if (!areaPrincipal) return;
 
-    areaPrincipal.innerHTML = meuObjetoUsina.content.basic;
-
-    setTimeout(() => {
-        gerarMapaChunks(); // Chama a função definitiva
-        carregarLaboratorioHidro(); // Carrega o Python
-    }, 100);
-}
-   
-let rotationY = 45; 
-
-function rotateWorld() {
-    const container = document.getElementById('water-container');
-    if (container) {
-        rotationY += 45; 
-        // Use -15deg aqui para bater com o gerarMapaFoguete
-        container.style.transform = `rotateX(-15deg) rotateY(${rotationY}deg)`;
-    }
-}
-    function simularFluxo() {
-    const blocosAgua = document.querySelectorAll('#water-container .water');
-    if (blocosAgua.length === 0) return alert("Construa a usina primeiro!");
+    window.engineHydro = new BABYLON.Engine(canvas, true);
     
-    blocosAgua.forEach(b => b.classList.toggle('fluxo-ativo'));
-}
-    function configurarEditorPython() {
-    js.window.aplicarPotenciaHidro(999)
-print("Comando enviado com sucesso!")
-}
-    function generateTerrain(tipo) {
-    gerarMapaChunks(); // Isso redireciona o clique para a nossa usina nova
-}
-    // VERIFICAÇÃO 1: A FUNÇÃO DE POTÊNCIA
+    const criarCenarioUsina = function() {
+        const scene = new BABYLON.Scene(window.engineHydro);
+        window.sceneHydro = scene;
+        
+        // Céu Claro Low-Poly
+        scene.clearColor = new BABYLON.Color4(0.5, 0.75, 0.9, 1);
+
+        // Ajuste da Câmera para uma posição em diagonal técnica que mostre o fluxo da água
+        const camera = new BABYLON.ArcRotateCamera("cameraHydro", -Math.PI / 4, Math.PI / 3, 18, new BABYLON.Vector3(0, 1.5, 0), scene);
+        camera.attachControl(canvas, true);
+
+        const light = new BABYLON.HemisphericLight("lightHydro", new BABYLON.Vector3(0.5, 1, 0.2), scene);
+        light.intensity = 0.95;
+
+        // Materiais Básicos Sólidos (Estilo Low-Poly)
+        const gramaMat = new BABYLON.StandardMaterial("gramaMat", scene);
+        gramaMat.diffuseColor = new BABYLON.Color3(0.3, 0.5, 0.25);
+
+        const concretoMat = new BABYLON.StandardMaterial("concretoMat", scene);
+        concretoMat.diffuseColor = new BABYLON.Color3(0.55, 0.58, 0.6);
+
+        const aguaMat = new BABYLON.StandardMaterial("aguaMat", scene);
+        aguaMat.diffuseColor = new BABYLON.Color3(0.05, 0.4, 0.65);
+        aguaMat.alpha = 0.8;
+
+        const metalMat = new BABYLON.StandardMaterial("metalMat", scene);
+        metalMat.diffuseColor = new BABYLON.Color3(0.35, 0.35, 0.38);
+
+        // 1. TERRENO / BASE
+        const solo = BABYLON.MeshBuilder.CreateBox("solo", {width: 16, height: 0.4, depth: 10}, scene);
+        solo.position.y = -0.2;
+        solo.material = gramaMat;
+
+        // 2. RESERVATÓRIO SUPERIOR (Montante)
+        const reservatorio = BABYLON.MeshBuilder.CreateBox("reservatorio", {width: 5, height: 4.0, depth: 8}, scene);
+        reservatorio.position.set(-5.5, 2.0, 0);
+        reservatorio.material = aguaMat;
+
+        // 3. ESTRUTURA DA BARRAGEM + CAPTAÇÃO
+        const barragem = BABYLON.MeshBuilder.CreateBox("barragem", {width: 1.5, height: 4.5, depth: 8}, scene);
+        barragem.position.set(-2.25, 2.25, 0);
+        barragem.material = concretoMat;
+
+        // Torre de Captação (Grade/Estrutura que recebe a água na represa)
+        const captacao = BABYLON.MeshBuilder.CreateBox("captacao", {width: 1.0, height: 3.0, depth: 2.5}, scene);
+        captacao.position.set(-2.25, 3.5, 0);
+        const captacaoMat = new BABYLON.StandardMaterial("captacaoMat", scene);
+        captacaoMat.diffuseColor = new BABYLON.Color3(0.2, 0.2, 0.2);
+        captacao.material = captacaoMat;
+
+        // 4. SISTEMA DE ADUÇÃO (Conduto Forçado Inclinado Low-Poly)
+        // Criado usando um cilindro de poucos lados (estilo facetado/quadrado) direcionado em ângulo
+        window.condutoMesh = BABYLON.MeshBuilder.CreateCylinder("conduto", {height: 4.0, diameter: 0.6, tessellation: 4}, scene);
+        window.condutoMesh.position.set(-0.7, 2.2, 0);
+        window.condutoMesh.rotation.z = -Math.PI / 4; // Inclinação de 45 graus ligando a represa à turbina
+        window.condutoMesh.material = metalMat;
+
+        // 5. CASA DE FORÇA (Turbina e Gerador)
+        window.geradorMesh = BABYLON.MeshBuilder.CreateBox("geradorMesh", {width: 2.2, height: 2.2, depth: 4.0}, scene);
+        window.geradorMesh.position.set(1.1, 1.1, 0);
+        window.geradorMesh.material = concretoMat;
+        
+        // O Bloco Interno do Alternador (que acende com o Python)
+        const alternador = BABYLON.MeshBuilder.CreateBox("alternador", {width: 1.2, height: 1.2, depth: 2.0}, scene);
+        alternador.position.set(1.1, 2.4, 0);
+        const alternadorMat = new BABYLON.StandardMaterial("alternadorMat", scene);
+        alternadorMat.diffuseColor = new BABYLON.Color3(0.4, 0.1, 0.1);
+        alternador.material = alternadorMat;
+        // Vinculamos para herdar o efeito visual de brilho
+        window.blocoEletrico = alternadorMat;
+
+        // 6. RESTITUIÇÃO / CANAL DE FUGA
+        const canalFuga = BABYLON.MeshBuilder.CreateBox("canalFuga", {width: 5.5, height: 0.5, depth: 4.0}, scene);
+        canalFuga.position.set(4.95, 0.25, 0);
+        canalFuga.material = aguaMat;
+
+        return scene;
+    };
+
+    criarCenarioUsina();
+
+    window.engineHydro.runRenderLoop(() => {
+        if (window.sceneHydro) window.sceneHydro.render();
+    });
+};
+
+// Redirecionamento da chamada de inicialização histórica
+window.generateTerrain = function(tipo) {
+    window.gerarMapaChunks();
+};
+
+// Integração de resposta do Motor Python
 window.aplicarPotenciaHidro = function(mw) {
-    console.log("Executando aplicação de potência:", mw);
-    
     const status = document.getElementById('energia-status');
     if (status) {
         status.innerHTML = `⚡ PRODUZINDO: <strong>${Number(mw).toFixed(2)} MW</strong>`;
     }
 
-    const geradores = document.querySelectorAll('.iron');
-    if (geradores.length === 0) {
-        console.warn("Aviso: Nenhum bloco com a classe '.iron' foi encontrado!");
-    }
-
-    geradores.forEach(g => {
-        g.style.filter = mw > 0 ? "brightness(2) drop-shadow(0 0 15px gold)" : "none";
-    });
-};
-    window.animarLancamento = function(altitude, sucesso) {
-    const foguete = document.getElementById('foguete-container'); // O ID do grupo de blocos do foguete
-    const status = document.getElementById('missao-status');
-
-    if (sucesso) {
-        status.innerHTML = "🚀 LANÇAMENTO BEM SUCEDIDO!";
-        status.style.color = "#2ecc71";
-        
-        // Animação de subida suave
-        foguete.style.transition = "transform 5s ease-in";
-        foguete.style.transform = `translateY(-1500px) scale(0.5)`;
-    } else {
-        status.innerHTML = "💥 FALHA: Empuxo insuficiente para decolar!";
-        status.style.color = "#e74c3c";
-        
-        // Efeito de tremer (falha)
-        foguete.style.animation = "shake 0.5s cubic-bezier(.36,.07,.19,.97) both";
-    }
-};
-   window.gerarMapaFoguete = function() {
-    const container = document.getElementById('water-container');
-    if (!container) return;
-    container.innerHTML = ''; 
-    
-    // Aplica a rotação inicial para não ficar "de frente" (2D)
-    container.style.transform = `rotateX(-15deg) rotateY(${rotationY}deg)`;
-
-    // 🏗️ Criando a Base/Torre de Lançamento (lado esquerdo)
-    // Usamos x = -1 para ficar ao lado do foguete (que estará em x = 0)
-    for (let h = 1; h <= 6; h++) {
-        window.criarBloco(-1, h, 0, 'iron', container); 
-    }
-    // Uma plataforma no chão
-    for (let x = -2; x <= 2; x++) {
-        for (let z = -2; z <= 2; z++) {
-            window.criarBloco(x, 0, z, 'stone', container);
+    // Feedback visual Low-Poly: O alternador brilha em amarelo neon quando a usina gera energia
+    if (window.blocoEletrico) {
+        if (mw > 0) {
+            window.blocoEletrico.emissiveColor = new BABYLON.Color3(0.9, 0.7, 0.0);
+        } else {
+            window.blocoEletrico.emissiveColor = new BABYLON.Color3(0, 0, 0);
         }
     }
-
-    // 🚀 Criando o Container do Foguete
-    const foguete = document.createElement('div');
-    foguete.id = 'foguete-container';
-    foguete.style.position = 'absolute';
-    foguete.style.transformStyle = 'preserve-3d';
-    foguete.style.transform = 'translate3d(0, 0, 0)';
-    container.appendChild(foguete);
-
-    // Montagem do Foguete (x=0 para não bater na torre)
-    window.criarBloco(0, 1, 0, 'gold', foguete);    
-    window.criarBloco(0, 2, 0, 'diamond', foguete); 
-    window.criarBloco(0, 3, 0, 'diamond', foguete); 
-    window.criarBloco(0, 4, 0, 'glass', foguete);   
 };
-    window.criarBloco = function(x, y, z, tipo, pai) {
-    const bloco = document.createElement('div');
-    bloco.className = `chunk ${tipo}`;
+
+// Listener para atualização via Sliders manuais
+window.update3D = function() {
+    const sliderVazao = document.getElementById('py-vazao');
+    const sliderQueda = document.getElementById('py-queda');
+    if (!sliderVazao || !sliderQueda) return;
+
+    const vazao = parseFloat(sliderVazao.value) || 0;
+    const queda = parseFloat(sliderQueda.value) || 0;
+
+    const potenciaMW = (0.85 * 1000 * 9.81 * vazao * queda) / 1000000;
     
-    const s = 32; // Tamanho do bloco
-    const tx = x * s;
-    const ty = -y * s;
-    const tz = z * s;
+    const status = document.getElementById('energia-status');
+    if (status) {
+        status.innerHTML = `⚡ PRODUZINDO: <strong>${potenciaMW.toFixed(2)} MW</strong>`;
+    }
 
-    // Posiciona o container do bloco
-    bloco.style.transform = `translate3d(${tx}px, ${ty}px, ${tz}px)`;
-
-    // Cria as 6 faces do cubo
-    const faces = ['front', 'back', 'top', 'bottom', 'left', 'right'];
-    faces.forEach(face => {
-        const divFace = document.createElement('div');
-        divFace.className = `face ${face}`;
-        bloco.appendChild(divFace);
-    });
-
-    pai.appendChild(bloco);
-};
-    window.animarLancamento = function(sucesso) {
-    const foguete = document.getElementById('foguete-container');
-    const status = document.getElementById('missao-status');
-
-    if (sucesso) {
-        // Ativa trepidação
-        foguete.classList.add('tremendo');
-        
-        // Sobe após um pequeno delay da ignição
-        setTimeout(() => {
-            foguete.classList.remove('tremendo');
-            foguete.style.transition = "transform 4s cubic-bezier(.62,-0.01,.91,.47)";
-            foguete.style.transform = "translate3d(0, -1500px, 0) scale(0.7)";
-            status.innerHTML = "🚀 STATUS: EM ÓRBITA";
-            status.style.color = "#2ecc71";
-        }, 500); 
-    } else {
-        // Apenas treme e para
-        foguete.classList.add('tremendo');
-        status.innerHTML = "💥 STATUS: FALHA NO LANÇAMENTO";
-        status.style.color = "#ff4444";
-        setTimeout(() => foguete.classList.remove('tremendo'), 1000);
+    // Altera a opacidade do canal de fuga proporcionalmente à vazão de água liberada
+    if (window.sceneHydro) {
+        const canal = window.sceneHydro.getMeshByName("canalFuga");
+        if (canal && canal.material) {
+            canal.material.alpha = 0.4 + (vazao / 2500);
+        }
     }
 };
+
+// Monitor de Ciclo de Vida e Redimensionamento
+window.addEventListener("resize", () => {
+    if (window.engineHydro) window.engineHydro.resize();
+});
+
+// Auto-inicialização por amostragem de DOM
+const checkHydroState = setInterval(() => {
+    const canvasPronto = !!document.getElementById("renderCanvasHydro");
+    const babylonPronto = typeof BABYLON !== "undefined";
+
+    if (babylonPronto && canvasPronto) {
+        clearInterval(checkHydroState);
+        window.gerarMapaChunks();
+        window.update3D();
+    }
+}, 200);
+   // =================================================================
+// 1. PRIMEIRO DECLARAMOS A FUNÇÃO DE CRIAR BLOCOS
+// =================================================================
+ let engineFoguete = null;
+let sceneFoguete = null;
+let meshFogueteContainer = null; // Guarda o grupo do foguete para mover na decolagem
+let decolando = false;
+
+function initFoguete3DSpace() {
+    // Captura o canvas exclusivo do foguete
+    const canvas = document.getElementById("renderCanvasFoguete"); 
+    if (!canvas) return; 
+
+    if (engineFoguete) {
+        engineFoguete.dispose();
+    }
+
+    decolando = false; // Reseta o estado de decolagem
+    engineFoguete = new BABYLON.Engine(canvas, true);
+    
+    const createScene = function () {
+        const scene = new BABYLON.Scene(engineFoguete);
+        sceneFoguete = scene;
+        
+        // Céu Azul Claro (Sem iluminação complexa)
+        scene.clearColor = new BABYLON.Color4(0.53, 0.81, 0.92, 1);
+
+        // Câmera Orbital com limites idênticos ao seu padrão seguro
+        const camera = new BABYLON.ArcRotateCamera("cameraFoguete", Math.PI / 4, Math.PI / 3, 20, new BABYLON.Vector3(0, 3, 0), scene);
+        camera.attachControl(canvas, true);
+        camera.lowerRadiusLimit = 8;
+        camera.upperRadiusLimit = 40;
+
+        // Luzes básicas sem cálculo de sombras pesadas
+        const light = new BABYLON.HemisphericLight("lightFoguete", new BABYLON.Vector3(0, 1, 0), scene);
+        light.intensity = 0.9;
+
+        // --- CONSTRUÇÃO DA BASE (STONE) ---
+        // Plataforma cinza feita com uma caixa achatada low-poly
+        const plataforma = BABYLON.MeshBuilder.CreateBox("plataforma", {width: 8, height: 0.2, depth: 8}, scene);
+        const stoneMat = new BABYLON.StandardMaterial("stoneMat", scene);
+        stoneMat.diffuseColor = new BABYLON.Color3(0.58, 0.65, 0.65); // #95a5a6
+        stoneMat.specularColor = new BABYLON.Color3(0, 0, 0); // Desativa brilho reflexivo plástico
+        plataforma.material = stoneMat;
+
+        // --- TORRE DE LANÇAMENTO (IRON) ---
+        // Uma coluna metálica simples ao lado do foguete
+        const torre = BABYLON.MeshBuilder.CreateBox("torreLancamento", {width: 0.8, height: 6, depth: 0.8}, scene);
+        torre.position.set(-1.5, 3, 0); // Posicionada à esquerda (x = -1.5)
+        const ironMat = new BABYLON.StandardMaterial("ironMat", scene);
+        ironMat.diffuseColor = new BABYLON.Color3(0.5, 0.55, 0.55); // #7f8c8d
+        torre.material = ironMat;
+
+        // --- CONTAINER DO FOGUETE ---
+        // Criamos um nó de transformação invisível para agrupar as partes do foguete
+        meshFogueteContainer = new BABYLON.TransformNode("fogueteTransformNode", scene);
+
+        // 1. Motor (GOLD) - Cilindro curto na base do foguete
+        const motor = BABYLON.MeshBuilder.CreateCylinder("motorFoguete", {height: 0.5, diameter: 0.7}, scene);
+        motor.position.y = 0.25;
+        motor.parent = meshFogueteContainer; // Prende ao grupo principal
+        const goldMat = new BABYLON.StandardMaterial("goldMat", scene);
+        goldMat.diffuseColor = new BABYLON.Color3(0.95, 0.77, 0.06); // #f1c40f
+        motor.material = goldMat;
+
+        // 2. Corpo do Foguete (DIAMOND) - Cilindro principal azul
+        const corpo = BABYLON.MeshBuilder.CreateCylinder("corpoFoguete", {height: 2.5, diameter: 0.8}, scene);
+        corpo.position.y = 1.75;
+        corpo.parent = meshFogueteContainer;
+        const diamondMat = new BABYLON.StandardMaterial("diamondMat", scene);
+        diamondMat.diffuseColor = new BABYLON.Color3(0.2, 0.6, 0.86); // #3498db
+        corpo.material = diamondMat;
+
+        // 3. Ponta do Foguete (GLASS) - Um cone low-poly no topo
+        const ponta = BABYLON.MeshBuilder.CreateCylinder("pontaFoguete", {height: 0.8, diameterTop: 0, diameterBottom: 0.8, tessellation: 16}, scene);
+        ponta.position.y = 3.4;
+        ponta.parent = meshFogueteContainer;
+        const glassMat = new BABYLON.StandardMaterial("glassMat", scene);
+        glassMat.diffuseColor = new BABYLON.Color3(0.92, 0.94, 0.95); // #ecf0f1
+        ponta.material = glassMat;
+
+        // --- LOOP DE ANIMAÇÃO DE SUBIDA ---
+        scene.onBeforeRenderObservable.add(() => {
+            if (decolando && meshFogueteContainer) {
+                // Sobe linearmente no eixo Y sem depender de CSS!
+                meshFogueteContainer.position.y += 0.15;
+                
+                // Efeito simples de rotação enquanto sobe para dar charme
+                meshFogueteContainer.rotation.y += 0.02;
+            }
+        });
+
+        return scene;
+    };
+
+    const scene = createScene();
+
+    engineFoguete.runRenderLoop(() => {
+        if (sceneFoguete) sceneFoguete.render();
+    });
+}
+
+// =================================================================
+// FUNÇÕES GLOBAIS DE COMANDO (Chamadas pelos botões do HTML)
+// =================================================================
+
+window.gerarMapaFoguete = function() {
+    // Reseta a posição do foguete e para a decolagem
+    decolando = false;
+    if (meshFogueteContainer) {
+        meshFogueteContainer.position.set(0, 0, 0);
+        meshFogueteContainer.rotation.set(0, 0, 0);
+    }
+    const status = document.getElementById("missao-status");
+    if (status) {
+        status.innerHTML = "🛰️ Status: Pronto para a Construção";
+        status.style.color = "#2ecc71";
+    }
+};
+
+window.animarLancamento = function(sucesso) {
+    const status = document.getElementById("missao-status");
+
+    if (sucesso) {
+        if (status) {
+            status.innerHTML = "🚀 STATUS: LANÇAMENTO BEM SUCEDIDO!";
+            status.style.color = "#2ecc71";
+        }
+        // Ativa o gatilho capturado no onBeforeRenderObservable
+        decolando = true;
+    } else {
+        if (status) {
+            status.innerHTML = "💥 STATUS: FALHA (Empuxo Insuficiente)";
+            status.style.color = "#ff4444";
+        }
+        // Efeito simples low-poly: tomba o foguete de lado indicando falha
+        if (meshFogueteContainer) {
+            meshFogueteContainer.rotation.z = 0.2; 
+        }
+    }
+};
+
+// Ouvinte de tela idêntico ao seu modelo estável
+window.addEventListener("resize", () => {
+    if (engineFoguete) engineFoguete.resize();
+});
+
+// Inicializador automático por detecção de ambiente
+const checkFogueteState = setInterval(() => {
+    const canvasPronto = !!document.getElementById("renderCanvasFoguete"); // ID atualizado aqui
+    const babylonPronto = typeof BABYLON !== "undefined";
+
+    if (babylonPronto && canvasPronto) {
+        clearInterval(checkFogueteState);
+        console.log("🚀 Subsistema Aeroespacial Low-Poly Inicializado!");
+        initFoguete3DSpace();
+    }
+}, 250);
    // 1. Declarar globalmente para evitar o erro de "before initialization"
 window.city_instancia = null;
 
@@ -8266,7 +8293,7 @@ async function inicializarPython() {
         pyodideInstancia = await loadPyodide();
         
         // --- CORREÇÃO DO ERRO SQLITE3 AQUI ---
-        // Força o Pyodide a baixar e instalar o sqlite3 no ambiente do navegador
+        // Força a SUA instância a baixar e instalar o sqlite3 no ambiente do navegador
         await pyodideInstancia.loadPackage("sqlite3");
         
         console.log("🐍 Python pronto para uso (com suporte a sqlite3)!");
@@ -9186,43 +9213,58 @@ temperatura_atual = 25
 }
 
 // Loop de atualização constante do ambiente do laboratório
-// Aguarda o carregamento completo do DOM e da janela
-// Controle global do motor da matemática
-let currentMesh = null;
-let secondaryMesh = null; // Guarda o objeto clonado para fusão
-let material = null;
-let secondaryMaterial = null;
-let vertexHandles = []; // Esferas de arrastar vértices
+// 1. Variáveis de controle globais (Verifique se não estão duplicadas no topo do seu arquivo)
+// 1. DECLARAÇÕES GLOBAIS ALINHADAS (Conversando com todas as funções)
+var engineGeometria = null;
+var sceneGeometria = null;
+var material = null;            // Unificado com o resto do código
+var secondaryMaterial = null;   // Unificado com o resto do código
+var currentMesh = null;         // Declarado globalmente para evitar erros de escopo
+var secondaryMesh = null;       // Declarado globalmente para o sistema de CSG
+var vertexHandles = [];         // Inicializado como array para os vértices vermelhos
 
-// Inicialização do Espaço 3D
+// Evita que múltiplos intervalos rodem ao mesmo tempo se o CodePen reiniciar o script
+if (typeof checkEngineState !== "undefined" && checkEngineState) {
+    clearInterval(checkEngineState);
+}
+
+// 2. FUNÇÃO DE INICIALIZAÇÃO PRINCIPAL
 function initGeometria() {
-    // Trava de segurança para o ecossistema Python
-    if (typeof pyodideInstancia === "undefined" || pyodideInstancia === null) {
-        console.log("⏳ Adiada inicialização 3D: Aguardando pacotes do Python...");
-        return;
-    }
-
     const canvas = document.getElementById("geoBabylonCanvas");
     const shapeSelector = document.getElementById("geo-shape-selector");
     
+    // Se os elementos ainda não existem na tela, aborta preventivamente
     if (!canvas || !shapeSelector) return; 
 
-    // Inicialização do motor gráfico com proteção de contexto
-    const engine = new BABYLON.Engine(canvas, true);
-    const scene = new BABYLON.Scene(engine);
+    // Limpeza completa de memória de sessões ou abas anteriores (Anti-travamento)
+    if (engineGeometria) {
+        engineGeometria.dispose();
+        engineGeometria = null;
+    }
+    
+    // Reseta referências de materiais antigos
+    material = null;
+    secondaryMaterial = null;
+    currentMesh = null;
+    secondaryMesh = null;
+
+    // Inicialização do motor gráfico do BabylonJS
+    engineGeometria = new BABYLON.Engine(canvas, true);
+    const scene = new BABYLON.Scene(engineGeometria);
+    sceneGeometria = scene;
+    
+    // Cor de fundo escura azulada para destacar o sólido
     scene.clearColor = new BABYLON.Color4(0.06, 0.09, 0.16, 1); 
 
-    // Câmera Orbital
+    // Configuração da Câmera Orbital
     const camera = new BABYLON.ArcRotateCamera("geoCamera", -Math.PI / 4, Math.PI / 3, 6, BABYLON.Vector3.Zero(), scene);
     camera.attachControl(canvas, true);
 
+    // Iluminação do Ambiente
     const light = new BABYLON.HemisphericLight("geoLight", new BABYLON.Vector3(0, 1, 0), scene);
     light.intensity = 0.95;
 
-    // Injeção Automática do ecossistema CSG e controle de UI
-    injectCSGButtons(shapeSelector, scene);
-
-    // Captura dos Sliders Existentes
+    // Captura dos Sliders e Labels existentes no seu HTML
     const inW = document.getElementById("geo-param-w");
     const inH = document.getElementById("geo-param-h");
     const inZ = document.getElementById("geo-param-z");
@@ -9231,6 +9273,10 @@ function initGeometria() {
     const labelH = document.getElementById("geo-h-val");
     const labelZ = document.getElementById("geo-z-val");
 
+    // Injeção dos botões de Duplicar/Furar
+    injectCSGButtons(shapeSelector, scene);
+
+    // FUNÇÃO INTERNA: Disparada ao mover Sliders ou mudar Select
     function triggerBuild() {
         const type = shapeSelector.value;
         const w = inW ? parseFloat(inW.value) : 1.0;
@@ -9253,6 +9299,7 @@ function initGeometria() {
         recalculateAdvancedMetrics(currentMesh);
     }
 
+    // Ouvintes de Eventos da Interface
     shapeSelector.addEventListener("change", () => {
         resetSceneCSG();
         triggerBuild();
@@ -9265,7 +9312,7 @@ function initGeometria() {
         }
     });
 
-    // Modos de Visualização
+    // Modos de Visualização (Raio-X / Sólido)
     const btnWireframe = document.getElementById("geo-btn-wireframe");
     const btnSolid = document.getElementById("geo-btn-solid");
 
@@ -9286,14 +9333,17 @@ function initGeometria() {
         };
     }
 
-    engine.runRenderLoop(() => { scene.render(); });
-    window.addEventListener("resize", () => { engine.resize(); });
+    // CORREÇÃO: Vinculado corretamente à variável engineGeometria
+    engineGeometria.runRenderLoop(() => { 
+        scene.render(); 
+    });
 
+    // Gera o primeiro sólido e calcula o teorema de Euler inicial
     triggerBuild();
     updateEuler(shapeSelector.value);
 }
 
-// GERENCIADOR DE ESTADO DOS SLIDERS DA UI
+// 3. GERENCIADOR DE ESTADO DOS SLIDERS DA UI
 function toggleSlidersState(disabled) {
     const sliders = ["geo-param-w", "geo-param-h", "geo-param-z"];
     sliders.forEach(id => {
@@ -9306,7 +9356,7 @@ function toggleSlidersState(disabled) {
     });
 }
 
-// INJEÇÃO DA SUÍTE DE BOTÕES E CORREÇÃO DE INTERFACE
+// 4. INJEÇÃO DA SUÍTE DE BOTÕES CSG
 function injectCSGButtons(targetElement, scene) {
     if (document.getElementById("geo-csg-container")) return;
 
@@ -9327,7 +9377,6 @@ function injectCSGButtons(targetElement, scene) {
     btnMerge.innerText = "🔗 Fundir (Colar)";
     btnMerge.style.cssText = "flex: 1; min-width: 120px; padding: 10px; background: #a855f7; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; display: none;";
 
-    // NOVO BOTÃO: Subtrair / Furar
     const btnSubtract = document.createElement("button");
     btnSubtract.id = "geo-btn-subtract";
     btnSubtract.innerText = "➖ Subtrair (Furar)";
@@ -9345,7 +9394,7 @@ function injectCSGButtons(targetElement, scene) {
 
     rowButtons.appendChild(btnClone);
     rowButtons.appendChild(btnMerge);
-    rowButtons.appendChild(btnSubtract); // Injetando o botão de subtração na linha
+    rowButtons.appendChild(btnSubtract); 
     container.appendChild(rowButtons);
     container.appendChild(btnResetCSG);
     container.appendChild(infoText);
@@ -9355,7 +9404,7 @@ function injectCSGButtons(targetElement, scene) {
         if (!currentMesh || secondaryMesh) return;
 
         secondaryMesh = currentMesh.clone("secondaryShape");
-        secondaryMesh.position.set(0.8, 0.4, 0.4); // Deslocamento elegante em diagonal
+        secondaryMesh.position.set(0.8, 0.4, 0.4); 
         
         secondaryMaterial = new BABYLON.StandardMaterial("secMat", scene);
         secondaryMaterial.diffuseColor = new BABYLON.Color3(0.95, 0.55, 0.05); 
@@ -9366,15 +9415,13 @@ function injectCSGButtons(targetElement, scene) {
         secondaryMesh.addBehavior(objectDrag);
 
         btnMerge.style.display = "block";
-        btnSubtract.style.display = "block"; // Exibe o botão de subtrair ao duplicar
+        btnSubtract.style.display = "block"; 
         btnClone.style.background = "#4b5563";
         btnClone.innerText = "Posicionando...";
     };
 
-    // LÓGICA DE UNIÃO (FUNDIR)
     btnMerge.onclick = () => {
         if (!currentMesh || !secondaryMesh) return;
-
         currentMesh.computeWorldMatrix(true);
         secondaryMesh.computeWorldMatrix(true);
 
@@ -9385,16 +9432,14 @@ function injectCSGButtons(targetElement, scene) {
         finalizeCSGOperation(unionCSG, "mergedShape", scene, btnMerge, btnSubtract, btnClone, btnResetCSG, infoText);
     };
 
-    // LÓGICA DE SUBTRAÇÃO (FURAR)
     btnSubtract.onclick = () => {
         if (!currentMesh || !secondaryMesh) return;
-
         currentMesh.computeWorldMatrix(true);
         secondaryMesh.computeWorldMatrix(true);
 
         let mainCSG = BABYLON.CSG.FromMesh(currentMesh);
         let sideCSG = BABYLON.CSG.FromMesh(secondaryMesh);
-        let subtractCSG = mainCSG.subtract(sideCSG); // Executa o furo / corte geométrico
+        let subtractCSG = mainCSG.subtract(sideCSG); 
 
         finalizeCSGOperation(subtractCSG, "subtractedShape", scene, btnMerge, btnSubtract, btnClone, btnResetCSG, infoText);
     };
@@ -9420,7 +9465,7 @@ function injectCSGButtons(targetElement, scene) {
     };
 }
 
-// Função auxiliar para evitar repetição de código pós-operação CSG
+// 5. FINALIZADOR DE OPERAÇÕES BOOLEANAS CSG
 function finalizeCSGOperation(csgResult, meshName, scene, btnMerge, btnSubtract, btnClone, btnResetCSG, infoText) {
     currentMesh.dispose();
     secondaryMesh.dispose();
@@ -9433,19 +9478,19 @@ function finalizeCSGOperation(csgResult, meshName, scene, btnMerge, btnSubtract,
     refreshVertexHandles(currentMesh, scene); 
     recalculateAdvancedMetrics(currentMesh);
 
-    // Atualização da Interface Pós-Operação
     btnMerge.style.display = "none";
     btnSubtract.style.display = "none";
     btnClone.style.background = "#10b981";
     btnClone.innerText = "➕ Duplicar Forma";
     btnResetCSG.style.display = "block";
     infoText.style.display = "block";
-    toggleSlidersState(true); // Trava os sliders dimensionais
+    toggleSlidersState(true); 
     
     const textEuler = document.getElementById("geo-euler-text");
     if(textEuler) textEuler.innerText = "Geometria Complexa Modificada (CSG)";
 }
 
+// 6. RESETADOR DE CENÁRIO
 function resetSceneCSG() {
     clearHandles();
     if (currentMesh) currentMesh.dispose();
@@ -9464,14 +9509,14 @@ function resetSceneCSG() {
         btnClone.innerText = "➕ Duplicar Forma";
     }
     if(btnMerge) btnMerge.style.display = "none";
-    if(btnSubtract) btnSubtract.style.display = "none"; // Reseta o estado do botão de subtração
+    if(btnSubtract) btnSubtract.style.display = "none"; 
     if(btnResetCSG) btnResetCSG.style.display = "none";
     if(infoText) infoText.style.display = "none";
 
-    toggleSlidersState(false); // Libera os sliders clássicos de volta
+    toggleSlidersState(false); 
 }
 
-// GERAÇÃO DOS SÓLIDOS BASE
+// 7. GERADOR DOS SÓLIDOS BASE
 function createShape(scene, type) {
     switch (type) {
         case "cube":
@@ -9500,6 +9545,7 @@ function createShape(scene, type) {
     applyMaterial(scene);
 }
 
+// 8. APLICADOR DE MATERIAL SEMI-TRANSPARENTE
 function applyMaterial(scene) {
     if(!material) {
         material = new BABYLON.StandardMaterial("mat", scene);
@@ -9521,7 +9567,7 @@ function clearHandles() {
     vertexHandles = [];
 }
 
-// CONTROLE E FILTRAGEM INTELIGENTE DE VÉRTICES (CLUSTERING POR DISTÂNCIA)
+// 9. RENDERIZADOR DE ALÇAS DE VÉRTICES (ESFERAS VERMELHAS)
 function refreshVertexHandles(mesh, scene) {
     clearHandles();
 
@@ -9529,16 +9575,15 @@ function refreshVertexHandles(mesh, scene) {
     const positions = mesh.getVerticesData(BABYLON.VertexBuffer.PositionKind);
     if (!positions) return;
 
-    let uniquePoints = []; // Mapeamento dinâmico estruturado por proximidade
+    let uniquePoints = []; 
     const matrix = mesh.getWorldMatrix();
-    const proximityThreshold = 0.08; // Distância limite para fundir esferas vermelhas
+    const proximityThreshold = 0.08; 
 
     for (let i = 0; i < positions.length; i += 3) {
         let localPdf = new BABYLON.Vector3(positions[i], positions[i+1], positions[i+2]);
         let globalPdf = BABYLON.Vector3.TransformCoordinates(localPdf, matrix);
 
         let foundGroup = false;
-        // Varre os grupos já mapeados para ver se o vértice pertence à mesma quina tridimensional
         for (let j = 0; j < uniquePoints.length; j++) {
             if (BABYLON.Vector3.Distance(globalPdf, uniquePoints[j].globalPos) < proximityThreshold) {
                 uniquePoints[j].localIndices.push(i);
@@ -9555,7 +9600,6 @@ function refreshVertexHandles(mesh, scene) {
         }
     }
 
-    // Renderiza apenas uma única esfera vermelha por quina/cluster real
     uniquePoints.forEach((pt, idx) => {
         let handle = BABYLON.MeshBuilder.CreateSphere("h_" + idx, { diameter: 0.14 }, scene);
         handle.position.copyFrom(pt.globalPos);
@@ -9567,11 +9611,9 @@ function refreshVertexHandles(mesh, scene) {
         let dragBehavior = new BABYLON.PointerDragBehavior();
         handle.addBehavior(dragBehavior);
 
-        // Deformador Dinâmico Unificado (Move todos os vértices soldados da quina simultaneamente)
         dragBehavior.onDragObservable.add(() => {
             let invMatrix = mesh.getWorldMatrix().clone().invert();
             let localDragPos = BABYLON.Vector3.TransformCoordinates(handle.position, invMatrix);
-
             let currentPositions = mesh.getVerticesData(BABYLON.VertexBuffer.PositionKind);
             
             pt.localIndices.forEach(index => {
@@ -9588,18 +9630,16 @@ function refreshVertexHandles(mesh, scene) {
     });
 }
 
-// CÁLCULO DE MÉTRICAS VIA PRODUTO VETORIAL DE GAUSS
+// 10. CÁLCULO GAUSSIANO DE ÁREA E VOLUME
 function recalculateAdvancedMetrics(mesh) {
     if (!mesh) return;
 
     const positions = mesh.getVerticesData(BABYLON.VertexBuffer.PositionKind);
     const indices = mesh.getIndices();
-    
     if (!positions || !indices) return;
 
     let volume = 0;
     let area = 0;
-
     let scaledPositions = [];
     const isTransformed = mesh.isCSGResult;
 
@@ -9620,7 +9660,6 @@ function recalculateAdvancedMetrics(mesh) {
 
         let cross = BABYLON.Vector3.Cross(v2.subtract(v1), v3.subtract(v1));
         area += cross.length() / 2;
-
         volume += (-v3.x * v2.y * v1.z + v2.x * v3.y * v1.z + v3.x * v1.y * v2.z - v1.x * v3.y * v2.z - v2.x * v1.y * v3.z + v1.x * v2.y * v3.z) / 6;
     }
 
@@ -9631,6 +9670,7 @@ function recalculateAdvancedMetrics(mesh) {
     if (areaEl) areaEl.innerText = area.toFixed(2) + " u²";
 }
 
+// 11. TEOREMA DE EULER
 function updateEuler(type) {
     let v = 0, e = 0, f = 0;
     const textEl = document.getElementById("geo-euler-text");
@@ -9647,17 +9687,15 @@ function updateEuler(type) {
     textEl.innerText = `V(${v}) - A(${e}) + F(${f}) = 2`;
 }
 
-// Inicializador Defensivo Antigo Injetado
-function init3DSpace() {
-    const shape = document.getElementById('shape-3d');
-    if (!shape) return; 
-}
+// 12. ESCUTADOR RESPONSIVO DO MOTOR GRÁFICO
+window.addEventListener("resize", function() {
+    if (engineGeometria) engineGeometria.resize();
+});
 
-const checkEngineState = setInterval(() => {
+// 13. ORQUESTRADOR SEGURO COM VERIFICAÇÃO DO PYTHON (Substituído por var)
+var checkEngineState = setInterval(() => {
     const canvasPronto = !!document.getElementById("geoBabylonCanvas");
     const babylonPronto = typeof BABYLON !== "undefined";
-    
-    // Verifica se a variável global do Pyodide já foi inicializada e terminou o bootstrap
     const pythonPronto = typeof pyodideInstancia !== "undefined" && pyodideInstancia !== null;
 
     if (babylonPronto && canvasPronto && pythonPronto) {
@@ -9920,319 +9958,771 @@ const checkBiologiaState = setInterval(() => {
     }
 }, 250);
 // Inicializador Defensivo Antigo Injetado
-const world = document.getElementById("world");
-const rotX = document.getElementById("rotX");
-const rotY = document.getElementById("rotY");
-const zoom = document.getElementById("zoom");
-const shapeSelect = document.getElementById("shapeSelect");
-const result = document.getElementById("result");
+/* =======================================================================
+   PROJETO 1: VISUALIZADOR 3D EM CSS (CUBO / CILINDRO)
+   ======================================================================= */
+const VisualizadorCSS = {
+    world: null, rotX: null, rotY: null, zoom: null, shapeSelect: null, result: null,
 
-function createCube(){
+    init: function() {
+        // Captura os elementos específicos deste projeto
+        this.world = document.getElementById("world");
+        this.rotX = document.getElementById("rotX");
+        this.rotY = document.getElementById("rotY");
+        this.zoom = document.getElementById("zoom");
+        this.shapeSelect = document.getElementById("shapeSelect");
+        this.result = document.getElementById("result");
 
-    world.innerHTML = "";
+        // PROTEÇÃO: Só inicializa se o container principal do projeto existir
+        if (!this.world) return;
 
-    const cube = document.createElement("div");
-    cube.className = "shape";
+        this.setupEvents();
+        this.createCube(); // Inicia com o cubo por padrão
+        this.updateView();
+    },
 
-    ["front","back","left","right","top","bottom"]
-    .forEach(face=>{
-        const div=document.createElement("div");
-        div.className="face "+face;
-        cube.appendChild(div);
-    });
+    createCube: function() {
+        if (!this.world) return;
+        this.world.innerHTML = "";
+        const cube = document.createElement("div");
+        cube.className = "shape";
 
-    world.appendChild(cube);
+        ["front","back","left","right","top","bottom"].forEach(face => {
+            const div = document.createElement("div");
+            div.className = "face " + face;
+            cube.appendChild(div);
+        });
+        this.world.appendChild(cube);
 
-    let aresta = 5;
-    let volume = Math.pow(aresta,3);
+        let aresta = 5;
+        let volume = Math.pow(aresta, 3);
+        if (this.result) {
+            this.result.innerHTML = `<b>Cubo</b><br>Aresta = ${aresta}<br>Volume = ${volume}`;
+        }
+    },
 
-    result.innerHTML=
-    `<b>Cubo</b><br>
-    Aresta = ${aresta}<br>
-    Volume = ${volume}`;
-}
+    createCylinder: function() {
+        if (!this.world) return;
+        this.world.innerHTML = "";
+        const cyl = document.createElement("div");
+        cyl.className = "cylinder";
 
-function createCylinder(){
+        for (let i = 0; i < 30; i++) {
+            let side = document.createElement("div");
+            side.className = "side";
+            let angle = i * (360 / 30);
+            side.style.transform = `rotateY(${angle}deg) translateZ(60px)`;
+            cyl.appendChild(side);
+        }
 
-    world.innerHTML = "";
+        const top = document.createElement("div");
+        top.className = "cap topcap";
+        const bottom = document.createElement("div");
+        bottom.className = "cap bottomcap";
 
-    const cyl = document.createElement("div");
-    cyl.className = "cylinder";
+        cyl.appendChild(top);
+        cyl.appendChild(bottom);
+        this.world.appendChild(cyl);
 
-    for(let i=0;i<30;i++){
+        let raio = 3;
+        let altura = 8;
+        let volume = Math.PI * raio * raio * altura;
+        if (this.result) {
+            this.result.innerHTML = `<b>Cilindro</b><br>Raio = ${raio}<br>Altura = ${altura}<br>Volume = ${volume.toFixed(2)}`;
+        }
+    },
 
-        let side=document.createElement("div");
-        side.className="side";
+    updateView: function() {
+        if (!this.world || !this.rotX || !this.rotY || !this.zoom) return;
+        this.world.style.transform = `
+            translate(-50%,-50%)
+            rotateX(${this.rotX.value}deg)
+            rotateY(${this.rotY.value}deg)
+            scale(${this.zoom.value})
+        `;
+    },
 
-        let angle=i*(360/30);
-
-        side.style.transform=
-        `rotateY(${angle}deg) translateZ(60px)`;
-
-        cyl.appendChild(side);
+    setupEvents: function() {
+        if (this.rotX) this.rotX.addEventListener("input", () => this.updateView());
+        if (this.rotY) this.rotY.addEventListener("input", () => this.updateView());
+        if (this.zoom) this.zoom.addEventListener("input", () => this.updateView());
+        
+        if (this.shapeSelect) {
+            this.shapeSelect.addEventListener("change", () => {
+                if (this.shapeSelect.value === "cube") this.createCube();
+                else this.createCylinder();
+                this.updateView();
+            });
+        }
     }
+};
 
-    const top=document.createElement("div");
-    top.className="cap topcap";
+/* =======================================================================
+   PROJETO 2: SIMULAÇÃO DE FÍSICA 2D (TERMODINÂMICA / PARTÍCULAS)
+   ======================================================================= */
+const SimuladorFisica = {
+    slider: null, piston: null, volText: null, presText: null, canvas: null, graph: null,
+    ctx: null, gctx: null, K: 20, particles: [],
 
-    const bottom=document.createElement("div");
-    bottom.className="cap bottomcap";
+    init: function() {
+        this.slider = document.getElementById("volumeSlider");
+        this.piston = document.getElementById("piston");
+        this.volText = document.getElementById("vol-val");
+        this.presText = document.getElementById("pres-val");
+        this.canvas = document.getElementById("particleCanvas");
+        this.graph = document.getElementById("physicsChart");
 
-    cyl.appendChild(top);
-    cyl.appendChild(bottom);
+        // PROTEÇÃO: Só roda se o canvas de partículas e o gráfico existirem
+        if (!this.canvas || !this.graph) return;
 
-    world.appendChild(cyl);
+        this.ctx = this.canvas.getContext("2d");
+        this.gctx = this.graph.getContext("2d");
 
-    let raio=3;
-    let altura=8;
+        this.resizeCanvas();
+        window.addEventListener("resize", () => this.resizeCanvas());
 
-    let volume=Math.PI*raio*raio*altura;
+        // Criar partículas gasosas
+        for (let i = 0; i < 60; i++) {
+            this.particles.push({
+                x: Math.random() * this.canvas.width,
+                y: Math.random() * this.canvas.height,
+                vx: (Math.random() - 0.5) * 4,
+                vy: (Math.random() - 0.5) * 4
+            });
+        }
 
-    result.innerHTML=
-    `<b>Cilindro</b><br>
-    Raio = ${raio}<br>
-    Altura = ${altura}<br>
-    Volume = ${volume.toFixed(2)}`;
-}
+        if (this.slider) {
+            this.slider.addEventListener("input", () => this.updatePhysicsSim());
+        }
 
-function updateView(){
+        this.drawParticles();
+        this.updatePhysicsSim();
+    },
 
-    world.style.transform=
-    `
-    translate(-50%,-50%)
-    rotateX(${rotX.value}deg)
-    rotateY(${rotY.value}deg)
-    scale(${zoom.value})
-    `;
-}
+    resizeCanvas: function() {
+        if (!this.canvas || !this.graph) return;
+        this.canvas.width = this.canvas.offsetWidth;
+        this.canvas.height = this.canvas.offsetHeight;
+        this.graph.width = this.graph.offsetWidth;
+        this.graph.height = this.graph.offsetHeight;
+    },
 
-rotX.addEventListener("input",updateView);
-rotY.addEventListener("input",updateView);
-zoom.addEventListener("input",updateView);
+    drawParticles: function() {
+        if (!this.canvas || !this.ctx) return;
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-shapeSelect.addEventListener("change",()=>{
+        this.particles.forEach(p => {
+            p.x += p.vx; p.y += p.vy;
+            if (p.x < 0 || p.x > this.canvas.width) p.vx *= -1;
+            if (p.y < 0 || p.y > this.canvas.height) p.vy *= -1;
 
-    if(shapeSelect.value==="cube"){
-        createCube();
-    }else{
-        createCylinder();
+            this.ctx.beginPath();
+            this.ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
+            this.ctx.fillStyle = "#2563eb";
+            this.ctx.fill();
+        });
+
+        requestAnimationFrame(() => this.drawParticles());
+    },
+
+    drawGraph: function(volume) {
+        if (!this.graph || !this.gctx) return;
+        this.gctx.clearRect(0, 0, this.graph.width, this.graph.height);
+        this.gctx.beginPath();
+
+        for (let v = 1; v <= 20; v += 0.1) {
+            let p = this.K / v;
+            let x = (v / 20) * this.graph.width;
+            let y = this.graph.height - (p / 20) * this.graph.height;
+            if (v === 1) this.gctx.moveTo(x, y);
+            else this.gctx.lineTo(x, y);
+        }
+        this.gctx.lineWidth = 3;
+        this.gctx.strokeStyle = "#7c3aed";
+        this.gctx.stroke();
+
+        let pressure = this.K / volume;
+        let px = (volume / 20) * this.graph.width;
+        let py = this.graph.height - (pressure / 20) * this.graph.height;
+
+        this.gctx.beginPath();
+        this.gctx.arc(px, py, 8, 0, Math.PI * 2);
+        this.gctx.fillStyle = "red";
+        this.gctx.fill();
+    },
+
+    updatePhysicsSim: function() {
+        if (!this.slider || !this.volText || !this.presText || !this.piston) return;
+        let volume = parseFloat(this.slider.value);
+        let pressure = this.K / volume;
+
+        this.volText.textContent = volume.toFixed(0) + " L";
+        this.presText.textContent = pressure.toFixed(2) + " atm";
+        this.piston.style.height = (40 + (20 - volume) * 8) + "px";
+
+        this.drawGraph(volume);
     }
+};
 
-    updateView();
+/* =======================================================================
+   PROJETO 3: MOTOR 4 CILINDROS REALÍSTICO (BABYLON.JS) - MODO AVANÇADO
+   ======================================================================= */
+const SimuladorMotor = {
+    engine: null,
+    scene: null,
+    
+    // Arrays dinâmicos (limpados a cada troca de motor)
+    pistons: [],
+    bielas: [],
+    crankpins: [], 
+    counterweights: [], 
+    blocosCilindros: [],
+    malhasPecas: {}, // Guarda as referências 3D das peças de upgrade
+    
+    // --- BANCO DE DADOS DE ARQUITETURAS DE MOTOR ---
+    tipoMotorAtual: "4cil",
+    configuracoesMotores: {
+        "1cil": {
+            qtdCilindros: 1,
+            potenciaBase: 25,
+            offsets: [0],
+            angulosZ: [0], 
+            posicoesX: [0]
+        },
+        "2cil": {
+            qtdCilindros: 2,
+            potenciaBase: 60,
+            offsets: [0, Math.PI],
+            angulosZ: [0, 0],
+            posicoesX: [-1.1, 1.1]
+        },
+        "4cil": {
+            qtdCilindros: 4,
+            potenciaBase: 120,
+            offsets: [0, Math.PI, 3 * Math.PI, 2 * Math.PI],
+            angulosZ: [0, 0, 0, 0],
+            posicoesX: [-3.3, -1.1, 1.1, 3.3]
+        },
+        "V6": {
+            qtdCilindros: 6,
+            potenciaBase: 250,
+            offsets: [0, Math.PI/3, 2*Math.PI/3, Math.PI, 4*Math.PI/3, 5*Math.PI/3],
+            angulosZ: [-Math.PI / 6, Math.PI / 6, -Math.PI / 6, Math.PI / 6, -Math.PI / 6, Math.PI / 6],
+            posicoesX: [-2.2, -2.2, 0, 0, 2.2, 2.2]
+        },
+        "V8": {
+            qtdCilindros: 8,
+            potenciaBase: 420,
+            offsets: [0, Math.PI/2, Math.PI, 3*Math.PI/2, 3*Math.PI/2, 0, Math.PI/2, Math.PI],
+            angulosZ: [-Math.PI / 4, Math.PI / 4, -Math.PI / 4, Math.PI / 4, -Math.PI / 4, Math.PI / 4, -Math.PI / 4, Math.PI / 4],
+            posicoesX: [-3.3, -3.3, -1.1, -1.1, 1.1, 1.1, 3.3, 3.3]
+        },
+        "Boxer": {
+            qtdCilindros: 2,
+            potenciaBase: 75,
+            offsets: [0, Math.PI], 
+            angulosZ: [-Math.PI / 2, Math.PI / 2],
+            posicoesX: [0, 0]
+        }
+    },
+
+    // --- ESTADO DE UPGRADES DA OFICINA ---
+    pecasInstaladas: { 
+        turbo: false, 
+        filtro: false, 
+        escape: false,
+        radiadorEsportivo: false 
+    },
+    
+    // --- VARIÁVEIS DINÂMICAS DE FÍSICA ---
+    motorSpeed: 0,
+    dynamicAngle: 0,
+    raioVirabrequim: 0.8,   
+    comprimentoBiela: 2.3,  
+    Y_eixo: -3.2, 
+
+    // --- VARIÁVEIS DO SISTEMA TÉRMICO ---
+    temperatura: 25.0,         // Temperatura atual em °C
+    temperaturaAmbiente: 25.0, 
+    temperaturaMaxima: 130.0,  // Ponto de quebra/fusão do motor
+    ventoinhaLigada: false,
+    motorFundido: false,       // Trava a física se virar true
+
+    // --- MÉTODOS INTERNOS DO OBJETO ---
+    init: function() {
+        const canvas = document.getElementById("renderCanvasMotor") || document.getElementById("motor-canvas");
+        if (!canvas) return;
+        this.engine = new BABYLON.Engine(canvas, true);
+        this.scene = new BABYLON.Scene(this.engine);
+        this.scene.clearColor = new BABYLON.Color4(0.1, 0.11, 0.13, 1);
+
+        const camera = new BABYLON.ArcRotateCamera("motorCam", -Math.PI / 2.2, Math.PI / 2.1, 14, new BABYLON.Vector3(0, -0.5, 0), this.scene);
+        camera.attachControl(canvas, true, false);
+        camera.wheelPrecision = 50;
+
+        const lightAmbient = new BABYLON.HemisphericLight("motorAmbient", new BABYLON.Vector3(0, 1, 0), this.scene);
+        lightAmbient.intensity = 0.6;
+        const lightDirect = new BABYLON.DirectionalLight("motorDirect", new BABYLON.Vector3(1, -0.6, -1), this.scene);
+        lightDirect.intensity = 0.8;
+
+        this.construirMotorFisico();
+        this.setupUI();
+        this.setupOficina();
+        this.startLoop();
+    },
+
+    construirMotorFisico: function() {
+        this.temperatura = this.temperaturaAmbiente;
+        this.motorFundido = false;
+        
+        const txtStatus = document.getElementById("motor-txt-status");
+        if (txtStatus) { txtStatus.innerText = "OK"; txtStatus.style.color = "#4caf50"; }
+
+        this.limparMotorAntigo();
+        const config = this.configuracoesMotores[this.tipoMotorAtual];
+
+        const blocoMat = new BABYLON.StandardMaterial("blocoMat", this.scene);
+        blocoMat.diffuseColor = new BABYLON.Color3(0.4, 0.5, 0.6);
+        blocoMat.alpha = 0.40;
+        
+        const metalMat = new BABYLON.StandardMaterial("metalMat", this.scene);
+        metalMat.diffuseColor = new BABYLON.Color3(0.5, 0.5, 0.5);
+
+        const coresPistoes = [
+            new BABYLON.Color3(0.9, 0.5, 0.1), new BABYLON.Color3(0.9, 0.7, 0.1), 
+            new BABYLON.Color3(0.1, 0.5, 0.8), new BABYLON.Color3(0.2, 0.2, 0.2),
+            new BABYLON.Color3(0.6, 0.1, 0.8), new BABYLON.Color3(0.1, 0.8, 0.5),
+            new BABYLON.Color3(0.8, 0.1, 0.3), new BABYLON.Color3(0.4, 0.4, 0.4)
+        ];
+
+        const eixoCentral = BABYLON.MeshBuilder.CreateCylinder("eixoCentral", { height: 10, diameter: 0.3, tessellation: 6 }, this.scene);
+        eixoCentral.rotation.z = Math.PI / 2;
+        eixoCentral.position.y = this.Y_eixo;
+        eixoCentral.material = metalMat;
+        eixoCentral.convertToFlatShadedMesh();
+        this.blocosCilindros.push(eixoCentral);
+
+        for (let i = 0; i < config.qtdCilindros; i++) {
+            let posX = config.posicoesX[i];
+            let rotZ = config.angulosZ[i];
+
+            let socketCilindro = new BABYLON.TransformNode("socket_" + i, this.scene);
+            socketCilindro.position = new BABYLON.Vector3(posX, this.Y_eixo, 0);
+            socketCilindro.rotation.z = rotZ;
+            this.blocosCilindros.push(socketCilindro);
+
+            let bloco = BABYLON.MeshBuilder.CreateCylinder("blocoMotor_" + i, { height: 4.8, diameter: 2.8, tessellation: 16 }, this.scene);
+            bloco.parent = socketCilindro;
+            bloco.position.y = 3.0;
+            bloco.material = blocoMat;
+            this.blocosCilindros.push(bloco);
+
+            let pistao = BABYLON.MeshBuilder.CreateCylinder("pistao_" + i, { height: 1.2, diameter: 2.5, tessellation: 16 }, this.scene);
+            pistao.parent = socketCilindro;
+            let pMat = new BABYLON.StandardMaterial("pistonMat_" + i, this.scene);
+            pMat.diffuseColor = coresPistoes[i % coresPistoes.length];
+            pistao.material = pMat;
+            this.pistons.push(pistao);
+
+            let biela = BABYLON.MeshBuilder.CreateBox("biela_" + i, { height: this.comprimentoBiela, width: 0.22, depth: 0.35 }, this.scene);
+            biela.parent = socketCilindro;
+            biela.setPivotPoint(new BABYLON.Vector3(0, this.comprimentoBiela / 2, 0));
+            biela.material = metalMat;
+            biela.convertToFlatShadedMesh();
+            this.bielas.push(biela);
+
+            let crankpin = BABYLON.MeshBuilder.CreateCylinder("crankpin_" + i, { height: 0.4, diameter: 0.35, tessellation: 6 }, this.scene);
+            crankpin.rotation.z = Math.PI / 2;
+            crankpin.material = metalMat;
+            crankpin.convertToFlatShadedMesh();
+            this.crankpins.push(crankpin);
+
+            let contrapeso = BABYLON.MeshBuilder.CreateBox("counterweight_" + i, { height: 1.0, width: 0.35, depth: 1.2 }, this.scene);
+            contrapeso.position.x = posX;
+            contrapeso.setPivotPoint(new BABYLON.Vector3(0, 0.5, 0));
+            contrapeso.material = metalMat;
+            contrapeso.convertToFlatShadedMesh();
+            this.counterweights.push(contrapeso);
+        }
+
+        this.atualizarPotenciaUI();
+    },
+
+    limparMotorAntigo: function() {
+        this.pistons.forEach(m => m.dispose());
+        this.bielas.forEach(m => m.dispose());
+        this.crankpins.forEach(m => m.dispose());
+        this.counterweights.forEach(m => m.dispose());
+        this.blocosCilindros.forEach(m => m.dispose());
+        this.pistons = []; this.bielas = []; this.crankpins = []; this.counterweights = []; this.blocosCilindros = [];
+        ["turbo", "filtro", "escape"].forEach(peca => this.removerPeca3D(peca));
+    },
+
+    setupUI: function() {
+        const selectTipo = document.getElementById("motor-select-tipo");
+        if (selectTipo) {
+            selectTipo.addEventListener("change", (e) => {
+                this.tipoMotorAtual = e.target.value;
+                this.construirMotorFisico();
+            });
+        }
+
+        const btnVentoinha = document.getElementById("btn-toggle-ventoinha");
+        if (btnVentoinha) {
+            btnVentoinha.addEventListener("click", () => {
+                if (this.motorFundido) return;
+                this.ventoinhaLigada = !this.ventoinhaLigada;
+                if (this.ventoinhaLigada) {
+                    btnVentoinha.innerText = "❄️ Ventoinha: LIGADA";
+                    btnVentoinha.style.background = "#2196f3";
+                } else {
+                    btnVentoinha.innerText = "❄️ Ligar Ventoinha";
+                    btnVentoinha.style.background = "#25262b";
+                }
+            });
+        }
+
+        const btnRadiador = document.getElementById("btn-add-radiador");
+        if (btnRadiador) {
+            btnRadiador.addEventListener("click", () => {
+                if (this.motorFundido) return;
+                this.pecasInstaladas.radiadorEsportivo = !this.pecasInstaladas.radiadorEsportivo;
+                if (this.pecasInstaladas.radiadorEsportivo) {
+                    btnRadiador.innerText = "📦 Radiador: ESPORTIVO";
+                    btnRadiador.style.borderColor = "#4caf50";
+                } else {
+                    btnRadiador.innerText = "➕ Radiador Alta Vazão";
+                    btnRadiador.style.borderColor = "rgba(255, 255, 255, 0.1)";
+                }
+            });
+        }
+
+        const opacitySlider = document.getElementById("motor-slider-opacity");
+        const valOpacity = document.getElementById("motor-txt-opacity");
+        if (opacitySlider) {
+            opacitySlider.addEventListener("input", (e) => {
+                let val = parseFloat(e.target.value);
+                if (valOpacity) valOpacity.innerText = val + "%";
+                this.blocosCilindros.forEach(m => {
+                    if (m.name && m.name.startsWith("blocoMotor_") && m.material) {
+                        m.material.alpha = val / 100;
+                    }
+                });
+            });
+        }
+    },
+
+    setupOficina: function() {
+        document.getElementById("btn-add-turbo")?.addEventListener("click", () => !this.motorFundido && this.togglePeca("turbo", () => this.criarTurbo3D()));
+        document.getElementById("btn-add-filtro")?.addEventListener("click", () => !this.motorFundido && this.togglePeca("filtro", () => this.criarFiltro3D()));
+        document.getElementById("btn-add-escape")?.addEventListener("click", () => !this.motorFundido && this.togglePeca("escape", () => this.criarEscape3D()));
+        document.getElementById("btn-reset-motor")?.addEventListener("click", () => this.construirMotorFisico());
+    },
+
+    togglePeca: function(idPeca, criadorVisual3D) {
+        if (this.pecasInstaladas[idPeca]) { this.removerPeca3D(idPeca); } 
+        else {
+            this.pecasInstaladas[idPeca] = true;
+            this.malhasPecas[idPeca] = criadorVisual3D();
+            const btn = document.getElementById(`btn-add-${idPeca}`);
+            if (btn) btn.style.borderColor = "#4caf50";
+        }
+        this.atualizarPotenciaUI();
+    },
+
+    removerPeca3D: function(idPeca) {
+        this.pecasInstaladas[idPeca] = false;
+        if (this.malhasPecas[idPeca]) {
+            this.malhasPecas[idPeca].dispose();
+            this.malhasPecas[idPeca] = null;
+        }
+        const btn = document.getElementById(`btn-add-${idPeca}`);
+        if (btn) btn.style.borderColor = "rgba(255, 255, 255, 0.05)";
+    },
+
+    atualizarPotenciaUI: function() {
+        let config = this.configuracoesMotores[this.tipoMotorAtual];
+        let cavalos = config ? config.potenciaBase : 120;
+        if (this.pecasInstaladas.filtro) cavalos += 8;
+        if (this.pecasInstaladas.escape) cavalos += 15;
+        if (this.pecasInstaladas.turbo) cavalos *= 1.4;
+
+        const txtPotencia = document.getElementById("motor-txt-potencia");
+        if (txtPotencia) txtPotencia.innerText = this.motorFundido ? 0 : Math.floor(cavalos);
+    },
+
+    criarTurbo3D: function() {
+        const turboContainer = new BABYLON.TransformNode("turbo_root", this.scene);
+        const carcaçaMat = new BABYLON.StandardMaterial("turboMat", this.scene);
+        carcaçaMat.diffuseColor = new BABYLON.Color3(0.7, 0.3, 0.1);
+        const c1 = BABYLON.MeshBuilder.CreateCylinder("t1", { height: 0.5, diameter: 1.1, tessellation: 6 }, this.scene);
+        c1.rotation.x = Math.PI / 2; c1.material = carcaçaMat; c1.parent = turboContainer;
+        let blocoReferencia = this.scene.getMeshByName("blocoMotor_0");
+        if (blocoReferencia) { turboContainer.parent = blocoReferencia; turboContainer.localPosition = new BABYLON.Vector3(0, 1.2, 1.4); }
+        return turboContainer;
+    },
+
+    criarFiltro3D: function() {
+        const filtroContainer = new BABYLON.TransformNode("filtro_root", this.scene);
+        const filtroMat = new BABYLON.StandardMaterial("filtroMat", this.scene);
+        filtroMat.diffuseColor = new BABYLON.Color3(0.8, 0.1, 0.1);
+        const cone = BABYLON.MeshBuilder.CreateCylinder("cone", { height: 0.8, diameterTop: 0.4, diameterBottom: 0.8, tessellation: 6 }, this.scene);
+        cone.rotation.z = Math.PI / 2; cone.material = filtroMat; cone.parent = filtroContainer;
+        let blocoReferencia = this.scene.getMeshByName("blocoMotor_0");
+        if (blocoReferencia) { filtroContainer.parent = blocoReferencia; filtroContainer.localPosition = new BABYLON.Vector3(0, 2.2, 0); }
+        return filtroContainer;
+    },
+
+    criarEscape3D: function() {
+        const escapeContainer = new BABYLON.TransformNode("escape_root", this.scene);
+        const escapeMat = new BABYLON.StandardMaterial("escapeMat", this.scene);
+        escapeMat.diffuseColor = new BABYLON.Color3(0.3, 0.3, 0.35);
+        let config = this.configuracoesMotores[this.tipoMotorAtual];
+        for (let i = 0; i < config.qtdCilindros; i++) {
+            let blocoCilindro = this.scene.getMeshByName("blocoMotor_" + i);
+            if (blocoCilindro) {
+                let tubo = BABYLON.MeshBuilder.CreateCylinder("tubo_ex_" + i, { height: 1.0, diameter: 0.25, tessellation: 5 }, this.scene);
+                tubo.parent = escapeContainer;
+                tubo.position = blocoCilindro.getAbsolutePosition().add(blocoCilindro.up.scale(-1.2));
+                tubo.rotation = blocoCilindro.rotation; tubo.material = escapeMat;
+            }
+        }
+        return escapeContainer;
+    },
+
+    startLoop: function() {
+        const rpmSlider = document.getElementById("motor-slider-rpm");
+        const valRpm = document.getElementById("motor-txt-rpm");
+        const txtTemp = document.getElementById("motor-txt-temperatura");
+        const txtArrefecimento = document.getElementById("motor-txt-arrefecimento");
+        const txtStatus = document.getElementById("motor-txt-status");
+        
+        // --- ELEMENTOS DE TELEMETRIA CORRIGIDOS ---
+        const txtCiclo = document.getElementById("motor-txt-ciclo") || document.getElementById("ciclo-val"); 
+        const txtPressao = document.getElementById("motor-txt-pressao") || document.getElementById("pressao-val");
+
+        const r = this.raioVirabrequim;
+        const L = this.comprimentoBiela;
+
+        this.engine.runRenderLoop(() => {
+            if (!this.scene) return;
+
+            let sliderValue = rpmSlider ? parseFloat(rpmSlider.value) : 0;
+
+            if (this.motorFundido) {
+                this.motorSpeed = 0;
+                if (valRpm) valRpm.innerText = "0 (TRAVADO)";
+                if (rpmSlider) rpmSlider.value = 0;
+                if (txtCiclo) { txtCiclo.innerText = "TRAVADO"; txtCiclo.style.color = "#f44336"; }
+                if (txtPressao) txtPressao.innerText = "0.0 atm";
+            } else {
+                let turboMult = this.pecasInstaladas && this.pecasInstaladas.turbo ? 1.4 : 1.0;
+                this.motorSpeed = (sliderValue * 0.0008) * turboMult;
+                if (valRpm) valRpm.innerText = Math.floor(sliderValue * 10 * turboMult);
+                if (this.motorSpeed > 0) this.dynamicAngle += this.motorSpeed;
+            }
+
+            // --- LÓGICA DO CICLO DE 4 TEMPOS & PRESSÃO ---
+            if (!this.motorFundido && sliderValue > 0) {
+                let anguloCiclo = this.dynamicAngle % (4 * Math.PI);
+                
+                let nomeCiclo = "ADMISSÃO 📥";
+                let corCiclo = "#2196f3"; 
+                let pressaoDinamica = 1.0; 
+
+                if (anguloCiclo < Math.PI) {
+                    nomeCiclo = "ADMISSÃO 📥";
+                    corCiclo = "#2196f3";
+                    pressaoDinamica = 1.0 - (Math.sin(anguloCiclo) * 0.2); 
+                } else if (anguloCiclo < 2 * Math.PI) {
+                    nomeCiclo = "COMPRESSÃO 🗜️";
+                    corCiclo = "#ff9800"; 
+                    let progressoComp = anguloCiclo - Math.PI;
+                    pressaoDinamica = 1.0 + (Math.sin(progressoComp) * 8.0); 
+                } else if (anguloCiclo < 3 * Math.PI) {
+                    nomeCiclo = "EXPANSÃO 🔥";
+                    corCiclo = "#f44336"; 
+                    let progressoExp = anguloCiclo - (2 * Math.PI);
+                    pressaoDinamica = 35.0 * Math.exp(-progressoExp * 1.5) + 1.0; 
+                    if (this.pecasInstaladas && this.pecasInstaladas.turbo) pressaoDinamica *= 1.4; 
+                } else {
+                    nomeCiclo = "EXAUSTÃO 💨";
+                    corCiclo = "#9e9e9e"; 
+                    let progressoEx = anguloCiclo - (3 * Math.PI);
+                    pressaoDinamica = 1.2 + (Math.sin(progressoEx) * 0.5); 
+                }
+
+                if (txtCiclo) {
+                    txtCiclo.innerText = nomeCiclo;
+                    txtCiclo.style.color = corCiclo;
+                }
+                if (txtPressao) {
+                    txtPressao.innerText = pressaoDinamica.toFixed(1) + " atm";
+                }
+            } else if (sliderValue === 0 && !this.motorFundido) {
+                if (txtCiclo) { txtCiclo.innerText = "DESLIGADO"; txtCiclo.style.color = "#757575"; }
+                if (txtPressao) txtPressao.innerText = "1.0 atm";
+            }
+
+            // --- FÍSICA TÉRMICA ---
+            let geracaoCalor = (sliderValue / 100) * 0.15;
+            if (this.pecasInstaladas && this.pecasInstaladas.turbo && sliderValue > 0) geracaoCalor *= 1.6;
+
+            let capacidadederesfriamento = 0.03; 
+            let eficienciaPercentual = 0;
+
+            if (this.ventoinhaLigada) { capacidadederesfriamento += 0.09; eficienciaPercentual += 50; }
+            if (this.pecasInstaladas && this.pecasInstaladas.radiadorEsportivo) { capacidadederesfriamento += 0.07; eficienciaPercentual += 50; }
+
+            if (txtArrefecimento) txtArrefecimento.innerText = eficienciaPercentual;
+
+            if (sliderValue > 0) {
+                this.temperatura += (geracaoCalor - capacidadederesfriamento);
+            } else {
+                this.temperatura += (this.temperaturaAmbiente - this.temperatura) * 0.01;
+            }
+
+            if (this.temperatura < this.temperaturaAmbiente) this.temperatura = this.temperaturaAmbiente;
+
+            if (txtTemp) {
+                txtTemp.innerText = this.temperatura.toFixed(1);
+                if (this.temperatura > 105) txtTemp.style.color = "#f44336";
+                else if (this.temperatura > 85) txtTemp.style.color = "#ff9800";
+                else txtTemp.style.color = "#4caf50";
+            }
+          
+          // --- CÁLCULO DINÂMICO DE POTÊNCIA ---
+            const txtPotencia = document.getElementById("motor-txt-potencia");
+            if (txtPotencia) {
+                if (this.motorFundido) {
+                    txtPotencia.innerText = "0 cv";
+                } else if (sliderValue === 0) {
+                    txtPotencia.innerText = "0 cv";
+                } else {
+                    // 1. Define a potência base de acordo com a arquitetura do motor
+                    let potenciaBaseConfig = 60; // Padrão para 1 cilindro
+                    if (this.tipoMotorAtual === "2cil") potenciaBaseConfig = 90;
+                    if (this.tipoMotorAtual === "4cil") potenciaBaseConfig = 140;
+                    if (this.tipoMotorAtual === "V6") potenciaBaseConfig = 220;
+                    if (this.tipoMotorAtual === "V8") potenciaBaseConfig = 380;
+                    if (this.tipoMotorAtual === "Boxer") potenciaBaseConfig = 100;
+
+                    // 2. Calcula o RPM real simulado (0 a ~8000 RPM baseado no slider)
+                    let rpmReal = sliderValue * 80; 
+                    if (this.pecasInstaladas && this.pecasInstaladas.turbo) rpmReal *= 1.1; // Turbo deixa subir um pouco mais o giro
+
+                    // 3. Simula a curva de potência (eficiência mecânica)
+                    // O pico de eficiência acontece por volta de 75% do slider (fim da curva de torque)
+                    let fatorCurva = Math.sin((sliderValue / 100) * Math.PI * 0.85);
+                    if (fatorCurva < 0.1) fatorCurva = 0.1;
+
+                    // 4. Aplica os multiplicadores dos Upgrades da Oficina
+                    let multiplicadorPecas = 1.0;
+                    if (this.pecasInstaladas) {
+                        if (this.pecasInstaladas.filtro) multiplicadorPecas += 0.05;  // +5% cv
+                        if (this.pecasInstaladas.escape) multiplicadorPecas += 0.08;  // +8% cv
+                        if (this.pecasInstaladas.turbo) {
+                            // O turbo adiciona potência progressiva: quanto mais rotação, mais o turbo enche!
+                            let pressaoTurboEfetiva = (sliderValue / 100) * 0.40; 
+                            multiplicadorPecas += pressaoTurboEfetiva;
+                        }
+                    }
+
+                    // 5. Cálculo final da potência naquele exato milissegundo
+                    let potenciaCalculada = potenciaBaseConfig * fatorCurva * multiplicadorPecas;
+
+                    // Exibe no painel de telemetria sem casas decimais
+                    txtPotencia.innerText = Math.round(potenciaCalculada) + " cv";
+                }
+            }
+
+            // --- QUEBRA DO MOTOR ---
+            if (this.temperatura >= this.temperaturaMaxima && !this.motorFundido) {
+                this.motorFundido = true;
+                if (typeof this.atualizarPotenciaUI === "function") this.atualizarPotenciaUI();
+                
+                if (txtStatus) {
+                    txtStatus.innerText = "❌ FUNDIDO (SUPERAQUECIMENTO)";
+                    txtStatus.style.color = "#f44336";
+                }
+
+                if (this.pistons) {
+                    this.pistons.forEach(pistao => {
+                        if (pistao.material) {
+                            pistao.material.diffuseColor = new BABYLON.Color3(0.15, 0.15, 0.15);
+                            pistao.material.specularColor = new BABYLON.Color3(0, 0, 0);
+                        }
+                    });
+                }
+            }
+
+            // --- ATUALIZAÇÃO GEOMÉTRICA ---
+            if (!this.motorFundido && this.configuracoesMotores && this.configuracoesMotores[this.tipoMotorAtual]) {
+                let config = this.configuracoesMotores[this.tipoMotorAtual];
+                for (let i = 0; i < config.qtdCilindros; i++) {
+                    let cilAngle = this.dynamicAngle + config.offsets[i];
+                    let posX = config.posicoesX[i];
+
+                    let viaY = this.Y_eixo + r * Math.cos(cilAngle);
+                    let viaZ = r * Math.sin(cilAngle);
+                    
+                    if (this.crankpins && this.crankpins[i]) {
+                        this.crankpins[i].position.x = posX;
+                        this.crankpins[i].position.y = viaY;
+                        this.crankpins[i].position.z = viaZ;
+                    }
+
+                    if (this.counterweights && this.counterweights[i]) {
+                        this.counterweights[i].rotation.x = -cilAngle + Math.PI;
+                    }
+
+                    let localPistaoY = r * Math.cos(cilAngle) + Math.sqrt(L * L - (r * Math.sin(cilAngle)) * (r * Math.sin(cilAngle)));
+                    
+                    if (this.pistons && this.pistons[i]) this.pistons[i].localPosition = new BABYLON.Vector3(0, localPistaoY, 0);
+                    if (this.bielas && this.bielas[i]) this.bielas[i].localPosition = new BABYLON.Vector3(0, localPistaoY, 0);
+                    
+                    let anguloOscilacao = Math.asin((r * Math.sin(cilAngle)) / L);
+                    if (this.bielas && this.bielas[i]) this.bielas[i].localRotation = new BABYLON.Vector3(-anguloOscilacao, 0, 0);
+                }
+            }
+
+            // ... (fim do runRenderLoop onde tem o seu this.scene.render();)
+            this.scene.render();
+        });
+    } // <- Fecha a função startLoop
+}; // <- Fecha o objeto SimuladorMotor de forma definitiva. APENAS UMA VEZ.
+
+// =================================================================
+// INICIALIZAÇÃO BLINDADA CONTRA ERROS DE SINTAXE
+// =================================================================
+;(function() {
+    if (window.meuMotorTimerAtivo) return;
+    window.meuMotorTimerAtivo = true;
+
+    const checkEngineState = setInterval(() => {
+        const canvas = document.getElementById("motor-canvas") || document.getElementById("renderCanvasMotor");
+        
+        if (typeof BABYLON !== "undefined" && canvas) {
+            clearInterval(checkEngineState);
+            
+            if (typeof SimuladorMotor !== "undefined" && typeof SimuladorMotor.init === "function") {
+                console.log("🚀 Inicializando o SimuladorMotor com segurança...");
+                SimuladorMotor.init();
+            } else {
+                console.error("ERRO: Objeto 'SimuladorMotor' ou método 'init()' não foi encontrado.");
+            }
+        }
+    }, 200);
+})();
+
+// =================================================================
+// REDIMENSIONAMENTO DA TELA
+// =================================================================
+window.addEventListener("resize", () => { 
+    if (typeof SimuladorMotor !== "undefined" && SimuladorMotor.engine) {
+        SimuladorMotor.engine.resize(); 
+    }
 });
-
-function viewFront(){
-    rotX.value=0;
-    rotY.value=0;
-    updateView();
-}
-
-function viewSide(){
-    rotX.value=0;
-    rotY.value=90;
-    updateView();
-}
-
-function viewTop(){
-    rotX.value=-90;
-    rotY.value=0;
-    updateView();
-}
-
-function viewIso(){
-    rotX.value=-25;
-    rotY.value=35;
-    updateView();
-}
-
-createCube();
-updateView();
-
-    const slider = document.getElementById("volumeSlider");
-
-const piston = document.getElementById("piston");
-
-const volText = document.getElementById("vol-val");
-
-const presText = document.getElementById("pres-val");
-
-const canvas =
-document.getElementById("particleCanvas");
-
-const ctx =
-canvas.getContext("2d");
-
-const graph =
-document.getElementById("physicsChart");
-
-const gctx =
-graph.getContext("2d");
-
-const K = 20;
-
-const particles = [];
-
-function resizeCanvas(){
-
-    canvas.width =
-    canvas.offsetWidth;
-
-    canvas.height =
-    canvas.offsetHeight;
-
-    graph.width =
-    graph.offsetWidth;
-
-    graph.height =
-    graph.offsetHeight;
-}
-
-resizeCanvas();
-
-window.addEventListener(
-    "resize",
-    resizeCanvas
-);
-
-for(let i=0;i<60;i++){
-
-    particles.push({
-
-        x:Math.random()*canvas.width,
-        y:Math.random()*canvas.height,
-
-        vx:(Math.random()-0.5)*4,
-        vy:(Math.random()-0.5)*4
-
-    });
-
-}
-
-function drawParticles(){
-
-    ctx.clearRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
-
-    particles.forEach(p=>{
-
-        p.x += p.vx;
-        p.y += p.vy;
-
-        if(p.x < 0 || p.x > canvas.width)
-            p.vx *= -1;
-
-        if(p.y < 0 || p.y > canvas.height)
-            p.vy *= -1;
-
-        ctx.beginPath();
-        ctx.arc(
-            p.x,
-            p.y,
-            4,
-            0,
-            Math.PI*2
-        );
-        ctx.fillStyle="#2563eb";
-        ctx.fill();
-
-    });
-
-    requestAnimationFrame(
-        drawParticles
-    );
-}
-
-drawParticles();
-
-function drawGraph(volume){
-
-    gctx.clearRect(
-        0,
-        0,
-        graph.width,
-        graph.height
-    );
-
-    gctx.beginPath();
-
-    for(let v=1; v<=20; v+=0.1){
-
-        let p = K/v;
-
-        let x =
-        (v/20)*graph.width;
-
-        let y =
-        graph.height -
-        (p/20)*graph.height;
-
-        if(v===1)
-            gctx.moveTo(x,y);
-        else
-            gctx.lineTo(x,y);
-
-    }
-
-    gctx.lineWidth=3;
-    gctx.strokeStyle="#7c3aed";
-    gctx.stroke();
-
-    let pressure = K/volume;
-
-    let px =
-    (volume/20)*graph.width;
-
-    let py =
-    graph.height -
-    (pressure/20)*graph.height;
-
-    gctx.beginPath();
-
-    gctx.arc(
-        px,
-        py,
-        8,
-        0,
-        Math.PI*2
-    );
-
-    gctx.fillStyle="red";
-    gctx.fill();
-
-}
-
-function updatePhysicsSim(){
-
-    let volume =
-    parseFloat(slider.value);
-
-    let pressure =
-    K / volume;
-
-    volText.textContent =
-    volume.toFixed(0) + " L";
-
-    presText.textContent =
-    pressure.toFixed(2) + " atm";
-
-    let pistonHeight =
-    40 + (20-volume)*8;
-
-    piston.style.height =
-    pistonHeight + "px";
-
-    drawGraph(volume);
-
-}
-
-slider.addEventListener(
-    "input",
-    updatePhysicsSim
-);
 /* Inicial: nada mais */
   </script>
 </body>
