@@ -6,7 +6,7 @@
   <title>Plataforma Aprenda+ — Cursos</title>
   <style>
     :root{
-      --primary:#0a84ff;
+      --primary:#ff0000;
       --bg:#f7f9fc;
       --card:#fff;
       --muted:#64748b;
@@ -17,7 +17,7 @@
     body{
       font-family:'Open Sans', Arial, sans-serif;
       margin:0;
-      background:linear-gradient(180deg,var(--bg),#ffffff);
+      background:linear-gradient(180deg,var(--bg),#f0f0f0);
       color:#0f1724;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
@@ -31,7 +31,7 @@
     .brand{display:flex;gap:12px;align-items:center;cursor:pointer}
     .logo{
       width:52px;height:52px;border-radius:10px;background:var(--primary);
-      display:grid;place-items:center;color:#fff;font-weight:700;font-family:Poppins;
+      display:grid;place-items:center;color:#000;font-weight:700;font-family:Poppins;
     }
     main{padding:20px;max-width:1100px;margin:0 auto;}
     .hero h1{font-family:'Poppins',sans-serif;font-size:26px;margin:6px 0}
@@ -3644,6 +3644,111 @@ proporcional à pressão exercida sobre ele (Lei de Boyle).
         `,
              }
       },
+        {
+  id: 'acelerador-particulas',
+  title: 'Acelerador de Partículas de Alta Energia (Babylon.js)',
+  content: {
+    basic: `
+    <div class="particle-lab-container" style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; background: #0f111a; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #eee; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.5);">
+    
+        <div class="control-panel" style="flex: 1; min-width: 320px; display: flex; flex-direction: column; gap: 15px;">
+            
+            <div style="background: #141824; padding: 15px; border-radius: 8px; border: 1px solid #e74c3c; min-width: 200px;">
+                <span style="color: #e74c3c; font-weight: bold; display: block; margin-bottom: 8px; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase;">📡 Monitor da Câmara</span>
+                <div style="font-size: 0.9rem; margin-bottom: 5px;">Status: <span id="status-leitura" style="color: #2ecc71; font-weight: bold;">Pronto para Injeção</span></div>
+                <div style="font-size: 0.9rem;">Energia Gerada: <span id="energia-leitura" style="color: #f1c40f; font-weight: bold;">0.00 GeV</span></div>
+            </div>
+            
+            <div class="controles-física" style="background: #1a1f2c; padding: 15px; border-radius: 8px; border: 1px solid #252d3f;">
+                <h3 style="margin-top: 0; color: #3498db; font-size: 16px; border-bottom: 1px solid #252d3f; padding-bottom: 5px;">⚙️ Configuração do Feixe</h3>
+                
+                <div style="margin-bottom: 15px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 14px;">
+                        <label>Massa das Partículas (u):</label>
+                        <span style="color: #3498db; font-weight: bold;"><span id="massa-val">100</span> u</span>
+                    </div>
+                    <input type="range" id="p-massa" min="10" max="500" value="100" style="width: 100%; accent-color: #3498db;" oninput="document.getElementById('massa-val').innerText = this.value;">
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 14px;">
+                        <label>Velocidade de Injeção (% c):</label>
+                        <span style="color: #e74c3c; font-weight: bold;"><span id="velocidade-val">50</span>%</span>
+                    </div>
+                    <input type="range" id="p-velocidade" min="10" max="95" value="50" style="width: 100%; accent-color: #e74c3c;" oninput="document.getElementById('velocidade-val').innerText = this.value;">
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <div style="flex: 1; background: #0a0c10; height: 110px; border-radius: 6px; border: 1px solid #1f2430; padding: 8px; position: relative;">
+                    <span style="font-size: 11px; color: #65758c; text-transform: uppercase;">Espectro de Decaimento</span>
+                    <div id="mini-graph-1" style="color: #555; font-size: 12px; margin-top: 20px; text-align: center;">[Aguardando Impacto]</div>
+                </div>
+                <div style="flex: 1; background: #0a0c10; height: 110px; border-radius: 6px; border: 1px solid #1f2430; padding: 8px; position: relative;">
+                    <span style="font-size: 11px; color: #65758c; text-transform: uppercase;">Espalhamento Angular</span>
+                    <div id="mini-graph-2" style="color: #555; font-size: 12px; margin-top: 20px; text-align: center;">[Aguardando Dados]</div>
+                </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+                 <button onclick="window.injetarParticulas()" style="padding: 12px; background: #0288d1; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">⚛️ Injetar Partículas</button>
+                 <button onclick="window.dispararColisao()" style="padding: 12px; background: #d32f2f; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">💥 Disparar Colisão</button>
+                 <button onclick="window.resetarAcelerador()" style="padding: 8px; background: transparent; color: #65758c; border: 1px solid #252d3f; border-radius: 6px; cursor: pointer;">🔄 Limpar Câmara</button>
+            </div>
+        </div>
+        <div class="controle-quimico">
+    <label>Buscar Substância:</label>
+    <input type="text" id="campo-busca" placeholder="Ex: H2O, CO2 ou Oxigênio" onkeyup="window.pesquisarEALterarMolecula(this.value)">
+</div>
+
+<div class="controle-quimico">
+    <label>Estado da Matéria:</label>
+    <select id="seletor-estado" onchange="window.mudarEstadoFisico(this.value)">
+        <option value="liquido">Líquido</option>
+        <option value="solido">Sólido</option>
+        <option value="gasoso">Gasoso</option>
+        <option value="plasma">Plasma (Ionizado)</option>
+    </select>
+</div>
+
+        <div class="viewport-panel" style="flex: 1.5; min-width: 360px; display: flex; flex-direction: column; gap: 10px;">
+            <div style="color: #3498db; font-weight: bold; font-size: 14px;">🌐 Câmara de Colisão 3D (Vácuo Magnético):</div>
+            <div id="viewport-particle" style="width: 100%; height: 460px; background: #000; position: relative; border-radius: 8px; overflow: hidden; border: 2px solid #252d3f;">
+                <canvas id="renderCanvasParticle" style="width: 100%; height: 100%; outline: none; display: block;"></canvas>
+                
+            </div>
+        </div>
+    </div>
+    <div style="margin-top: 15px; background: #1a1f2c; padding: 15px; border-radius: 8px; border: 1px solid #252d3f;">
+        <label style="color: #aaa; font-size: 12px; display: block; margin-bottom: 5px;">Selecione o Experimento:</label>
+        <select id="modo-experimento" onchange="window.mudarModoExperimento(this.value)" style="width: 100%; background: #252d3f; color: white; border: 1px solid #3498db; padding: 8px; border-radius: 6px; cursor: pointer;">
+            <option value="colisao-alta">Acelerador de Partículas (Atual)</option>
+            <option value="fusao-nuclear">Fusão Nuclear</option>
+            <option value="fissao-corte">Fissão e Química</option>
+        </select>
+        
+        <div id="controles-subatomicos" style="display: none; margin-top: 10px;">
+            <div style="margin-bottom: 10px;">
+                <label style="font-size: 13px;">Quantidade de Prótons: <span id="pt-val" style="color:#e74c3c;">1</span></label>
+                <input type="range" id="p-protons" min="1" max="8" value="1" style="width:100%; accent-color: #e74c3c;" oninput="document.getElementById('pt-val').innerText=this.value">
+            </div>
+            <div style="margin-bottom: 10px;">
+                <label style="font-size: 13px;">Quantidade de Nêutrons: <span id="nt-val" style="color:#95a5a6;">1</span></label>
+                <input type="range" id="p-neutrons" min="0" max="10" value="1" style="width:100%; accent-color: #95a5a6;" oninput="document.getElementById('nt-val').innerText=this.value">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="viewport-panel" style="...">
+    <div id="viewport-particle" style="...">
+        <canvas id="renderCanvasParticle" style="width: 100%; height: 100%; ..."></canvas>
+    </div>
+</div>
+    
+    `
+  }
+},
        {
           id: 'laboratorio', // ID que a openLesson usa
           title: 'Laboratório',
@@ -3727,48 +3832,90 @@ proporcional à pressão exercida sobre ele (Lei de Boyle).
           title: 'Usina Nuclear',
           content: { 
             basic: `
- <div class="minecraft-lab">
+<div class="minecraft-lab" style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; background: #0c1017; font-family: 'Segoe UI', system-ui, sans-serif; color: #fff; border-radius: 12px; border: 1px solid #262c36;">
     
-    <div class="control-panel">
-        <h3 style="color: #00f2ff; margin-top: 0; font-size: 18px; letter-spacing: 1px;">☢️ MONITOR DO REATOR</h3>
+    <div class="control-panel" style="flex: 1; min-width: 360px; height: 580px; overflow-y: auto; padding-right: 10px; display: flex; flex-direction: column; gap: 15px;">
         
-        <div class="metrics">
-            <div class="metric-box">
-                <div class="metric-label">Temp. Núcleo</div>
-                <div class="metric-value" id="val-temp">285°C</div>
+        <div style="border-bottom: 2px solid #21262d; padding-bottom: 10px;">
+            <h2 style="margin: 0; color: #00f2ff; font-size: 18px; letter-spacing: 0.5px;">☢️ Sandbox de Engenharia Nuclear</h2>
+            <small style="color: #8b949e;">Controle geométrico e térmico dos 3 circuitos industriais</small>
+        </div>
+
+        <div style="background: #161b22; padding: 12px; border-radius: 8px; border: 1px solid #30363d;">
+            <strong style="color: #ffb86c; font-size: 12px; text-transform: uppercase; display: block; margin-bottom: 8px;">1. Circuito Primário (Vaso do Reator)</strong>
+            <div style="display: flex; gap: 10px; margin-bottom: 8px;">
+                <label style="flex: 1; font-size: 11px;">Raio do Domo (Tamanho):
+                    <input type="range" id="nuke-reactor-radius" min="2.5" max="5.5" step="0.5" value="4" style="width:100%" oninput="window.gerarUsinaNuclear()">
+                </label>
+                <label style="flex: 1; font-size: 11px;">Altura do Cilindro:
+                    <input type="range" id="nuke-reactor-height" min="2" max="6" step="1" value="3" style="width:100%" oninput="window.gerarUsinaNuclear()">
+                </label>
             </div>
-            <div class="metric-box">
-                <div class="metric-label">Fluxo Nêutrons</div>
-                <div class="metric-value" id="val-neutrons">1.02 Φ</div>
+            <label style="font-size: 11px; display: block;">Localização no Eixo X:
+                <input type="range" id="nuke-reactor-pos-x" min="10" max="16" step="1" value="14" style="width:100%" oninput="window.gerarUsinaNuclear()">
+            </label>
+        </div>
+
+        <div style="background: #161b22; padding: 12px; border-radius: 8px; border: 1px solid #30363d;">
+            <strong style="color: #ffb86c; font-size: 12px; text-transform: uppercase; display: block; margin-bottom: 8px;">2. Sistema de Refrigeração (Torres)</strong>
+            <div style="display: flex; gap: 10px; margin-bottom: 8px;">
+                <label style="flex: 1; font-size: 11px;">Altura das Torres:
+                    <input type="range" id="nuke-tower-height" min="5" max="10" step="1" value="7" style="width:100%" oninput="window.gerarUsinaNuclear()">
+                </label>
+                <label style="flex: 1; font-size: 11px;">Raio da Base:
+                    <input type="range" id="nuke-tower-radius" min="3" max="5" step="0.5" value="4" style="width:100%" oninput="window.gerarUsinaNuclear()">
+                </label>
+            </div>
+            <label style="font-size: 11px; display: block;">Quantidade de Torres:
+                <select id="nuke-tower-qty" style="width: 100%; background: #0d1117; color: #fff; border: 1px solid #30363d; padding: 5px; font-size: 11px;" onchange="window.gerarUsinaNuclear()">
+                    <option value="1">1 Torre Individual</option>
+                    <option value="2">2 Torres de Resfriamento Gêmeas</option>
+                </select>
+            </label>
+        </div>
+
+        <div style="background: #161b22; padding: 12px; border-radius: 8px; border: 1px solid #30363d;">
+            <strong style="color: #50fa7b; font-size: 12px; text-transform: uppercase; display: block; margin-bottom: 8px;">3. Elementos Físicos e Controle</strong>
+            <div style="display: flex; gap: 10px; margin-bottom: 8px;">
+                <label style="flex: 1; font-size: 11px;">Isótopo Físsil:
+                    <select id="nuke-fuel-type" style="width: 100%; background: #0d1117; color: #fff; border: 1px solid #30363d; padding: 4px;" onchange="window.gerarUsinaNuclear()">
+                        <option value="u235">Urânio-235 (U-235)</option>
+                        <option value="pu239">Plutônio-239 (Pu-239)</option>
+                    </select>
+                </label>
+                <label style="flex: 1; font-size: 11px;">Enriquecimento:
+                    <select id="nuke-enrichment" style="width: 100%; background: #0d1117; color: #fff; border: 1px solid #30363d; padding: 4px;" onchange="window.gerarUsinaNuclear()">
+                        <option value="0.03">3% (Usina Leve)</option>
+                        <option value="0.05" selected>5% (Comercial Padrão)</option>
+                        <option value="0.15">15% (Alta Performance)</option>
+                    </select>
+                </label>
+            </div>
+            <label style="font-size: 11px; display: block;">Inserção das Barras de Boro: <span id="lbl-boro" style="color:#ff5555; font-weight: bold;">45%</span>
+                <input type="range" id="nuke-boro-rods" min="0" max="100" value="45" style="width:100%" oninput="document.getElementById('lbl-boro').innerText = this.value + '%'; window.gerarUsinaNuclear()">
+            </label>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div style="background: #0d1117; border: 1px solid #30363d; padding: 8px; border-radius: 6px; text-align: center;">
+                <div style="font-size: 10px; color: #8b949e; text-transform: uppercase;">Temp. Núcleo</div>
+                <div id="val-temp" style="font-size: 18px; font-weight: bold; color: #00f2ff; margin-top: 2px;">285°C</div>
+            </div>
+            <div style="background: #0d1117; border: 1px solid #30363d; padding: 8px; border-radius: 6px; text-align: center;">
+                <div style="font-size: 10px; color: #8b949e; text-transform: uppercase;">Circuito Secundário</div>
+                <div id="val-neutrons" style="font-size: 18px; font-weight: bold; color: #50fa7b; margin-top: 2px;">0 MW</div>
             </div>
         </div>
-        
-        <div class="editor-section">
-            <label style="color: #8b949e; display: block; font-size: 12px; margin-bottom: 5px; font-family: monospace;">💻 script_controle.py</label>
-            <textarea id="nuke-python-editor" spellcheck="false"># Lógica de Controle Químico (Urânio-235)
-enriquecimento = 0.05   # 5% de massa físsil
-barras_boro = 0.45     # Inserção das barras (0.0 a 1.0)
-fluxo_agua = 80        # Refrigeração em %
 
-def calcular_status():
-    if barras_boro < 0.20 and fluxo_agua < 50:
-        return "CRÍTICO: Superaquecimento!"
-    return "Estável: Reação Moderada."
+        <div id="nuke-console-log" style="background: #010409; border: 1px solid #30363d; padding: 8px; border-radius: 6px; min-height: 40px; font-family: monospace; font-size: 11px; color: #cbd5e1;">> Modulador pronto para inicialização em Babylon.js</div>
 
-print(calcular_status())</textarea>
-        </div>
-
-        <div class="console-section">
-            <div class="console-output" id="nuke-console-log">> Terminal pronto. Aguardando execução...</div>
-        </div>
-        
-        <button onclick="executarSimulacaoNuclear()" class="btn-primary">Executar Simulação</button>
-        <button onclick="girarMaqueteNuclear()" class="btn-secondary">Girar Visão 3D</button>
-        <button onclick="gerarUsinaNuclear()" class="btn-tertiary">Construir Usina Nuclear</button>
+        <button onclick="window.executarSimulacaoNuclear()" style="background: #00f2ff; color: #000; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 13px;">⚡ Iniciar Reator Nuclear</button>
     </div>
 
-    <div class="viewport-3d">
-        <div id="nuclear-vector-container" class="escala-mini"></div>
+    <div style="flex: 1.5; min-width: 360px; display: flex; flex-direction: column; gap: 10px;">
+        <div id="viewport-nuclear-babylon" style="width: 100%; height: 580px; background: #07090d; border-radius: 8px; overflow: hidden; border: 2px solid #30363d;">
+            <canvas id="renderCanvasNuclear" style="width: 100%; height: 100%; outline: none; display: block;"></canvas>
+        </div>
     </div>
 </div>
         `,
@@ -5885,6 +6032,219 @@ pyautogui.write("Olá")
   },
     ]
   },
+  {
+  id: 'aviacao',
+  title: 'Aviação',
+  topics: [
+    {
+      id: 'transporte-aereo',
+      title: 'Transporte Aéreo',
+      subtopics: [
+        {
+          id: 'oficina',
+          title: 'Oficia',
+          content: {
+            basic: `
+             <div class="aviation-lab" style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; background: #141923; font-family: 'Segoe UI', system-ui, sans-serif; color: #fff; border-radius: 12px;">
+    
+    <div class="assembly-panel" style="flex: 1.2; min-width: 360px; height: 550px; overflow-y: auto; padding-right: 10px; display: flex; flex-direction: column; gap: 15px;">
+        
+        <div style="border-bottom: 2px solid #2a364f; padding-bottom: 10px;">
+            <h2 style="margin: 0; color: #00d2ff; font-size: 20px;">🛠️ Engenharia Aeronáutica Avançada</h2>
+            <small style="color: #8fa0c4;">Ajuste dimensões, posições e especificações de fluidos</small>
+        </div>
+
+        <div class="component-group" style="background: #1f293d; padding: 12px; border-radius: 8px; border: 1px solid #2a364f;">
+            <h3 style="margin: 0 0 10px 0; font-size: 13px; color: #ffb86c; text-transform: uppercase;">1. Fuselagem e Cabine</h3>
+            <div style="display: flex; gap: 10px; margin-bottom: 8px;">
+                <label style="flex: 1; font-size: 12px;">Comprimento:
+                    <input type="range" id="fuso-length" min="1" max="3" step="0.1" value="1" style="width:100%" oninput="window.atualizarMontagem()">
+                </label>
+                <label style="flex: 1; font-size: 12px;">Largura/Diâmetro:
+                    <input type="range" id="fuso-width" min="0.6" max="1.8" step="0.1" value="1" style="width:100%" oninput="window.atualizarMontagem()">
+                </label>
+            </div>
+        </div>
+
+        <div class="component-group" style="background: #1f293d; padding: 12px; border-radius: 8px; border: 1px solid #2a364f;">
+            <h3 style="margin: 0 0 10px 0; font-size: 13px; color: #ffb86c; text-transform: uppercase;">2. Configuração das Asas</h3>
+            <div style="margin-bottom: 8px;">
+                <label style="font-size: 12px;">Tipo de Perfil / Formato:</label>
+                <select id="wing-type" style="width: 100%; padding: 6px; background: #141923; color: #fff; border: 1px solid #3b4a6b;" onchange="window.atualizarMontagem()">
+                    <option value="reta">Retangular Convencional</option>
+                    <option value="enfechada">Enflechada Aerodinâmica</option>
+                </select>
+            </div>
+            <div style="display: flex; gap: 10px; margin-bottom: 8px;">
+                <label style="flex: 1; font-size: 12px;">Envergadura (Tamanho):
+                    <input type="range" id="wing-span" min="0.7" max="2.5" step="0.1" value="1" style="width:100%" oninput="window.atualizarMontagem()">
+                </label>
+                <label style="flex: 1; font-size: 12px;">Posição no Corpo (Z):
+                    <input type="range" id="wing-pos-z" min="-0.8" max="0.8" step="0.1" value="0" style="width:100%" oninput="window.atualizarMontagem()">
+                </label>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <label style="flex: 1; font-size: 12px;">Qtd de Asas (Planos):
+                    <select id="wing-qty" style="width: 100%; padding: 4px; background: #141923; color: #fff; border: 1px solid #3b4a6b;" onchange="window.atualizarMontagem()">
+                        <option value="1">Monoplano (1 par)</option>
+                        <option value="2">Biplano (2 pares superpostos)</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+
+        <div class="component-group" style="background: #1f293d; padding: 12px; border-radius: 8px; border: 1px solid #2a364f;">
+            <h3 style="margin: 0 0 10px 0; font-size: 13px; color: #ffb86c; text-transform: uppercase;">3. Empenagem (Estabilizadores)</h3>
+            <div style="display: flex; gap: 10px;">
+                <label style="flex: 1; font-size: 12px;">Altura do Leme (Vertical):
+                    <input type="range" id="tail-v-scale" min="0.5" max="1.8" step="0.1" value="1" style="width:100%" oninput="window.atualizarMontagem()">
+                </label>
+                <label style="flex: 1; font-size: 12px;">Largura do Profundor (Horiz):
+                    <input type="range" id="tail-h-scale" min="0.5" max="1.8" step="0.1" value="1" style="width:100%" oninput="window.atualizarMontagem()">
+                </label>
+            </div>
+        </div>
+
+        <div class="component-group" style="background: #1f293d; padding: 12px; border-radius: 8px; border: 1px solid #2a364f;">
+            <h3 style="margin: 0 0 10px 0; font-size: 13px; color: #ffb86c; text-transform: uppercase;">4. Trem de Pouso</h3>
+            <div style="display: flex; gap: 10px;">
+                <label style="flex: 1; font-size: 12px;">Configuração técnica:
+                    <select id="gear-type" style="width: 100%; padding: 6px; background: #141923; color: #fff; border: 1px solid #3b4a6b;" onchange="window.atualizarMontagem()">
+                        <option value="triciclo">Triciclo (Moderno)</option>
+                        <option value="convencional">Convencional (Clássico/Traseiro)</option>
+                    </select>
+                </label>
+                <label style="flex: 1; font-size: 12px;">Altura das Pernas:
+                    <input type="range" id="gear-height" min="0.4" max="1.2" step="0.1" value="0.7" style="width:100%" oninput="window.atualizarMontagem()">
+                </label>
+            </div>
+        </div>
+
+        <div class="component-group" style="background: #1f293d; padding: 12px; border-radius: 8px; border: 1px solid #2a364f;">
+            <h3 style="margin: 0 0 10px 0; font-size: 13px; color: #ffb86c; text-transform: uppercase;">5. Grupo Motopropulsor e Combustível</h3>
+            <div style="display: flex; gap: 10px; margin-bottom: 8px;">
+                <label style="flex: 1; font-size: 12px;">Motorização:
+                    <select id="engine-type" style="width: 100%; padding: 4px; background: #141923; color: #fff; border: 1px solid #3b4a6b;" onchange="window.atualizarMontagem()">
+                        <option value="pistao">Monomotor a Pistão (Hélice)</option>
+                        <option value="jato">Turbojato Puro (Reação)</option>
+                    </select>
+                </label>
+                <label style="flex: 1; font-size: 12px;">Tipo Combustível:
+                    <select id="fuel-type" style="width: 100%; padding: 4px; background: #141923; color: #fff; border: 1px solid #3b4a6b;" onchange="window.atualizarMontagem()">
+                        <option value="avgas">AvGas (Gasolina de Aviação)</option>
+                        <option value="jetA">Jet A-1 (Querosene de Aviação)</option>
+                    </select>
+                </label>
+            </div>
+            <div>
+                <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 2px;">
+                    <label>Volume de Combustível:</label>
+                    <span style="color:#ffb86c; font-weight:bold;"><span id="fuel-display">300</span> L</span>
+                </div>
+                <input type="range" id="fuel-qty" min="20" max="1200" step="10" value="300" style="width:100%" oninput="document.getElementById('fuel-display').innerText = this.value; window.atualizarMontagem()">
+            </div>
+        </div>
+
+        <div class="telemetry-box" style="background: #0f131c; padding: 12px; border-radius: 6px; border-left: 4px solid #00d2ff; font-size: 13px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
+                <span>Peso Vazio (Massa Seca):</span>
+                <span id="meta-dry-weight" style="font-weight: bold; color: #aaa;">0 kg</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
+                <span>Peso do Combustível:</span>
+                <span id="meta-fuel-weight" style="font-weight: bold; color: #ffb86c;">0 kg</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px; border-top: 1px solid #222; padding-top: 3px;">
+                <span>Massa Total de Decolagem:</span>
+                <span id="meta-total-weight" style="font-weight: bold; color: #00d2ff;">0 kg</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+                <span>Coeficiente de Sustentação:</span>
+                <span id="meta-lift-status" style="font-weight: bold; color: #50fa7b;">Estável</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="viewport-panel" style="flex: 1.4; min-width: 360px; display: flex; flex-direction: column; gap: 10px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: #00d2ff; font-weight: bold; font-size: 14px;">🛸 Oficina de Montagem Dinâmica:</span>
+        </div>
+        <div id="viewport-aviation" style="width: 100%; height: 550px; background: #0b0e14; border-radius: 8px; overflow: hidden; border: 2px solid #2a364f;">
+            <canvas id="renderCanvasAviation" style="width: 100%; height: 100%; outline: none; display: block;"></canvas>
+        </div>
+    </div>
+</div>
+            `
+          }
+        },
+         {
+          id: 'comercial-vars',
+          title: 'Operações Comerciais e Carga',
+          content: {
+            basic: `
+              <h3>✈️ Logística de Transporte Aéreo</h3>
+              <p>Aprenda como gerenciar pesos de decolagem, passageiros e carga útil utilizando variáveis de controle.</p>
+              <pre style="background:#1e1e1e; color:#9cdcfe; padding:10px; border-radius:8px; font-family:monospace;">
+# Variáveis de Carga e Autonomia
+carga_payload_kg = 15000
+total_passageiros = 180
+peso_combustivel = 8500
+reserva_seguranca = True
+              </pre>
+            `
+          }
+        }
+      ]
+    },
+    {
+      id: 'aviacao-geral',
+      title: 'Aviação Geral',
+      subtopics: [
+        {
+          id: 'geral-oficina',
+          title: 'Oficina e Modelagem Privada',
+          content: {
+            basic: `
+              <h3>🛩️ Montagem da Aviação Geral</h3>
+              <p>Configure aeronaves agrícolas, jatos executivos ou modelos desportivos leves na bancada.</p>
+              <div class="input-terminal-container" style="margin-top:15px; background:#0d0d1a; padding:12px; border-radius:8px; border:1px solid #444;">
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <span style="color:#2ecc71; font-family:'Fira Code', monospace; font-weight:bold;">>>></span>
+                  <input type="text" id="python-input-geral" placeholder="Defina: tipo_asa = 'reta'..." style="flex:1; background:transparent; border:none; color:#9cdcfe; font-family:monospace; outline:none; font-size:15px;">
+                </div>
+              </div>
+            `
+          }
+        }
+      ]
+    },
+    {
+      id: 'aviacao-militar',
+      title: 'Aviação Militar',
+      subtopics: [
+        {
+          id: 'defesa-aerodinamica',
+          title: 'Sistemas de Defesa e Alta Performance',
+          content: {
+            basic: `
+              <h3>🚀 Aerodinâmica de Caças e Reconhecimento</h3>
+              <p>Monitore empuxo, pós-combustão e manobrabilidade em alta velocidade G (força gravitacional).</p>
+              <pre style="background:#1e1e1e; color:#ff5555; padding:10px; border-radius:8px; font-family:monospace;">
+# Parâmetros de Missão e Defesa
+modo_pos_combustao = True
+fator_carga_g = 7.5
+velocidade_mach = 1.8
+angulo_ataque_deg = 14
+              </pre>
+            `
+          }
+        },
+    ]
+    }
+ ]
+  }
+
 ];
 
 /* ====== QUIZZES (10 perguntas por curso) ====== */
@@ -6221,9 +6581,14 @@ let pyodideInstance = null;
 
 async function getPython() {
     if (!pyodideInstance) {
-        // Inicializa o Pyodide v0.27.2 puramente
+        // Inicializa o Pyodide v0.27.2
         pyodideInstance = await loadPyodide();
-        console.log("🐍 Motor Python carregado em modo seguro.");
+        
+        // --- CORREÇÃO OBRIGATÓRIA PARA PYODIDE MODERNO ---
+        // Carrega o módulo sqlite3 que foi desmembrado do core nas versões recentes
+        await pyodideInstance.loadPackage("sqlite3");
+        
+        console.log("🐍 Motor Python carregado com suporte a SQLite3.");
     }
     return pyodideInstance;
 }
@@ -6560,39 +6925,59 @@ window.updateMuvChart = () => {
   
 // 1. Abre a lista de Tópicos (Álgebra, Geometria...)
 // PASSO 1: Mostra as Áreas (Ex: Álgebra)
-function showTopics(courseId) {
-    const course = courses.find(c => c.id === courseId);
-    const container = document.getElementById('content-container');
-    
-    let html = `<h2>Áreas de ${course.title}</h2><div class="grid-container">`;
-    course.topics.forEach(topic => {
-        html += `
-            <div class="course-card" onclick="showSubTopics('${courseId}', '${topic.id}')">
-                <div class="course-icon">${topic.icon || '📚'}</div>
-                <h3>${topic.title}</h3>
-                <button class="btn-estudar">Ver Assuntos</button>
-            </div>`;
-    });
-    html += `</div><button onclick="renderMainSelection()" class="btn-voltar">← Voltar aos Cursos</button>`;
-    container.innerHTML = html;
-}
-
-// PASSO 2: Mostra os Assuntos (Ex: Função Linear, Funções Básicas)
 function showSubTopics(courseId, topicId) {
-    const course = courses.find(c => c.id === courseId);
-    const topic = course.topics.find(t => t.id === topicId);
-    const container = document.getElementById('content-container');
 
-    let html = `<h2>${topic.title}</h2><div class="grid-container">`;
+    const course = courses.find(c => c.id === courseId);
+
+    const topic = course.topics.find(t => t.id === topicId);
+
+    if (!topic) return;
+
+    const container = document.getElementById("content-container");
+
+    let html = `
+        <h2>${topic.title}</h2>
+
+        <div class="grid-container">
+    `;
+
     topic.subtopics.forEach(sub => {
+
         html += `
-            <div class="course-card" onclick="renderLesson('${courseId}', '${topicId}', '${sub.id}')">
+            <div
+                class="course-card"
+
+                onclick="showLessons(
+                    '${courseId}',
+                    '${topicId}',
+                    '${sub.id}'
+                )">
+
                 <h3>${sub.title}</h3>
-                <p>Clique para estudar este assunto.</p>
-            </div>`;
+
+                <p>
+                    Clique para acessar os subassuntos.
+                </p>
+
+            </div>
+        `;
+
     });
-    html += `</div><button onclick="showTopics('${courseId}')" class="btn-voltar">← Voltar para Áreas</button>`;
+
+    html += `
+        </div>
+
+        <button
+            class="btn-voltar"
+            onclick="showTopics('${courseId}')">
+
+            ← Voltar
+
+        </button>
+    `;
+
     container.innerHTML = html;
+
 }
 
 // PASSO 3: Abre a Lição Final (Onde o conteúdo aparece)
@@ -8495,118 +8880,226 @@ function gerarMaqueteCidade() {
 // ============================================================================
 // ☢️ MAQUETE NUCLEAR REALISTA E FIEL À ENGENHARIA (Malha 20x20)
 // ============================================================================
-function gerarUsinaNuclear() {
-    const container = document.getElementById('nuclear-vector-container') || document.getElementById('water-container');
-    if (!container) return;
-    
-    container.innerHTML = ''; 
-    const tamanho = 20; 
+window.nukeEngine = null;
+window.nukeScene = null;
+window.nukeMesaNos = []; // Guarda referências para limpar os cubos antigos
 
-    for (let x = 0; x < tamanho; x++) {
-        for (let z = 0; z < tamanho; z++) {
-            
-            // 1. BASE DA INDÚSTRIA (Solo técnico de concreto/chumbo)
-            createBlock(x, 0, z, 'lead-shield', container.id);
-            
-            // 2. CAPTAÇÃO DE ÁGUA (O Rio de Resfriamento na borda superior)
+window.inicializarUsinaBabylon = function() {
+    const canvas = document.getElementById("renderCanvasNuclear");
+    if (!canvas) return;
+
+    if (window.nukeEngine) window.nukeEngine.dispose();
+    window.nukeEngine = new BABYLON.Engine(canvas, true);
+
+    const scene = new BABYLON.Scene(window.nukeEngine);
+    window.nukeScene = scene;
+    scene.clearColor = new BABYLON.Color4(0.07, 0.09, 0.13, 1);
+
+    // Câmera Orbital Isométrica inclinada por padrão de fábrica
+    const camera = new BABYLON.ArcRotateCamera("nukeCam", -Math.PI / 4, Math.PI / 3, 35, new BABYLON.Vector3(10, 2, 10), scene);
+    camera.attachControl(canvas, true);
+    camera.wheelPrecision = 30;
+
+    // Iluminação industrial rica
+    const light1 = new BABYLON.HemisphericLight("nukeHemi", new BABYLON.Vector3(0, 1, 0), scene);
+    light1.intensity = 0.7;
+    
+    const light2 = new BABYLON.DirectionalLight("nukeDir", new BABYLON.Vector3(-1, -1, -0.5), scene);
+    light2.intensity = 0.4;
+
+    window.nukeEngine.runRenderLoop(() => {
+        if (window.nukeScene) window.nukeScene.render();
+    });
+
+    // Dispara a primeira geração de blocos
+    window.gerarUsinaNuclear();
+};
+
+window.gerarUsinaNuclear = function() {
+    const scene = window.nukeScene;
+    if (!scene) return;
+
+    // 1. LIMPEZA SEGURA DOS VOXELS ANTERIORES
+    window.nukeMesaNos.forEach(m => m.dispose());
+    window.nukeMesaNos = [];
+
+    // 2. CAPTURA DE PARÂMETROS DA INTERFACE
+    const reatorRaio = parseFloat(document.getElementById("nuke-reactor-radius").value);
+    const reatorAlturaMax = parseInt(document.getElementById("nuke-reactor-height").value);
+    const reatorCentroX = parseInt(document.getElementById("nuke-reactor-pos-x").value);
+    
+    const torreAltura = parseInt(document.getElementById("nuke-tower-height").value);
+    const torreRaioBase = parseFloat(document.getElementById("nuke-tower-radius").value);
+    const qtdTorres = parseInt(document.getElementById("nuke-tower-qty").value);
+    
+    const barraBoroInsercao = parseInt(document.getElementById("nuke-boro-rods").value);
+    const tipoCombustivel = document.getElementById("nuke-fuel-type").value;
+    const enriquecimento = parseFloat(document.getElementById("nuke-enrichment").value);
+
+    const tamanhoMapa = 20;
+    const centroTorreX = 4;
+    const centroTorreZ = 9;
+    const centroTorre2X = 4;
+    const centroTorre2Z = 15;
+    const reatorCentroZ = 9;
+
+    // 3. CRIAÇÃO DE MATERIAIS MATEMÁTICOS EM BABYLON
+    const matConcreto = new BABYLON.StandardMaterial("matConcreto", scene);
+    matConcreto.diffuseColor = new BABYLON.Color3(0.3, 0.35, 0.42);
+
+    const matAgua = new BABYLON.StandardMaterial("matAgua", scene);
+    matAgua.diffuseColor = new BABYLON.Color3(0.05, 0.55, 0.85);
+    matAgua.alpha = 0.65; // Efeito translúcido fluido
+
+    const matUranio = new BABYLON.StandardMaterial("matUranio", scene);
+    matUranio.diffuseColor = new BABYLON.Color3(0.0, 0.95, 1.0);
+    matUranio.emissiveColor = new BABYLON.Color3(0.0, 0.4, 0.5); // Brilha no escuro!
+
+    const matBoro = new BABYLON.StandardMaterial("matBoro", scene);
+    matBoro.diffuseColor = new BABYLON.Color3(0.9, 0.15, 0.15);
+
+    // FUNÇÃO INTERNA: Auxiliar para empilhar cubos idênticos na memória do Babylon
+    const criarCuboVoxel = function(x, y, z, material) {
+        const cubo = BABYLON.MeshBuilder.CreateBox("voxel", {size: 0.95}, scene); // Pequeno recuo de 0.05 cria o relevo de bloco
+        cubo.position.set(x, y, z);
+        cubo.material = material;
+        window.nukeMesaNos.push(cubo);
+    };
+
+    // 4. ALGORITMO GEOMÉTRICO TRIDIMENSIONAL (X, Y, Z)
+    for (let x = 0; x < tamanhoMapa; x++) {
+        for (let z = 0; z < tamanhoMapa; z++) {
+
+            // RIO EXTERNO DE CAPTAÇÃO / RESFRIAMENTO (Borda do mapa)
             if (z === 19 || z === 18) {
-                createBlock(x, 0, z, 'water-coolant', container.id);
-                continue; 
+                criarCuboVoxel(x, 0, z, matAgua);
+                continue;
             }
 
-            // 3. TORRE DE RESFRIAMENTO HIPERBÓLICA (Centro em X=4, Z=9)
-            // Centralizada no lado esquerdo da maquete
-            const centroTorreX = 4;
-            const centroTorreZ = 9;
-            const raioBaseTorre = Math.sqrt(Math.pow(x - centroTorreX, 2) + Math.pow(z - centroTorreZ, 2));
+            // Solo base de concreto
+            criarCuboVoxel(x, 0, z, matConcreto);
+
+            // SISTEMA DE REFRIGERAÇÃO: TORRES HIPERBÓLICAS
+            let distTorre1 = Math.sqrt(Math.pow(x - centroTorreX, 2) + Math.pow(z - centroTorreZ, 2));
+            let distTorre2 = Math.sqrt(Math.pow(x - centroTorre2X, 2) + Math.pow(z - centroTorre2Z, 2));
             
-            if (raioBaseTorre < 4) {
-                // Sobe a torre até o nível Y=7 calculando o estreitamento hiperbólico
-                for (let y = 1; y <= 7; y++) {
-                    // Equação matemática para criar o formato de ampulheta (estreita no meio Y=4)
-                    let raioDesejado = 3.2 - (0.3 * y) + (0.05 * y * y);
-                    
-                    // Desenha apenas a casca externa para a torre ficar oca por dentro
-                    if (raioBaseTorre >= raioDesejado - 0.5 && raioBaseTorre <= raioDesejado + 0.3) {
-                        createBlock(x, y, z, 'lead-shield', container.id);
+            let emTorre = false;
+            let distAlvo = 0;
+
+            if (distTorre1 < torreRaioBase) { emTorre = true; distAlvo = distTorre1; }
+            else if (qtdTorres === 2 && distTorre2 < torreRaioBase) { emTorre = true; distAlvo = distTorre2; }
+
+            if (emTorre) {
+                for (let y = 1; y <= torreAltura; y++) {
+                    let raioDesejado = torreRaioBase - (0.3 * y) + (0.05 * y * y);
+                    if (distAlvo >= raioDesejado - 0.5 && distAlvo <= raioDesejado + 0.3) {
+                        criarCuboVoxel(x, y, z, matConcreto);
                     }
                 }
                 continue;
             }
 
-            // 4. EDIFÍCIO DO REATOR COM DOMO SEMISFÉRICO (Centro em X=14, Z=9)
-            // Centralizado no lado direito da maquete
-            const centroReatorX = 14;
-            const centroReatorZ = 9;
-            const raioReator = Math.sqrt(Math.pow(x - centroReatorX, 2) + Math.pow(z - centroReatorZ, 2));
+            // CIRCUITO PRIMÁRIO: EDIFÍCIO DO REATOR DINÂMICO
+            let distReator = Math.sqrt(Math.pow(x - reatorCentroX, 2) + Math.pow(z - reatorCentroZ, 2));
 
-            if (raioReator < 4.5) {
-                // Parte Cilíndrica Inferior (Paredes de contenção biológica)
-                if (raioReator > 3.5) {
-                    for (let y = 1; y <= 3; y++) {
-                        createBlock(x, y, z, 'lead-shield', container.id);
+            if (distReator < reatorRaio) {
+                // Paredes Externas de Chumbo/Contenção
+                if (distReator > reatorRaio - 1) {
+                    for (let y = 1; y <= reatorAlturaMax; y++) {
+                        criarCuboVoxel(x, y, z, matConcreto);
                     }
                 } 
-                // Interior do Vaso de Pressão (Química Ativa)
+                // Elementos Químicos do Núcleo Interno
                 else {
-                    if (x === 14 && z === 9) {
-                        // Elementos de Fissão (Urânio-235 físsil na base)
-                        createBlock(x, 1, z, 'uranium-core', container.id);
-                        createBlock(x, 2, z, 'uranium-core', container.id);
-                        // Elementos de Controle (Barras de Boro absorvedoras de nêutrons no topo)
-                        createBlock(x, 3, z, 'boron-rods', container.id);
+                    if (x === reatorCentroX && z === reatorCentroZ) {
+                        // Combustível Ativo
+                        criarCuboVoxel(x, 1, z, matUranio);
+                        criarCuboVoxel(x, 2, z, matUranio);
+
+                        // Barras de Controle de Boro com Locação Vertical Relativa ao Slider
+                        let yBoro = reatorAlturaMax + 1 - Math.floor(barraBoroInsercao / 34);
+                        if (yBoro < 3) yBoro = 3;
+                        criarCuboVoxel(x, yBoro, z, matBoro);
                     } else {
-                        // Água leve pressurizada atuando como moderadora química
-                        createBlock(x, 1, z, 'water-coolant', container.id);
+                        // Água Moderadora do Circuito Primário
+                        criarCuboVoxel(x, 1, z, matAgua);
+                        if (reatorAlturaMax > 3) criarCuboVoxel(x, 2, z, matAgua);
                     }
                 }
 
-                // ARREDONDAMENTO DO TETO (O Domo Esférico protetor de concreto)
-                // Se comporta como uma cúpula perfeita nos níveis Y=4 e Y=5
-                for (let y = 4; y <= 5; y++) {
-                    // Distância esférica tridimensional do topo
-                    let raioEsferico = Math.sqrt(Math.pow(x - centroReatorX, 2) + Math.pow(y - 3, 2) + Math.pow(z - centroReatorZ, 2));
-                    if (raioEsferico >= 3.5 && raioEsferico <= 4.5) {
-                        createBlock(x, y, z, 'lead-shield', container.id);
+                // Domo Esférico Protetor do Domo Superior
+                for (let y = reatorAlturaMax + 1; y <= reatorAlturaMax + 2; y++) {
+                    let raioEsferico = Math.sqrt(Math.pow(x - reatorCentroX, 2) + Math.pow(y - reatorAlturaMax, 2) + Math.pow(z - reatorCentroZ, 2));
+                    if (raioEsferico >= reatorRaio - 1.2 && raioEsferico <= reatorRaio + 0.3) {
+                        criarCuboVoxel(x, y, z, matConcreto);
                     }
                 }
                 continue;
             }
 
-            // 5. EDIFÍCIO DE TURBINAS E GERADOR QUÍMICO (Bloco retangular conector)
-            // Conecta o calor do reator com o resfriamento da torre
-            if (x >= 8 && x <= 10 && z >= 8 && z <= 10) {
+            // CIRCUITO SECUNDÁRIO: GERADOR DE VAPOR E CONDENSADOR
+            // Bloco que conecta dinamicamente o reator móvel às torres estáveis
+            if (x >= reatorCentroX - 5 && x <= reatorCentroX - 3 && z >= reatorCentroZ - 1 && z <= reatorCentroZ + 1) {
                 for (let y = 1; y <= 2; y++) {
-                    createBlock(x, y, z, 'lead-shield', container.id);
+                    criarCuboVoxel(x, y, z, matConcreto);
                 }
-                // Adiciona um detalhe de bloco de água no teto simulando o trocador de calor (Condensador)
-                if (x === 9 && z === 9) {
-                    createBlock(x, 3, z, 'water-coolant', container.id);
+                if (x === reatorCentroX - 4 && z === reatorCentroZ) {
+                    criarCuboVoxel(x, 3, z, matAgua); // Trocador de calor no teto do gerador
                 }
             }
+
         }
     }
-    console.log("Maquete de Engenharia Nuclear Avançada gerada com fidelidade geométrica.");
-}
-    // Garanta que esta variável esteja declarada fora de qualquer função (no topo do script)
-if (typeof grausRotacaoNuclear === 'undefined') {
-    var grausRotacaoNuclear = 45;
-}
 
-function girarMaqueteNuclear() {
-    grausRotacaoNuclear += 45;
+    // 5. ENGENHARIA MATEMÁTICA E BALANÇO TÉRMICO
+    let fatorCombustivel = tipoCombustivel === "pu239" ? 1.4 : 1.0;
+    let boroModulador = (100 - barraBoroInsercao) / 100;
     
-    // Procura dinamicamente pelos dois possíveis seletores do projeto
-    const mapa = document.getElementById('nuclear-vector-container') || document.getElementById('water-container');
-    
-    if (mapa) {
-        // Preserva a inclinação para baixo (-25deg) e altera apenas a rotação de órbita
-        mapa.style.transform = `rotateX(-25deg) rotateY(${grausRotacaoNuclear}deg)`;
-        console.log(`Maquete rotacionada para ${grausRotacaoNuclear} graus.`);
-    } else {
-        console.error("Não foi possível encontrar a div da maquete para rotacionar!");
+    let temperaturaNucleo = 100 + (enriquecimento * 4200 * boroModulador) * fatorCombustivel;
+    let energiaMW = 0;
+    if (temperaturaNucleo > 150) {
+        energiaMW = (temperaturaNucleo - 140) * 3.3 * (reatorRaio / 4);
     }
-}
+
+    // Penalidade por falta de torres de resfriamento ativas
+    if (qtdTorres === 1 && energiaMW > 850) {
+        temperaturaNucleo += 60;
+    }
+
+    // Atualização dos elementos informativos na UI
+    document.getElementById("val-temp").innerText = Math.round(temperaturaNucleo) + "°C";
+    document.getElementById("val-neutrons").innerText = Math.round(energiaMW) + " MW";
+
+    const consoleLog = document.getElementById("nuke-console-log");
+    if (temperaturaNucleo > 460) {
+        consoleLog.innerText = "🚨 CRÍTICO: Superaquecimento no Circuito Primário! Insira as barras de Boro imediatamente.";
+        consoleLog.style.color = "#ff5555";
+    } else {
+        consoleLog.innerText = "✅ Estável: Circuito primário, secundário e refrigeração operando em conformidade.";
+        consoleLog.style.color = "#50fa7b";
+    }
+};
+
+window.executarSimulacaoNuclear = function() {
+    window.gerarUsinaNuclear();
+};
+
+// Auto-inicialização por amostragem de Canvas e script carregado
+const checarFocoNuclearDOM = setInterval(() => {
+    const canvasExiste = !!document.getElementById("renderCanvasNuclear");
+    const babylonCarregado = typeof BABYLON !== "undefined";
+
+    if (canvasExiste && babylonCarregado) {
+        clearInterval(checarFocoNuclearDOM);
+        window.inicializarUsinaBabylon();
+    }
+}, 200);
+
+window.addEventListener("resize", () => {
+    if (window.nukeEngine) window.nukeEngine.resize();
+});
+    //Acima Usina Nuclear
+    
    async function executarCodigo() {
     const pyodideAtivo = await getPython(); 
     if (!pyodideAtivo) {
@@ -10723,6 +11216,554 @@ window.addEventListener("resize", () => {
         SimuladorMotor.engine.resize(); 
     }
 });
+    
+window.engineAv = null;
+window.sceneAv = null;
+
+// Referência raiz do avião
+window.meshAviaoCompleto = null;
+
+window.inicializarOficina = function() {
+    const canvas = document.getElementById("renderCanvasAviation");
+    if (!canvas) return;
+
+    if (window.engineAv) window.engineAv.dispose();
+    window.engineAv = new BABYLON.Engine(canvas, true);
+
+    const cena = new BABYLON.Scene(window.engineAv);
+    window.sceneAv = cena;
+    cena.clearColor = new BABYLON.Color4(0.07, 0.09, 0.13, 1);
+
+    const camera = new BABYLON.ArcRotateCamera("cam", -Math.PI / 3, Math.PI / 2.3, 8, new BABYLON.Vector3(0, 0, 0), cena);
+    camera.attachControl(canvas, true);
+    camera.wheelPrecision = 40;
+
+    const luz1 = new BABYLON.HemisphericLight("luz1", new BABYLON.Vector3(0.5, 1, 0.2), cena);
+    luz1.intensity = 0.85;
+    const luz2 = new BABYLON.DirectionalLight("luz2", new BABYLON.Vector3(-1, -0.5, -1), cena);
+    luz2.intensity = 0.35;
+
+    const grid = BABYLON.MeshBuilder.CreateGround("grid", {width: 15, height: 15, subdivisions: 8}, cena);
+    grid.position.y = -1.8;
+    const matGrid = new BABYLON.StandardMaterial("matGrid", cena);
+    matGrid.diffuseColor = new BABYLON.Color3(0.18, 0.24, 0.35);
+    matGrid.wireframe = true;
+    grid.material = matGrid;
+
+    window.engineAv.runRenderLoop(() => {
+        if (window.sceneAv) window.sceneAv.render();
+    });
+
+    window.atualizarMontagem();
+};
+
+window.atualizarMontagem = function() {
+    const scene = window.sceneAv;
+    if (!scene) return;
+
+    // 1. CAPTURA DE PARÂMETROS DA UI
+    const fusoLength = parseFloat(document.getElementById("fuso-length").value);
+    const fusoWidth = parseFloat(document.getElementById("fuso-width").value);
+    
+    const wingType = document.getElementById("wing-type").value;
+    const wingSpan = parseFloat(document.getElementById("wing-span").value);
+    const wingPosZ = parseFloat(document.getElementById("wing-pos-z").value);
+    const wingQty = parseInt(document.getElementById("wing-qty").value);
+
+    const tailVScale = parseFloat(document.getElementById("tail-v-scale").value);
+    const tailHScale = parseFloat(document.getElementById("tail-h-scale").value);
+
+    const gearType = document.getElementById("gear-type").value;
+    const gearHeight = parseFloat(document.getElementById("gear-height").value);
+
+    const engineType = document.getElementById("engine-type").value;
+    const fuelType = document.getElementById("fuel-type").value;
+    const fuelQty = parseFloat(document.getElementById("fuel-qty").value);
+
+    // 2. RESELETOR DO NÓ ANCORA
+    if (window.meshAviaoCompleto) window.meshAviaoCompleto.dispose();
+    window.meshAviaoCompleto = new BABYLON.Mesh("aviao_root", scene);
+
+    // MATERIAIS LOW-POLY
+    const matCorpo = new BABYLON.StandardMaterial("m1", scene);
+    matCorpo.diffuseColor = new BABYLON.Color3(0.75, 0.77, 0.8);
+    const matAsas = new BABYLON.StandardMaterial("m2", scene);
+    matAsas.diffuseColor = new BABYLON.Color3(0.15, 0.35, 0.55);
+    const matMetal = new BABYLON.StandardMaterial("m3", scene);
+    matMetal.diffuseColor = new BABYLON.Color3(0.2, 0.2, 0.22);
+
+    // 3. CONSTRUÇÃO DIMENSIONAL - FUSELAGEM
+    const fuselagem = BABYLON.MeshBuilder.CreateBox("fuso", {width: 0.7, height: 0.8, depth: 3.2}, scene);
+    fuselagem.scaling = new BABYLON.Vector3(fusoWidth, fusoWidth, fusoLength);
+    fuselagem.parent = window.meshAviaoCompleto;
+    fuselagem.material = matCorpo;
+
+    // 4. CONSTRUÇÃO MONOPLANO / BIPLANO COM AJUSTE DE COORDENADAS
+    const construirParAsas = function(offsetY, sufixo) {
+        const asaE = BABYLON.MeshBuilder.CreateBox("asaE" + sufixo, {width: 2.0, height: 0.06, depth: 0.65}, scene);
+        const asaD = BABYLON.MeshBuilder.CreateBox("asaD" + sufixo, {width: 2.0, height: 0.06, depth: 0.65}, scene);
+        
+        asaE.scaling.x = wingSpan;
+        asaD.scaling.x = wingSpan;
+
+        // Locação tridimensional
+        if (wingType === "reta") {
+            asaE.position.set(-1 * wingSpan - (0.2 * fusoWidth), offsetY, wingPosZ);
+            asaD.position.set(wingSpan + (0.2 * fusoWidth), offsetY, wingPosZ);
+        } else { // Enflechada
+            asaE.position.set(-0.9 * wingSpan - (0.2 * fusoWidth), offsetY, wingPosZ - 0.2);
+            asaD.position.set(0.9 * wingSpan + (0.2 * fusoWidth), offsetY, wingPosZ - 0.2);
+            asaE.rotation.y = -Math.PI / 9;
+            asaD.rotation.y = Math.PI / 9;
+        }
+
+        asaE.parent = window.meshAviaoCompleto;
+        asaD.parent = window.meshAviaoCompleto;
+        asaE.material = matAsas;
+        asaD.material = matAsas;
+    };
+
+    construirParAsas(0, "_inf");
+    if (wingQty === 2) {
+        construirParAsas(0.6 * fusoWidth, "_sup"); // Cria plano superior do biplano
+    }
+
+    // 5. EMPENAGEM (Cauda com escala independente)
+    const leme = BABYLON.MeshBuilder.CreateBox("leme", {width: 0.05, height: 0.8, depth: 0.5}, scene);
+    leme.position.set(0, 0.5 * tailVScale, -1.4 * fusoLength);
+    leme.scaling.y = tailVScale;
+    leme.parent = window.meshAviaoCompleto;
+    leme.material = matAsas;
+
+    const profundor = BABYLON.MeshBuilder.CreateBox("profundor", {width: 1.4, height: 0.04, depth: 0.4}, scene);
+    profundor.position.set(0, 0, -1.4 * fusoLength);
+    profundor.scaling.x = tailHScale;
+    profundor.parent = window.meshAviaoCompleto;
+    profundor.material = matAsas;
+
+    // 6. TREM DE POUSO (Locação dinâmica baseada no tipo)
+    const pernaE = BABYLON.MeshBuilder.CreateCylinder("pE", {height: gearHeight, diameter: 0.06}, scene);
+    const pernaD = BABYLON.MeshBuilder.CreateCylinder("pD", {height: gearHeight, diameter: 0.06}, scene);
+    
+    const hY = -0.4 * fusoWidth - (gearHeight / 2);
+    const zFoco = gearType === "triciclo" ? 0.4 : -0.2; // Altera centro geométrico das rodas
+
+    pernaE.position.set(-0.5 * fusoWidth, hY, zFoco);
+    pernaD.position.set(0.5 * fusoWidth, hY, zFoco);
+    pernaE.parent = window.meshAviaoCompleto;
+    pernaD.parent = window.meshAviaoCompleto;
+    pernaE.material = matMetal;
+    pernaD.material = matMetal;
+
+    // Roda Auxiliar (Bequilha ou roda de nariz)
+    const pernaAux = BABYLON.MeshBuilder.CreateCylinder("pAux", {height: gearHeight, diameter: 0.04}, scene);
+    pernaAux.position.set(0, hY, gearType === "triciclo" ? 1.2 * fusoLength : -1.3 * fusoLength);
+    pernaAux.parent = window.meshAviaoCompleto;
+    pernaAux.material = matMetal;
+
+    // 7. MOTORIZAÇÃO
+    if (engineType === "pistao") {
+        const blocoMotor = BABYLON.MeshBuilder.CreateCylinder("bMot", {height: 0.4, diameter: 0.6 * fusoWidth, tessellation: 5}, scene);
+        blocoMotor.position.set(0, 0, 1.6 * fusoLength);
+        blocoMotor.rotation.x = Math.PI / 2;
+        blocoMotor.parent = window.meshAviaoCompleto;
+        blocoMotor.material = matMetal;
+
+        const helice = BABYLON.MeshBuilder.CreateBox("hel", {width: 1.5 * fusoWidth, height: 0.12, depth: 0.03}, scene);
+        helice.position.set(0, 0, 1.8 * fusoLength);
+        helice.parent = window.meshAviaoCompleto;
+        helice.material = matMetal;
+    } else { // Jato Turbofã
+        const turbina = BABYLON.MeshBuilder.CreateCylinder("turb", {height: 1.0, diameter: 0.5 * fusoWidth, tessellation: 8}, scene);
+        turbina.position.set(0, 0.5 * fusoWidth, -1.5 * fusoLength);
+        turbina.rotation.x = Math.PI / 2;
+        turbina.parent = window.meshAviaoCompleto;
+        turbina.material = matMetal;
+    }
+
+    // 8. MODELAGEM MATEMÁTICA DE PESOS (FÍSICA DO FLUIDO)
+    let pesoSeco = 350; 
+    pesoSeco += fusoLength * 120 + fusoWidth * 90;
+    pesoSeco += wingSpan * 60 * wingQty;
+    pesoSeco += engineType === "pistao" ? 110 : 290;
+
+    // Densidade do fluido: AvGas = 0.72kg/L | JetA = 0.80kg/L
+    const densidade = fuelType === "avgas" ? 0.72 : 0.80;
+    const pesoCombustivel = fuelQty * densidade;
+    const pesoTotal = pesoSeco + pesoCombustivel;
+
+    // Atualização da UI
+    document.getElementById("meta-dry-weight").innerText = Math.round(pesoSeco) + " kg";
+    document.getElementById("meta-fuel-weight").innerText = Math.round(pesoCombustivel) + " kg";
+    document.getElementById("meta-total-weight").innerText = Math.round(pesoTotal) + " kg";
+
+    // Cálculo simplificado de eficiência sustentável
+    const areaAsa = wingSpan * 0.65 * wingQty;
+    const cargaAlar = pesoTotal / areaAsa;
+    const displayLift = document.getElementById("meta-lift-status");
+
+    if (cargaAlar > 180) {
+        displayLift.innerText = "🚨 Peso excessivo para a asa!";
+        displayLift.style.color = "#ff5555";
+    } else if (engineType === "pistao" && fuelType === "jetA") {
+        displayLift.innerText = "❌ Combustível Incompatível com Motor!";
+        displayLift.style.color = "#ffaa00";
+    } else {
+        displayLift.innerText = "✅ Aerodinâmica Aprovada (" + Math.round(cargaAlar) + " kg/m²)";
+        displayLift.style.color = "#50fa7b";
+    }
+};
+
+// Auto-inicialização por amostragem de DOM
+const checkAviationDOM = setInterval(() => {
+    const canvasExiste = !!document.getElementById("renderCanvasAviation");
+    const babylonCarregado = typeof BABYLON !== "undefined";
+
+    if (canvasExiste && babylonCarregado) {
+        clearInterval(checkAviationDOM);
+        window.inicializarOficina();
+    }
+}, 200);
+
+window.addEventListener("resize", () => {
+    if (window.engineAv) window.engineAv.resize();
+});
+    
+// ===================================================
+// 1. ESTADO GLOBAL, TABELA E BANCO DE DADOS EXPANDIDO
+// ===================================================
+window.engineParticle = null;
+window.sceneParticle = null;
+window.listaParticulas = [];
+window.colisaoExecutada = false;
+
+// Configurações padrão dos Sliders (evita que o motor quebre antes do input)
+window.configSimulacao = {
+    massa: 100,
+    velocidade: 50,
+    estadoMateria: 'liquido' // solido, liquido, gasoso, plasma
+};
+
+window.TABELA_PERIODICA = {
+    "H":  { nome: "Hidrogênio", cor: new BABYLON.Color3(0.95, 0.95, 0.95), raioCovalente: 0.37, massa: 1.008 },
+    "C":  { nome: "Carbono",    cor: new BABYLON.Color3(0.20, 0.20, 0.20), raioCovalente: 0.77, massa: 12.011 },
+    "N":  { nome: "Nitrogênio", cor: new BABYLON.Color3(0.18, 0.35, 0.90), raioCovalente: 0.75, massa: 14.007 },
+    "O":  { nome: "Oxigênio",   cor: new BABYLON.Color3(0.90, 0.10, 0.10), raioCovalente: 0.73, massa: 15.999 },
+    "Na": { nome: "Sódio",      cor: new BABYLON.Color3(0.47, 0.26, 0.88), raioCovalente: 1.54, massa: 22.990 },
+    "Cl": { nome: "Cloro",      cor: new BABYLON.Color3(0.12, 0.75, 0.12), raioCovalente: 0.99, massa: 35.453 }
+};
+
+// Banco de dados expandido para testes locais de Substâncias Simples e Compostas
+window.bancoMoleculas = {
+    "H2O": {
+        id_base: "h2o", nome: "Água", vsepr: "Angular", angulo: "104.5°", hibridizacao: "sp³",
+        polaridade: "Polar", estado: "Líquido", ebulicao: "100 °C", tipoSubstancia: "Composta",
+        átomos: [
+            { id: "O_1", elemento: "O", posicao: [0, 0, 0], massa: 15.999 },
+            { id: "H_1", elemento: "H", posicao: [-0.75, 0.58, 0], massa: 1.008 },
+            { id: "H_2", elemento: "H", posicao: [0.75, 0.58, 0], massa: 1.008 }
+        ],
+        ligações: [
+            { id: "lig_1", origem: "O_1", destino: "H_1", tipo: "simples" },
+            { id: "lig_2", origem: "O_1", destino: "H_2", tipo: "simples" }
+        ]
+    },
+    "CO2": {
+        id_base: "co2", nome: "Dióxido de Carbono", vsepr: "Linear", angulo: "180°", hibridizacao: "sp",
+        polaridade: "Apolar", estado: "Gasoso", ebulicao: "-78.5 °C", tipoSubstancia: "Composta",
+        átomos: [
+            { id: "C_1", elemento: "C", posicao: [0, 0, 0], massa: 12.011 },
+            { id: "O_1", elemento: "O", posicao: [-1.16, 0, 0], massa: 15.999 },
+            { id: "O_2", elemento: "O", posicao: [1.16, 0, 0], massa: 15.999 }
+        ],
+        ligações: [
+            { id: "lig_1", origem: "C_1", destino: "O_1", tipo: "dupla" },
+            { id: "lig_2", origem: "C_1", destino: "O_2", tipo: "dupla" }
+        ]
+    },
+    "O2": {
+        id_base: "o2", nome: "Gás Oxigênio", vsepr: "Linear", angulo: "180°", hibridizacao: "sp²",
+        polaridade: "Apolar", estado: "Gasoso", ebulicao: "-183 °C", tipoSubstancia: "Simples",
+        átomos: [
+            { id: "O_1", elemento: "O", posicao: [-0.6, 0, 0], massa: 15.999 },
+            { id: "O_2", elemento: "O", posicao: [0.6, 0, 0], massa: 15.999 }
+        ],
+        ligações: [
+            { id: "lig_1", origem: "O_1", destino: "O_2", tipo: "dupla" }
+        ]
+    }
+};
+
+window.moleculaAtiva = JSON.parse(JSON.stringify(window.bancoMoleculas["H2O"]));
+
+// ===================================================
+// 2. CORREÇÃO DOS ERROS DE CONSOLE (SLIDERS DO HTML)
+// ===================================================
+window.updateSpeed = function(valor) {
+    window.configSimulacao.velocidade = parseFloat(valor);
+    console.log(`⚡ Velocidade ajustada para: ${valor}% c`);
+};
+
+window.updateMass = function(valor) {
+    window.configSimulacao.massa = parseFloat(valor);
+    console.log(`⚖️ Massa relativa ajustada para: ${valor} u`);
+};
+
+// ===================================================
+// 3. SISTEMA DE BUSCA E FILTRAGEM QUANTUM-QUÍMICA
+// ===================================================
+window.pesquisarEALterarMolecula = function(termo) {
+    const busca = termo.toUpperCase().trim();
+    
+    // Prioriza o banco completo/externo; se não achar, usa o local
+    const banco = window.bancoMoleculasCompleto || window.bancoMoleculas;
+    
+    if (!banco) {
+        console.error("❌ Nenhum banco de dados de moléculas foi encontrado na memória.");
+        return false;
+    }
+
+    // CORREÇÃO: Agora transforma a chave do banco em Maiúsculo (key.toUpperCase()) antes de comparar.
+    // Isso garante que ache tanto "CO2" quanto "h2o", independente de como foi salvo no banco.
+    let chaveEncontrada = Object.keys(banco).find(key => 
+        key.toUpperCase() === busca || banco[key].nome.toUpperCase().includes(busca)
+    );
+
+    if (chaveEncontrada) {
+        window.resetarAcelerador();
+        window.moleculaAtiva = JSON.parse(JSON.stringify(banco[chaveEncontrada]));
+        window.renderizarMolecula(window.moleculaAtiva);
+        
+        // Atualiza interface do usuário se os elementos existirem
+        const status = document.getElementById("status-leitura");
+        if (status) {
+            const tipo = banco[chaveEncontrada].tipoSubstancia || "Substância";
+            status.innerText = `Exibindo: ${banco[chaveEncontrada].nome} (${tipo})`;
+        }
+        return true;
+    } else {
+        console.warn("🔬 Elemento/Substância não catalogada no banco de dados.");
+        return false;
+    }
+};
+
+// Interface para mudança mecânica dos estados da matéria
+window.mudarEstadoFisico = function(novoEstado) {
+    window.configSimulacao.estadoMateria = novoEstado;
+    console.log(`🌡️ Estado da matéria alterado para: ${novoEstado.toUpperCase()}`);
+};
+
+// ===================================================
+// 4. MOTOR DE FÍSICA APLICADO AOS ESTADOS DA MATÉRIA
+// ===================================================
+window.executarFisicaFrames = function() {
+    if (!window.sceneParticle) return;
+    
+    const modo = document.getElementById("modo-experimento")?.value || 'colisao-alta';
+    const estado = window.configSimulacao.estadoMateria;
+
+    // Se houver uma molécula na tela, aplicamos a termodinâmica do estado selecionado
+    window.sceneParticle.meshes.forEach(mesh => {
+        if (mesh.name.startsWith("atomo-") || mesh.name.startsWith("ligacao-")) {
+            const tempo = Date.now() * 0.005;
+            
+            switch(estado) {
+                case 'solido':
+                    // Vibração molecular de retículo cristalino (frequência alta, amplitude mínima)
+                    mesh.position.x += Math.sin(tempo * 3 + mesh.uniqueId) * 0.001;
+                    mesh.position.y += Math.cos(tempo * 3 + mesh.uniqueId) * 0.001;
+                    break;
+                case 'liquido':
+                    // Movimento de translação suave e fluido espacial
+                    mesh.position.x += Math.sin(tempo + mesh.uniqueId) * 0.004;
+                    mesh.position.z += Math.cos(tempo + mesh.uniqueId) * 0.004;
+                    break;
+                case 'gasoso':
+                    // Dispersão caótica e colisões cinéticas rápidas
+                    mesh.position.x += Math.sin(tempo * 2 + mesh.uniqueId) * 0.02;
+                    mesh.position.y += Math.cos(tempo * 1.5 + mesh.uniqueId) * 0.02;
+                    mesh.position.z += Math.sin(tempo * 0.8 + mesh.uniqueId) * 0.02;
+                    break;
+                case 'plasma':
+                    // Altíssima energia térmica: os elétrons se separam, gerando instabilidade orbital
+                    mesh.position.x += (Math.random() - 0.5) * 0.06;
+                    mesh.position.y += (Math.random() - 0.5) * 0.06;
+                    // Simulação visual de ionização alterando levemente a escala do mesh
+                    const fatorGlow = 1 + Math.sin(tempo * 5) * 0.05;
+                    mesh.scaling = new BABYLON.Vector3(fatorGlow, fatorGlow, fatorGlow);
+                    break;
+            }
+        }
+    });
+
+    // Mantém a física do feixe tradicional do acelerador rodando em paralelo se ativo
+    if (modo === 'colisao-alta' && window.listaParticulas.length > 0) {
+        for (let i = 0; i < window.listaParticulas.length; i++) {
+            let p = window.listaParticulas[i];
+            if (p.mesh && p.velocity) {
+                // Modula a velocidade baseada no Slider real do HTML
+                let multiplicadorVelocidade = window.configSimulacao.velocidade / 50;
+                p.mesh.position.addInPlace(p.velocity.scale(0.1 * multiplicadorVelocidade));
+            }
+        }
+    }
+};
+
+// ===================================================
+// 5. ENGENHARIA DE RENDERIZAÇÃO BIOMOLECULAR (CORRIGIDO)
+// ===================================================
+window.renderizarMolecula = function(data) {
+    const scene = window.sceneParticle;
+    if (!scene || !data) return;
+
+    const molContainer = new BABYLON.TransformNode("molContainer-" + data.id_base, scene);
+
+    data.átomos.forEach(atomo => {
+        const propProprias = window.TABELA_PERIODICA[atomo.elemento] || { cor: new BABYLON.Color3(0.5,0.5,0.5), raioCovalente: 0.60 };
+        const diametroReal = propProprias.raioCovalente * 2.1;
+        
+        const sphere = BABYLON.MeshBuilder.CreateSphere("atomo-" + atomo.id, {diameter: diametroReal}, scene);
+        sphere.position = new BABYLON.Vector3(...atomo.posicao);
+        sphere.parent = molContainer;
+
+        const mat = new BABYLON.StandardMaterial("mat-" + atomo.id, scene);
+        mat.diffuseColor = propProprias.cor;
+        
+        // Se for plasma, adiciona efeito emissivo de ionização nas esferas
+        if (window.configSimulacao.estadoMateria === 'plasma') {
+            mat.emissiveColor = propProprias.cor.scale(0.4);
+        }
+        
+        sphere.material = mat;
+    });
+
+    if (data.ligações) {
+        data.ligações.forEach(lig => {
+            const a1 = data.átomos.find(a => a.id === lig.origem);
+            const a2 = data.átomos.find(a => a.id === lig.destino);
+            if (!a1 || !a2) return;
+
+            const pos1 = new BABYLON.Vector3(...a1.posicao);
+            const pos2 = new BABYLON.Vector3(...a2.posicao);
+            
+            let espessuraCilindro = lig.tipo === "dupla" ? 0.24 : (lig.tipo === "tripla" ? 0.32 : 0.14);
+
+            const direcao = pos2.subtract(pos1);
+            const distancia = direcao.length();
+
+            const link = BABYLON.MeshBuilder.CreateCylinder("ligacao-" + lig.id, {
+                height: distancia,
+                diameter: espessuraCilindro
+            }, scene);
+            
+            link.position = BABYLON.Vector3.Center(pos1, pos2);
+
+            // --- SISTEMA DE ROTAÇÃO COMPATÍVEL COM BABYLON.JS ---
+            // Cilindros no Babylon nascem apontando para o eixo Y positivo (0, 1, 0)
+            const direcaoPadraoCilindro = new BABYLON.Vector3(0, 1, 0);
+            const direcaoAlvo = direcao.normalize();
+            
+            // Encontra o eixo perpendicular de rotação entre a direção padrão e o alvo
+            const eixoRotacao = BABYLON.Vector3.Cross(direcaoPadraoCilindro, direcaoAlvo);
+            
+            if (eixoRotacao.lengthSquared() > 0.0001) {
+                const produtoEscalar = BABYLON.Vector3.Dot(direcaoPadraoCilindro, direcaoAlvo);
+                const angulo = Math.acos(produtoEscalar);
+                // Aplica a rotação via Quaternion de forma segura
+                link.rotationQuaternion = BABYLON.Quaternion.RotationAxis(eixoRotacao.normalize(), angulo);
+            }
+            // ----------------------------------------------------
+
+            link.parent = molContainer;
+
+            const linkMat = new BABYLON.StandardMaterial("linkMat-" + lig.id, scene);
+            linkMat.diffuseColor = new BABYLON.Color3(0.4, 0.45, 0.5);
+            link.material = linkMat;
+        });
+    }
+
+    window.atualizarTelemetriaAvancada(data);
+};
+// ===================================================
+// 6. DASHBOARD DE TELEMETRIA
+// ===================================================
+window.atualizarTelemetriaAvancada = function(data) {
+    if (!data) return;
+    const massaMolarTotal = data.átomos.reduce((soma, a) => soma + a.massa, 0);
+    
+    const eLeitura = document.getElementById("energia-leitura");
+    if (eLeitura) eLeitura.innerText = `${massaMolarTotal.toFixed(3)} u`;
+    
+    const graph1 = document.getElementById("mini-graph-1");
+    if (graph1) {
+        graph1.innerHTML = `
+            <b style="color:#3498db">${data.nome}</b> (${data.tipoSubstancia})<br>
+            Geometria: <b>${data.vsepr}</b><br>
+            Ângulo: <b>${data.angulo}</b>
+        `;
+    }
+};
+    
+    window.injetarParticulas = function() {
+    console.log("⚛️ Injetando partículas na câmara...");
+    const status = document.getElementById("status-leitura");
+    if (status) status.innerText = "Partículas prontas para colisão";
+};
+
+window.dispararColisao = function() {
+    console.log("💥 Disparando colisão de alta energia!");
+    window.colisaoExecutada = true;
+    const status = document.getElementById("status-leitura");
+    if (status) status.innerText = "Colisão efetuada com sucesso!";
+    
+    // Altera a energia exibida como exemplo do impacto
+    const energiaLeitura = document.getElementById("energia-leitura");
+    if (energiaLeitura) energiaLeitura.innerText = "7.00 TeV";
+};
+
+// ===================================================
+// 7. INICIALIZADOR DO MOTOR GRÁFICO (BABYLON.JS)
+// ===================================================
+window.inicializarAcelerador = function() {
+    const canvas = document.getElementById("renderCanvasParticle");
+    if (!canvas) return;
+
+    window.engineParticle = new BABYLON.Engine(canvas, true);
+    window.sceneParticle = new BABYLON.Scene(window.engineParticle);
+    window.sceneParticle.clearColor = new BABYLON.Color4(0.04, 0.05, 0.07, 1.0); 
+
+    const camera = new BABYLON.ArcRotateCamera("cameraParticle", -Math.PI / 2, Math.PI / 2.3, 6, BABYLON.Vector3.Zero(), window.sceneParticle);
+    camera.attachControl(canvas, true);
+
+    const luzAmbiente = new BABYLON.HemisphericLight("luzAmbiente", new BABYLON.Vector3(0, 1, 0), window.sceneParticle);
+    luzAmbiente.intensity = 0.7;
+
+    if (window.moleculaAtiva) {
+        window.renderizarMolecula(window.moleculaAtiva);
+    }
+
+    window.engineParticle.runRenderLoop(() => {
+        if (window.sceneParticle) {
+            window.sceneParticle.render();
+            window.executarFisicaFrames();
+        }
+    });
+};
+
+window.resetarAcelerador = function() {
+    if (window.sceneParticle) {
+        [...window.sceneParticle.meshes].forEach(m => m.dispose());
+    }
+    window.listaParticulas = [];
+    window.colisaoExecutada = false;
+};
+
+const checarEstadoAcelerador = setInterval(() => {
+    if (typeof BABYLON !== "undefined" && document.getElementById("renderCanvasParticle")) {
+        clearInterval(checarEstadoAcelerador);
+        window.inicializarAcelerador();
+    }
+}, 250);
 /* Inicial: nada mais */
   </script>
 </body>
